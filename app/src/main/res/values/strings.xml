@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">HealthierLifestyle</string>
+    <string name="welcome_to_healthier_lifestyle">Welcome to healthier lifestyle!</string>
+    <string name="register">REGISTER</string>
+    <string name="continue_as_guest">Continue as guest</string>
+    <string name="healthier_lifestyle">Healthier Lifestyle</string>
+    <string name="name">name</string>
+    <string name="age">age</string>
+    <string name="weight">weight</string>
+    <string name="height">height</string>
+    <string name="gender">gender</string>
+    <string name="trainings_per_week">trainings per week</string>
+    <string name="foods">foods</string>
+    <string name="menu">menus</string>
+</resources>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterActivity">
+
+
+    <TableLayout android:id="@+id/personTable"
+        android:layout_height="wrap_content" android:layout_width="match_parent"
+        android:layout_marginLeft="20dp"
+        tools:ignore="MissingConstraints">
+        <TableRow android:layout_height="match_parent" android:layout_width="match_parent">
+            <TextView
+                android:id="@+id/nameTextView"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:text="@string/name"
+               />
+            <EditText
+                android:id="@+id/namePlainText"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:inputType="textPersonName"
+                />
+        </TableRow>
+
+        <TableRow android:layout_height="match_parent" android:layout_width="match_parent">
+            <TextView
+                android:id="@+id/ageTextView"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:text="@string/age"
+              />
+            <EditText
+                android:id="@+id/agePlainText"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:inputType="number"
+                />
+        </TableRow>
+
+        <TableRow android:layout_height="match_parent" android:layout_width="match_parent">
+            <TextView
+                android:id="@+id/genderTextView"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:text="@string/gender" />
+            <Spinner
+                android:id="@+id/genderSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/btn_dropdown"
+                android:spinnerMode="dropdown"/>
+        </TableRow>
+
+        <TableRow android:layout_height="match_parent" android:layout_width="match_parent">
+            <TextView
+                android:id="@+id/heightTextView"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:text="@string/height"
+                />
+            <EditText
+                android:id="@+id/heightPlainText"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:inputType="number"
+                />
+        </TableRow>
+        <TableRow android:layout_height="match_parent" android:layout_width="match_parent">
+            <TextView
+                android:id="@+id/weightTextView"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:text="@string/weight"
+                />
+            <EditText
+                android:id="@+id/weightPlainText"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:inputType="number"
+                />
+        </TableRow>
+
+        <TableRow android:layout_height="match_parent" android:layout_width="match_parent">
+            <TextView
+                android:id="@+id/trainsPerWeekTextView"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:text="@string/trainings_per_week"
+                android:paddingRight="40dp"
+                />
+            <EditText
+                android:id="@+id/trainPerWeekPlainText"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:inputType="number"
+                />
+        </TableRow>
+    </TableLayout>
+
+    <Button
+        android:id="@+id/RegisterButton"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:text="@string/register"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/personTable" />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
