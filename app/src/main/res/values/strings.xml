@@ -12,4 +12,9 @@
     <string name="trainings_per_week">trainings per week</string>
     <string name="foods">foods</string>
     <string name="menu">menus</string>
+    <string name="show_all_foods">SHOW ALL FOODS</string>
+    <string name="show_foods_rich_on_protein">SHOW FOODS RICH ON PROTEIN</string>
+    <string name="show_foods_rich_on_carbohydrates">SHOW FOODS RICH ON CARBOHYDRATES</string>
+    <string name="show_foods_rich_on_fats">SHOW FOODS RICH ON FATS</string>
+    <string name="show_foods_rich_on_calories">SHOW FOODS RICH ON CALORIES</string>
 </resources>
