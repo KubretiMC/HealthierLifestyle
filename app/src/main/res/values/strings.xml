@@ -17,4 +17,20 @@
     <string name="show_foods_rich_on_carbohydrates">SHOW FOODS RICH ON CARBOHYDRATES</string>
     <string name="show_foods_rich_on_fats">SHOW FOODS RICH ON FATS</string>
     <string name="show_foods_rich_on_calories">SHOW FOODS RICH ON CALORIES</string>
+
+    <string-array name="Foods_names">
+        <item>Orange</item>
+        <item>Chicken Breasts</item>
+        <item>Apple</item>
+        <item>Rice</item>
+        <item>Egg</item>
+    </string-array>
+
+    <array name="foods_pics">
+        <item>@drawable/apple</item>
+        <item>@drawable/chickenbreasts</item>
+        <item>@drawable/orange</item>
+        <item>@drawable/rice</item>
+        <item>@drawable/egg</item>
+    </array>
 </resources>
