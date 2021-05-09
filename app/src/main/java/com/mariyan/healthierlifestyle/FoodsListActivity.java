@@ -1,6 +1,7 @@
 package com.mariyan.healthierlifestyle;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,10 +11,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.squareup.picasso.Picasso;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -33,28 +37,34 @@ public class FoodsListActivity extends Activity implements AdapterView.OnItemCli
     TypedArray food_pics;
     List<RowItem> rowItems;
     ListView mylistview;
+
+    Context context = this;
+
     //@RequiresApi(api = Build.VERSION_CODES.N)
     //@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_foods_list);
-     //   query= String.valueOf(getIntent().getStringExtra("query"));
-       // GetTextFromSQL(query);
+
+        query= String.valueOf(getIntent().getStringExtra("query"));
+        GetTextFromSQL(query);
 
 
-        rowItems = new ArrayList<RowItem>();
-        food_names = getResources().getStringArray(R.array.Foods_names);
-        food_pics=getResources().obtainTypedArray(R.array.foods_pics);
-        for(int i=0;i<food_names.length;i++){
-            RowItem item = new RowItem(food_names[i],
-                    food_pics.getResourceId(i,-1));
-            rowItems.add(item);
-        }
-        mylistview = (ListView) findViewById(R.id.simpleListView);
-        CustomAdapter adapter = new CustomAdapter(this,rowItems);
-        mylistview.setAdapter(adapter);
+        loadImageByInternetURL();
 
-        mylistview.setOnItemClickListener(this);
+//        rowItems = new ArrayList<RowItem>();
+//        food_names = getResources().getStringArray(R.array.Foods_names);
+//        food_pics=getResources().obtainTypedArray(R.array.foods_pics);
+//        for(int i=0;i<food_names.length;i++){
+//            RowItem item = new RowItem(food_names[i],
+//                    food_pics.getResourceId(i,-1));
+//            rowItems.add(item);
+//        }
+//        mylistview = (ListView) findViewById(R.id.simpleListView);
+//        CustomAdapter adapter = new CustomAdapter(this,rowItems);
+//        mylistview.setAdapter(adapter);
+//
+//        mylistview.setOnItemClickListener(this);
 
     }
 
@@ -105,4 +115,13 @@ public class FoodsListActivity extends Activity implements AdapterView.OnItemCli
     }
 
 
+    public void loadImageByInternetURL(){
+        ImageView targetImageView = (ImageView) findViewById(R.id.imageView);
+        String internetUrl = "https://pngimg.com/uploads/mario/mario_PNG53.png";
+
+        Picasso
+                .with(context)
+                .load(internetUrl)
+                .into(targetImageView);
+    }
 }
