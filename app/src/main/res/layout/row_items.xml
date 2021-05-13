@@ -3,8 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
 <RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="50dp"
@@ -15,39 +17,84 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
-        android:text="Name"/>
+        android:text="@string/name"/>
     <TextView
         android:id="@+id/itemProteins"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
-        android:text="Proteins"
-        android:layout_marginTop="7dp"
+        android:text="@string/proteins"
         android:layout_below="@id/itemName"/>
     <TextView
         android:id="@+id/itemCarbohydrates"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
-        android:text="Carbohydrates"
-        android:layout_marginTop="7dp"
+        android:text="@string/carbohydrates"
         android:layout_below="@id/itemProteins"/>
     <TextView
         android:id="@+id/itemFats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
-        android:text="Fats"
-        android:layout_marginTop="7dp"
-        android:layout_below="@id/itemCarbohydrates"/>
+        android:text="@string/fats"
+        android:layout_below="@id/itemCarbohydrates"
+        />
     <TextView
         android:id="@+id/itemCalories"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
-        android:text="Calories"
-        android:layout_marginTop="7dp"
+        android:text="@string/calories"
         android:layout_below="@id/itemFats"/>
 
+
 </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       >
+
+        <TextView
+            android:id="@+id/itemName2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+           />
+
+        <TextView
+            android:id="@+id/itemProteins2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/itemName2"
+            android:layout_marginStart="20dp"
+             />
+
+        <TextView
+            android:id="@+id/itemCarbohydrates2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/itemProteins2"
+            android:layout_marginStart="20dp"
+          />
+
+        <TextView
+            android:id="@+id/itemFats2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/itemCarbohydrates2"
+            android:layout_marginStart="20dp"
+         />
+
+        <TextView
+            android:id="@+id/itemCalories2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/itemFats2"
+            android:layout_marginStart="20dp"
+           />
+
+
+    </RelativeLayout>
 </LinearLayout>

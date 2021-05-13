@@ -1,5 +1,6 @@
 package com.mariyan.healthierlifestyle;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -80,25 +81,37 @@ public class FoodsListActivity extends Activity implements AdapterView.OnItemCli
                 //String query = "Select * from foods";
                 Statement st = connect.createStatement();
                 ResultSet rs = st.executeQuery(query);
-
+                rowItems = new ArrayList<RowItem>();
 
                 int counter=0;
                 while (rs.next()) {
-                    listResults.add(rs.getString(2)+ System.lineSeparator() +"Calories:"+rs.getString(6)
-                            + System.lineSeparator() +"Proteins: "+rs.getString(3)
-                            + System.lineSeparator() +"Carbohydrates: "+rs.getString(4)
-                            + System.lineSeparator() +"Fats: "+rs.getString(5)
-                            + System.lineSeparator() + images[counter]);
-                    counter++;
+//                    listResults.add(rs.getString(2)+ System.lineSeparator() +"Calories:"+rs.getString(6)
+//                            + System.lineSeparator() +"Proteins: "+rs.getString(3)
+//                            + System.lineSeparator() +"Carbohydrates: "+rs.getString(4)
+//                            + System.lineSeparator() +"Fats: "+rs.getString(5)
+//                            + System.lineSeparator() + images[counter]);
+//                    counter++;
+                    food_pics=getResources().obtainTypedArray(R.array.foods_pics);
+                    @SuppressLint("ResourceType") RowItem item = new RowItem(food_pics.getResourceId(1,-1), rs.getString(2),
+                            rs.getFloat(3),rs.getFloat(4),  rs.getFloat(5),rs.getFloat(6));
+                    rowItems.add(item);
                 }
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
-                        getApplicationContext(),
-                        R.layout.activity_list_view,
-                        R.id.result,
-                        listResults
-                );
-                simpleList.setAdapter(arrayAdapter);
-                return simpleList;
+                mylistview = (ListView) findViewById(R.id.simpleListView);
+                CustomAdapter adapter = new CustomAdapter(this,rowItems);
+                mylistview.setAdapter(adapter);
+
+                mylistview.setOnItemClickListener(this);
+                return mylistview;
+
+
+//                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
+//                        getApplicationContext(),
+//                        R.layout.activity_list_view,
+//                        R.id.result,
+//                        listResults
+//                );
+//                simpleList.setAdapter(arrayAdapter);
+//                return simpleList;
             } else {
                 ConnectionResult = "Check Connection";
             }
