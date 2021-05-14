@@ -32,12 +32,8 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
         String checkBox = preferences.getString("remember","");
 
-        if(checkBox.equals("true")){
-            Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-            startActivity(intent);
-        }else if(checkBox.equals("false")){
-            Toast.makeText(this,"Please Sign In.",Toast.LENGTH_SHORT).show();
-        }
+        Toast.makeText(this,"Please Sign In.",Toast.LENGTH_SHORT).show();
+
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override

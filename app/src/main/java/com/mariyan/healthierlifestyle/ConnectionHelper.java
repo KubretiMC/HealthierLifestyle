@@ -6,10 +6,13 @@ import android.util.Log;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Objects;
 
 class ConnectionHelper {
-    Connection conn;
+    Connection connection = null;
     private String uname,pass,ip,port,database;
     @SuppressLint("NewApi")
     Connection connectionclass()
@@ -22,7 +25,7 @@ class ConnectionHelper {
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        Connection connection = null;
+       // Connection connection = null;
         String ConnectionURL;
 
         try{
@@ -35,5 +38,16 @@ class ConnectionHelper {
         }
 
         return connection;
+    }
+
+    public boolean userCheck(String username, Boolean usernameExists) throws SQLException {
+
+        PreparedStatement st = connectionclass().prepareStatement("select * from users where name = ?");
+        st.setString(1, username);
+        ResultSet r1=st.executeQuery();
+        if(r1.next()) {
+            usernameExists = true;
+        }
+        return usernameExists;
     }
 }

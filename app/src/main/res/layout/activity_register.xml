@@ -10,6 +10,7 @@
     <TableLayout android:id="@+id/personRegisterTable"
         android:layout_height="wrap_content" android:layout_width="match_parent"
         android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         tools:ignore="MissingConstraints">
         <TableRow android:layout_height="match_parent" android:layout_width="match_parent">
             <TextView
@@ -17,12 +18,26 @@
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:text="@string/name"
-               />
+                />
             <EditText
                 android:id="@+id/namePlainText"
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:inputType="textPersonName"
+                />
+        </TableRow>
+        <TableRow android:layout_height="match_parent" android:layout_width="match_parent">
+            <TextView
+                android:id="@+id/passwordTextView"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:text="@string/password"
+                />
+            <EditText
+                android:id="@+id/passwordPlainText"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:inputType="textPassword"
                 />
         </TableRow>
 
@@ -36,7 +51,7 @@
             <EditText
                 android:id="@+id/agePlainText"
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:inputType="number"
                 />
         </TableRow>
@@ -65,7 +80,7 @@
             <EditText
                 android:id="@+id/heightPlainText"
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:inputType="number"
                 />
         </TableRow>
@@ -79,7 +94,7 @@
             <EditText
                 android:id="@+id/weightPlainText"
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:inputType="number"
                 />
         </TableRow>
@@ -95,23 +110,20 @@
             <EditText
                 android:id="@+id/trainPerWeekPlainText"
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:inputType="number"
                 />
         </TableRow>
+        <Button
+            android:id="@+id/RegisterButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/register"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/personRegisterTable" />
+
     </TableLayout>
-
-    <Button
-        android:id="@+id/RegisterButton"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:text="@string/register"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/personRegisterTable" />
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
