@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -41,7 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    createUser(gender);
+                    createUser();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -133,9 +134,9 @@ public class RegisterActivity extends AppCompatActivity {
     }
     public Spinner setSpinnerWeight() {
 
-        String[] arraySpinner = new String[161];
+        String[] arraySpinner = new String[201];
         int counter=40;
-        for(int i=0;i<=160;i++){
+        for(int i=0;i<=200;i++){
             arraySpinner[i]= String.valueOf(counter);
             counter++;
         }
@@ -148,7 +149,7 @@ public class RegisterActivity extends AppCompatActivity {
         return spinner;
     }
 
-    private void createUser(Object gender) throws SQLException {
+    private void createUser() throws SQLException {
         userName = findViewById(R.id.namePlainText);
         userPassword = findViewById(R.id.passwordPlainText);
         userPassword2 = findViewById(R.id.confirmPasswordPlainText);
@@ -162,6 +163,7 @@ public class RegisterActivity extends AppCompatActivity {
         String password = userPassword.getText().toString().trim();
         String password2 = userPassword2.getText().toString().trim();
         String age = userAge.getText().toString().trim();
+
 
 
 
@@ -214,6 +216,29 @@ public class RegisterActivity extends AppCompatActivity {
                             .setContentText(name)
                             .build();
                     notify.flags |= Notification.FLAG_AUTO_CANCEL;
+            String gender = userGender.getSelectedItem().toString();
+            String height = userHeight.getSelectedItem().toString();
+            String weight = userWeight.getSelectedItem().toString();
+            String trainings = userTrainingsPerWeek.getSelectedItem().toString();
+
+            int heightInt = Integer.parseInt(height);
+            int weightInt = Integer.parseInt(weight);
+            int ageInt = Integer.parseInt(age);
+              connectionHelper.userRegister(name,password,ageInt,gender,heightInt,weightInt,trainings);
+
+//                    PreparedStatement st = connectionHelper.connectionclass().prepareStatement("INSERT INTO users (name,password,age,gender,height,weight,trainings) VALUES (?,?,?,?,?,?,?)");
+//                    st.setString(1, name);
+//                    st.setString(2, password);
+//                    st.setInt(3, ageInt);
+//                    st.setString(4, gender);
+//                    st.setInt(5, heightInt);
+//                    st.setInt(6, weightInt);
+//                    st.setString(7, trainings);
+//                    st.executeQuery();
+
+
+
+
 //                    Integer id = Integer.valueOf(Hero.list.size()) + 1;
 //                    Hero hero = new Hero(id, name, 1, 5, 200, 1);
 //                    Hero.list.add(hero);

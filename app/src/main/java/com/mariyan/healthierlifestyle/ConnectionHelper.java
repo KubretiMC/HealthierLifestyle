@@ -50,4 +50,19 @@ class ConnectionHelper {
         }
         return usernameExists;
     }
+
+    public void userRegister(String username, String password, int age,String gender,int height, int weight,String trainings) throws SQLException {
+
+        PreparedStatement st = connectionclass().prepareStatement("INSERT INTO users (name,password,age,gender,height,weight,trainings) VALUES (?,?,?,?,?,?,?)");
+        st.setString(1, username);
+        st.setString(2, password);
+        st.setInt(3, age);
+        st.setString(4, gender);
+        st.setInt(5, height);
+        st.setInt(6, weight);
+        st.setString(7, trainings);
+        st.executeQuery();
+
+
+    }
 }
