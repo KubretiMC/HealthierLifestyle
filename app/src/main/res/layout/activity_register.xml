@@ -22,7 +22,7 @@
             <EditText
                 android:id="@+id/namePlainText"
                 android:layout_height="wrap_content"
-                android:layout_width="match_parent"
+                android:layout_width="135dp"
                 android:inputType="textPersonName"
                 />
         </TableRow>
@@ -35,6 +35,20 @@
                 />
             <EditText
                 android:id="@+id/passwordPlainText"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:inputType="textPassword"
+                />
+        </TableRow>
+        <TableRow android:layout_height="match_parent" android:layout_width="match_parent">
+            <TextView
+                android:id="@+id/confirmPasswordTextView"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:text="@string/confirm_password"
+                />
+            <EditText
+                android:id="@+id/confirmPasswordPlainText"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:inputType="textPassword"
@@ -75,45 +89,41 @@
                 android:id="@+id/heightTextView"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:text="@string/height"
-                />
-            <EditText
-                android:id="@+id/heightPlainText"
-                android:layout_height="wrap_content"
+                android:text="@string/height" />
+            <Spinner
+                android:id="@+id/heightSpinner"
                 android:layout_width="match_parent"
-                android:inputType="number"
-                />
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/btn_dropdown"
+                android:spinnerMode="dropdown"/>
         </TableRow>
         <TableRow android:layout_height="match_parent" android:layout_width="match_parent">
             <TextView
                 android:id="@+id/weightTextView"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:text="@string/weight"
-                />
-            <EditText
-                android:id="@+id/weightPlainText"
-                android:layout_height="wrap_content"
+                android:text="@string/weight" />
+            <Spinner
+                android:id="@+id/weightSpinner"
                 android:layout_width="match_parent"
-                android:inputType="number"
-                />
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/btn_dropdown"
+                android:spinnerMode="dropdown"/>
         </TableRow>
-
         <TableRow android:layout_height="match_parent" android:layout_width="match_parent">
             <TextView
-                android:id="@+id/trainsPerWeekTextView"
+                android:id="@+id/trainingsPerWeekTextView"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:text="@string/trainings_per_week"
-                android:paddingEnd="40dp"
-                />
-            <EditText
-                android:id="@+id/trainPerWeekPlainText"
-                android:layout_height="wrap_content"
+                android:text="@string/trainings_per_week" />
+            <Spinner
+                android:id="@+id/trainingsPerWeekSpinner"
                 android:layout_width="match_parent"
-                android:inputType="number"
-                />
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/btn_dropdown"
+                android:spinnerMode="dropdown"/>
         </TableRow>
+
         <Button
             android:id="@+id/RegisterButton"
             android:layout_width="match_parent"

@@ -20,12 +20,15 @@ public class RegisterActivity extends AppCompatActivity {
 
     private TextView userName;
     private TextView userPassword;
+    private TextView userPassword2;
     private TextView userAge;
     private Spinner userGender;
-    private TextView userHeight;
-    private TextView userWeight;
-    private TextView userTrainingsPerWeek;
+    private Spinner userHeight;
+    private Spinner userWeight;
+    private Spinner userTrainingsPerWeek;
     private Object gender;
+    private Object height;
+    private Object weight;
     private Button register;
 
     @Override
@@ -45,8 +48,8 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        Spinner spinner = setSpinner();
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        Spinner spinnerGender = setSpinner("Male","Female");
+        spinnerGender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 gender = parent.getItemAtPosition(pos);
             }
@@ -55,14 +58,88 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        Spinner spinnerTrainings = setSpinner("0","1-3","3-7");
+        spinnerTrainings.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                gender = parent.getItemAtPosition(pos);
+            }
 
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        Spinner spinnerHeight = setSpinnerHeight();
+        spinnerHeight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                height = parent.getItemAtPosition(pos);
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        Spinner spinnerWeight = setSpinnerWeight();
+        spinnerWeight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                weight = parent.getItemAtPosition(pos);
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
     }
 
-    public Spinner setSpinner() {
+    public Spinner setSpinner(String a, String b) {
+
         String[] arraySpinner = new String[]{
-                "Male", "Female"
+                a,b
         };
         Spinner spinner = (Spinner) findViewById(R.id.genderSpinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, arraySpinner);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        return spinner;
+    }
+    public Spinner setSpinner(String a, String b, String c) {
+
+        String[] arraySpinner = new String[]{
+                a,b,c
+        };
+        Spinner spinner = (Spinner) findViewById(R.id.trainingsPerWeekSpinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, arraySpinner);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        return spinner;
+    }
+    public Spinner setSpinnerHeight() {
+
+        String[] arraySpinner = new String[91];
+        int counter=130;
+        for(int i=0;i<=90;i++){
+            arraySpinner[i]= String.valueOf(counter);
+            counter++;
+        }
+        Spinner spinner = (Spinner) findViewById(R.id.heightSpinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, arraySpinner);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        return spinner;
+    }
+    public Spinner setSpinnerWeight() {
+
+        String[] arraySpinner = new String[161];
+        int counter=40;
+        for(int i=0;i<=160;i++){
+            arraySpinner[i]= String.valueOf(counter);
+            counter++;
+        }
+        Spinner spinner = (Spinner) findViewById(R.id.weightSpinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, arraySpinner);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -74,25 +151,46 @@ public class RegisterActivity extends AppCompatActivity {
     private void createUser(Object gender) throws SQLException {
         userName = findViewById(R.id.namePlainText);
         userPassword = findViewById(R.id.passwordPlainText);
+        userPassword2 = findViewById(R.id.confirmPasswordPlainText);
         userAge = findViewById(R.id.agePlainText);
         userGender = findViewById(R.id.genderSpinner);
-        userHeight = findViewById(R.id.heightPlainText);
-        userWeight = findViewById(R.id.weightPlainText);
-        userTrainingsPerWeek = findViewById(R.id.trainPerWeekPlainText);
+        userHeight = findViewById(R.id.heightSpinner);
+        userWeight = findViewById(R.id.weightSpinner);
+        userTrainingsPerWeek = findViewById(R.id.trainingsPerWeekSpinner);
 
         String name = userName.getText().toString().trim();
         String password = userPassword.getText().toString().trim();
+        String password2 = userPassword2.getText().toString().trim();
         String age = userAge.getText().toString().trim();
-        String gend = (String) gender;
-        String height = userHeight.getText().toString().trim();
-        String weight = userWeight.getText().toString().trim();
-        String trainsPerWeek = userTrainingsPerWeek.getText().toString().trim();
 
 
-        if (name.isEmpty() || password.isEmpty() || age.isEmpty() || height.isEmpty() || weight.isEmpty() || trainsPerWeek.isEmpty()) {
+
+
+        if (name.isEmpty() || password.isEmpty() || age.isEmpty()) {
             Toast.makeText(getApplicationContext(), "Empty field", Toast.LENGTH_LONG).show();
             Notification notify = new Notification.Builder(getApplicationContext())
                     .setContentTitle("Empty field!")
+                    .setContentText(name)
+                    .build();
+            notify.flags |= Notification.FLAG_AUTO_CANCEL;
+        }else if(name.length()<6 || name.length()>16 || password.length()<6 || password.length()>16){
+            Toast.makeText(getApplicationContext(), "Username and password must be between 6 and 16 characters", Toast.LENGTH_LONG).show();
+            Notification notify = new Notification.Builder(getApplicationContext())
+                    .setContentTitle("Username and password must be between 6 and 16 characters")
+                    .setContentText(name)
+                    .build();
+            notify.flags |= Notification.FLAG_AUTO_CANCEL;
+        }else if(!password.equals(password2)){
+            Toast.makeText(getApplicationContext(), "Passwords don't match.", Toast.LENGTH_LONG).show();
+            Notification notify = new Notification.Builder(getApplicationContext())
+                    .setContentTitle("Passwords don't match.")
+                    .setContentText(name)
+                    .build();
+            notify.flags |= Notification.FLAG_AUTO_CANCEL;
+        }else if(Integer.valueOf(age)<16 || Integer.valueOf(age)>70){
+            Toast.makeText(getApplicationContext(), "Enter age between 16 and 70.", Toast.LENGTH_LONG).show();
+            Notification notify = new Notification.Builder(getApplicationContext())
+                    .setContentTitle("Enter age between 16 and 70.")
                     .setContentText(name)
                     .build();
             notify.flags |= Notification.FLAG_AUTO_CANCEL;
