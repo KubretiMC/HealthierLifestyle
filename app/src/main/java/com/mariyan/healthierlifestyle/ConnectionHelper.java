@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.Objects;
 
 class ConnectionHelper {
-    Connection connection = null;
+    private Connection connection = null;
     private String uname,pass,ip,port,database;
     @SuppressLint("NewApi")
     Connection connectionclass()
@@ -40,15 +40,20 @@ class ConnectionHelper {
         return connection;
     }
 
-    public boolean userCheck(String username, Boolean usernameExists) throws SQLException {
+    public boolean userNameCheck(String username) throws SQLException {
 
         PreparedStatement st = connectionclass().prepareStatement("select * from users where name = ?");
         st.setString(1, username);
         ResultSet r1=st.executeQuery();
-        if(r1.next()) {
-            usernameExists = true;
-        }
-        return usernameExists;
+        return r1.next();
+    }
+    public boolean userCheck(String username, String password) throws SQLException {
+
+        PreparedStatement st = connectionclass().prepareStatement("select * from users where name = ? and password = ?");
+        st.setString(1, username);
+        st.setString(2,password);
+        ResultSet r1=st.executeQuery();
+        return r1.next();
     }
 
     public void userRegister(String username, String password, int age,String gender,int height, int weight,String trainings) throws SQLException {
