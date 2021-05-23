@@ -17,11 +17,12 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-import androidx.appcompat.widget.SearchView;
+
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 
 import com.squareup.picasso.Picasso;
 
@@ -43,27 +44,22 @@ public class FoodsListActivity extends AppCompatActivity implements AdapterView.
     String[] food_names;
     TypedArray food_pics;
     List<RowItem> rowItems;
-    ListView mylistview;
 
     Context context = this;
     CustomAdapter adapter;
+
     //@RequiresApi(api = Build.VERSION_CODES.N)
     //@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_foods_list);
 
-        query= String.valueOf(getIntent().getStringExtra("query"));
+        query = String.valueOf(getIntent().getStringExtra("query"));
         GetTextFromSQL(query);
 
 
         loadImageByInternetURL();
 
-        mylistview = (ListView) findViewById(R.id.simpleListView);
-        adapter = new CustomAdapter(rowItems,this);
-        mylistview.setAdapter(adapter);
-
-        mylistview.setOnItemClickListener(this);
 
 //        rowItems = new ArrayList<RowItem>();
 //        food_names = getResources().getStringArray(R.array.Foods_names);
@@ -83,7 +79,7 @@ public class FoodsListActivity extends AppCompatActivity implements AdapterView.
 
     public ListView GetTextFromSQL(String query) {
         final ListView simpleList = findViewById(R.id.simpleListView);
-        int images[] = {R.drawable.apple,R.drawable.orange,R.drawable.egg,R.drawable.rice,R.drawable.chickenbreasts};
+        int images[] = {R.drawable.apple, R.drawable.orange, R.drawable.egg, R.drawable.rice, R.drawable.chickenbreasts};
         ArrayList<String> listResults = new ArrayList<>();
 
         try {
@@ -95,7 +91,7 @@ public class FoodsListActivity extends AppCompatActivity implements AdapterView.
                 ResultSet rs = st.executeQuery(query);
                 rowItems = new ArrayList<RowItem>();
 
-                int counter=0;
+                int counter = 0;
                 while (rs.next()) {
 //                    listResults.add(rs.getString(2)+ System.lineSeparator() +"Calories:"+rs.getString(6)
 //                            + System.lineSeparator() +"Proteins: "+rs.getString(3)
@@ -103,13 +99,16 @@ public class FoodsListActivity extends AppCompatActivity implements AdapterView.
 //                            + System.lineSeparator() +"Fats: "+rs.getString(5)
 //                            + System.lineSeparator() + images[counter]);
 //                    counter++;
-                    food_pics=getResources().obtainTypedArray(R.array.foods_pics);
-                    @SuppressLint("ResourceType") RowItem item = new RowItem(food_pics.getResourceId(1,-1), rs.getString(2),
-                            rs.getFloat(3),rs.getFloat(4),  rs.getFloat(5),rs.getFloat(6));
+                    food_pics = getResources().obtainTypedArray(R.array.foods_pics);
+                    @SuppressLint("ResourceType") RowItem item = new RowItem(food_pics.getResourceId(1, -1), rs.getString(2),
+                            rs.getFloat(3), rs.getFloat(4), rs.getFloat(5), rs.getFloat(6));
                     rowItems.add(item);
                 }
+                adapter = new CustomAdapter(rowItems, this);
+                simpleList.setAdapter(adapter);
 
-                return mylistview;
+                simpleList.setOnItemClickListener(this);
+                return simpleList;
 
 
 //                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
@@ -132,11 +131,11 @@ public class FoodsListActivity extends AppCompatActivity implements AdapterView.
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         String food_name = rowItems.get(position).getFood_name();
-        Toast.makeText(getApplicationContext(),""+food_name,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "" + food_name, Toast.LENGTH_SHORT).show();
     }
 
 
-    public void loadImageByInternetURL(){
+    public void loadImageByInternetURL() {
         ImageView targetImageView = (ImageView) findViewById(R.id.imageView);
         String internetUrl = "https://pngimg.com/uploads/mario/mario_PNG53.png";
 
@@ -149,7 +148,7 @@ public class FoodsListActivity extends AppCompatActivity implements AdapterView.
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.search_menu,menu);
+        getMenuInflater().inflate(R.menu.search_menu, menu);
 
         MenuItem menuItem = menu.findItem(R.id.search_view);
 
@@ -158,18 +157,14 @@ public class FoodsListActivity extends AppCompatActivity implements AdapterView.
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-
-                Log.e("Main"," data search"+newText);
-
+                Log.e("Main", " data search" + newText);
                 adapter.getFilter().filter(newText);
-
-
-
                 return true;
             }
         });
@@ -183,10 +178,11 @@ public class FoodsListActivity extends AppCompatActivity implements AdapterView.
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if(id==R.id.search_view){
+        if (id == R.id.search_view) {
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
 }

@@ -2,6 +2,7 @@ package com.mariyan.healthierlifestyle;
 
 import android.app.Activity;
 import android.content.Context;
+import android.inputmethodservice.Keyboard;
 import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -86,17 +87,17 @@ public class CustomAdapter extends BaseAdapter implements Filterable {
             protected FilterResults performFiltering(CharSequence constraint) {
 
                 FilterResults filterResults = new FilterResults();
-                if (constraint == null || constraint.length() == 0) {
+                if(constraint == null || constraint.length() == 0){
                     filterResults.count = rowItems.size();
                     filterResults.values = rowItems;
 
-                } else {
+                }else{
                     List<RowItem> resultsModel = new ArrayList<>();
                     String searchStr = constraint.toString().toLowerCase();
 
-                    for (RowItem rowItem : rowItems) {
-                        if (rowItem.getFood_name().contains(searchStr)) {
-                            resultsModel.add(rowItem);
+                    for(RowItem itemsModel:rowItems){
+                        if(itemsModel.getFood_name().contains(searchStr)){
+                            resultsModel.add(itemsModel);
                             filterResults.count = resultsModel.size();
                             filterResults.values = resultsModel;
                         }
@@ -107,7 +108,6 @@ public class CustomAdapter extends BaseAdapter implements Filterable {
 
                 return filterResults;
             }
-
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
 
@@ -118,6 +118,7 @@ public class CustomAdapter extends BaseAdapter implements Filterable {
         };
         return filter;
     }
+
 
 
 
