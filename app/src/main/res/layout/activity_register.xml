@@ -60,14 +60,13 @@
                 android:id="@+id/ageTextView"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:text="@string/age"
-              />
-            <EditText
-                android:id="@+id/agePlainText"
-                android:layout_height="wrap_content"
+                android:text="@string/age" />
+            <Spinner
+                android:id="@+id/ageSpinner"
                 android:layout_width="match_parent"
-                android:inputType="number"
-                />
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/btn_dropdown"
+                android:spinnerMode="dropdown"/>
         </TableRow>
 
         <TableRow android:layout_height="match_parent" android:layout_width="match_parent">

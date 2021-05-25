@@ -67,7 +67,37 @@ class ConnectionHelper {
         st.setInt(6, weight);
         st.setString(7, trainings);
         st.executeQuery();
+    }
 
+
+    public void userUpdate(String username, int age, int height, int weight,String trainings) throws SQLException {
+
+        PreparedStatement st = connectionclass().prepareStatement("UPDATE USERS SET AGE=?, HEIGHT=?,WEIGHT=?,TRAININGS=? WHERE USERNAME=? ");
+
+        st.setInt(1, age);
+        st.setInt(2, height);
+        st.setInt(3, weight);
+        st.setString(4, trainings);
+        st.setString(5, username);
+        st.executeUpdate();
 
     }
+
+
+    public String[] userGetInfo(String username) throws SQLException {
+
+        PreparedStatement st = connectionclass().prepareStatement("select age,height,weight,trainings from users where name = ?");
+        st.setString(1, username);
+        ResultSet r1 = st.executeQuery();
+        r1.next();
+        String[] userInfo = new String[4];
+        userInfo[0] = r1.getString("age");
+        userInfo[1] = r1.getString("height");
+        userInfo[2] = r1.getString("weight");
+        userInfo[3] = r1.getString("trainings");
+        return userInfo;
+    }
+
+
+
 }

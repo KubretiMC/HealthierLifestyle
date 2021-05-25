@@ -1,6 +1,262 @@
 package com.mariyan.healthierlifestyle;
 
+import android.app.Notification;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.sql.SQLException;
+
 public class ProfileActivity extends AppCompatActivity {
+
+    private TextView userName;
+    private Spinner userAge;
+    private Spinner userGender;
+    private Spinner userHeight;
+    private Spinner userWeight;
+    private Spinner userTrainingsPerWeek;
+    private Button updateUser;
+    private String username;
+    private String userInfo[]=new String[4];
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_profile);
+
+        username = getIntent().getStringExtra("USERNAME");
+
+        updateUser = findViewById(R.id.UpdateButton);
+//        updateUser.setOnClickListener(v -> {
+//            try {
+//                if(updateUser(false)){
+//                    Intent intent = getIntent();
+//                    finish();
+//                    startActivity(intent);
+//                }
+//
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        });
+        try {
+            ConnectionHelper connectionHelper = new ConnectionHelper();
+            userInfo=connectionHelper.userGetInfo(username);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+        Spinner spinnerAge = setSpinnerAge();
+        spinnerAge.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        String age = userInfo[0]; //the value you want the position for
+        ArrayAdapter ageAdapter = (ArrayAdapter) spinnerAge.getAdapter(); //cast to an ArrayAdapter
+        int spinnerAgePosition = ageAdapter.getPosition(age);
+        spinnerAge.setSelection(spinnerAgePosition);
+
+
+
+
+
+        Spinner spinnerTrainings = setSpinner("0", "1-3", "3-7");
+        spinnerTrainings.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        String trainings = userInfo[3]; //the value you want the position for
+        ArrayAdapter trainingsAdapter = (ArrayAdapter) spinnerTrainings.getAdapter(); //cast to an ArrayAdapter
+        int spinnerTrainingsPosition = trainingsAdapter.getPosition(trainings);
+        spinnerTrainings.setSelection(spinnerTrainingsPosition);
+
+        Spinner spinnerHeight = setSpinnerHeight();
+        spinnerHeight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        String height = userInfo[1]; //the value you want the position for
+        ArrayAdapter heightAdapter = (ArrayAdapter) spinnerHeight.getAdapter(); //cast to an ArrayAdapter
+        int spinnerHeightPosition = heightAdapter.getPosition(height);
+        spinnerHeight.setSelection(spinnerHeightPosition);
+
+        Spinner spinnerWeight = setSpinnerWeight();
+        spinnerWeight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        String weight = userInfo[2]; //the value you want the position for
+        ArrayAdapter weightAdapter = (ArrayAdapter) spinnerWeight.getAdapter(); //cast to an ArrayAdapter
+        int spinnerWeightPosition = weightAdapter.getPosition(weight);
+        spinnerWeight.setSelection(spinnerWeightPosition);
+    }
+
+    public Spinner setSpinner(String a, String b) {
+
+        String[] arraySpinner = new String[]{
+                a, b
+        };
+        Spinner spinner = findViewById(R.id.genderSpinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, arraySpinner);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        return spinner;
+    }
+
+    public Spinner setSpinner(String a, String b, String c) {
+
+        String[] arraySpinner = new String[]{
+                a, b, c
+        };
+        Spinner spinner = findViewById(R.id.trainingsPerWeekSpinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, arraySpinner);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        return spinner;
+    }
+
+    public Spinner setSpinnerHeight() {
+
+        String[] arraySpinner = new String[91];
+        int counter = 130;
+        for (int i = 0; i <= 90; i++) {
+            arraySpinner[i] = String.valueOf(counter);
+            counter++;
+        }
+        Spinner spinner = findViewById(R.id.heightSpinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, arraySpinner);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        return spinner;
+    }
+
+    public Spinner setSpinnerAge() {
+
+        String[] arraySpinner = new String[55];
+        int counter = 16;
+        for (int i = 0; i <= 54; i++) {
+            arraySpinner[i] = String.valueOf(counter);
+            counter++;
+        }
+        Spinner spinner = findViewById(R.id.ageSpinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, arraySpinner);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        return spinner;
+    }
+
+
+    public Spinner setSpinnerWeight() {
+
+        String[] arraySpinner = new String[201];
+        int counter = 40;
+        for (int i = 0; i <= 200; i++) {
+            arraySpinner[i] = String.valueOf(counter);
+            counter++;
+        }
+        Spinner spinner = findViewById(R.id.weightSpinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, arraySpinner);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        return spinner;
+    }
+
+//    private boolean updateUser(boolean flag) throws SQLException {
+//        userName = findViewById(R.id.namePlainText);
+//        userAge = findViewById(R.id.ageSpinner);
+//        userGender = findViewById(R.id.genderSpinner);
+//        userHeight = findViewById(R.id.heightSpinner);
+//        userWeight = findViewById(R.id.weightSpinner);
+//        userTrainingsPerWeek = findViewById(R.id.trainingsPerWeekSpinner);
+//
+//        String name = userName.getText().toString().trim();
+//
+//            String s = "";
+//            ConnectionHelper connectionHelper = new ConnectionHelper();
+//            boolean exists = connectionHelper.userNameCheck(name);
+//
+//            if (exists) {
+//                Toast.makeText(getApplicationContext(), "Username taken!", Toast.LENGTH_LONG).show();
+//                Notification notify = new Notification.Builder(getApplicationContext())
+//                        .setContentTitle("Username taken!")
+//                        .setContentText(name)
+//                        .build();
+//                notify.flags |= Notification.FLAG_AUTO_CANCEL;
+//            } else {
+//                try {
+//                    Toast.makeText(getApplicationContext(), "Registration successful!", Toast.LENGTH_LONG).show();
+//                    Notification notify = new Notification.Builder(getApplicationContext())
+//                            .setContentTitle("Registration successful!")
+//                            .setContentText(name)
+//                            .build();
+//                    notify.flags |= Notification.FLAG_AUTO_CANCEL;
+//                    String age = userAge.getSelectedItem().toString();
+//                    String gender = userGender.getSelectedItem().toString();
+//                    String height = userHeight.getSelectedItem().toString();
+//                    String weight = userWeight.getSelectedItem().toString();
+//                    String trainings = userTrainingsPerWeek.getSelectedItem().toString();
+//
+//                    flag = true;
+//                    int heightInt = Integer.parseInt(height);
+//                    int weightInt = Integer.parseInt(weight);
+//                    int ageInt = Integer.parseInt(age);
+//                    connectionHelper.userRegister(name, password, ageInt, gender, heightInt, weightInt, trainings);
+//                    //finish();
+//                } catch (Exception e) {
+//                    Notification notify = new Notification.Builder(getApplicationContext())
+//                            .setContentTitle("Error while working with database!")
+//                            .build();
+//                    notify.flags |= Notification.FLAG_AUTO_CANCEL;
+//                }
+//            }
+//        }
+//        return flag;
+//    }
+
+
+//    private void userArray() throws SQLException {
+//        ConnectionHelper connectionHelper = new ConnectionHelper();
+//        userinfo=connectionHelper.userGetInfo(username);
+//    }
 }
+
+

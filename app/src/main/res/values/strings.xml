@@ -25,6 +25,9 @@
     <string name="fats">Fats</string>
     <string name="calories">Calories</string>
     <string name="confirm_password">Confirm password</string>
+    <string name="welcome_user">Welcome</string>
+    <string name="update_user_information">Update user information</string>
+
 
     <string-array name="Foods_names">
         <item>Orange</item>

@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(v -> {
             try {
                 if(loginUser(false)) {
-                    String username = String.valueOf(userName);
+                    String username = userName.getText().toString();
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     intent.putExtra("USERNAME", username);
                     startActivity(intent);

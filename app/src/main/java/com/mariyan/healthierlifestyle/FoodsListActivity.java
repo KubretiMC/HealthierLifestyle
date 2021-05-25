@@ -17,23 +17,17 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-
 import com.squareup.picasso.Picasso;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-
 
 public class FoodsListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     Button load;
@@ -56,32 +50,12 @@ public class FoodsListActivity extends AppCompatActivity implements AdapterView.
 
         query = String.valueOf(getIntent().getStringExtra("query"));
         GetTextFromSQL(query);
-
-
         loadImageByInternetURL();
-
-
-//        rowItems = new ArrayList<RowItem>();
-//        food_names = getResources().getStringArray(R.array.Foods_names);
-//        food_pics=getResources().obtainTypedArray(R.array.foods_pics);
-//        for(int i=0;i<food_names.length;i++){
-//            RowItem item = new RowItem(food_names[i],
-//                    food_pics.getResourceId(i,-1));
-//            rowItems.add(item);
-//        }
-//        mylistview = (ListView) findViewById(R.id.simpleListView);
-//        CustomAdapter adapter = new CustomAdapter(this,rowItems);
-//        mylistview.setAdapter(adapter);
-//
-//        mylistview.setOnItemClickListener(this);
-
     }
 
     public ListView GetTextFromSQL(String query) {
         final ListView simpleList = findViewById(R.id.simpleListView);
         int images[] = {R.drawable.apple, R.drawable.orange, R.drawable.egg, R.drawable.rice, R.drawable.chickenbreasts};
-        ArrayList<String> listResults = new ArrayList<>();
-
         try {
             ConnectionHelper connectionHelper = new ConnectionHelper();
             connect = connectionHelper.connectionclass();
@@ -90,15 +64,7 @@ public class FoodsListActivity extends AppCompatActivity implements AdapterView.
                 Statement st = connect.createStatement();
                 ResultSet rs = st.executeQuery(query);
                 rowItems = new ArrayList<RowItem>();
-
-                int counter = 0;
                 while (rs.next()) {
-//                    listResults.add(rs.getString(2)+ System.lineSeparator() +"Calories:"+rs.getString(6)
-//                            + System.lineSeparator() +"Proteins: "+rs.getString(3)
-//                            + System.lineSeparator() +"Carbohydrates: "+rs.getString(4)
-//                            + System.lineSeparator() +"Fats: "+rs.getString(5)
-//                            + System.lineSeparator() + images[counter]);
-//                    counter++;
                     food_pics = getResources().obtainTypedArray(R.array.foods_pics);
                     @SuppressLint("ResourceType") RowItem item = new RowItem(food_pics.getResourceId(1, -1), rs.getString(2),
                             rs.getFloat(3), rs.getFloat(4), rs.getFloat(5), rs.getFloat(6));
@@ -109,16 +75,6 @@ public class FoodsListActivity extends AppCompatActivity implements AdapterView.
 
                 simpleList.setOnItemClickListener(this);
                 return simpleList;
-
-
-//                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
-//                        getApplicationContext(),
-//                        R.layout.activity_list_view,
-//                        R.id.result,
-//                        listResults
-//                );
-//                simpleList.setAdapter(arrayAdapter);
-//                return simpleList;
             } else {
                 ConnectionResult = "Check Connection";
             }

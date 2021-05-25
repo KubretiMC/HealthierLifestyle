@@ -120,8 +120,6 @@ public class CustomAdapter extends BaseAdapter implements Filterable {
     }
 
 
-
-
     private class ViewHolder {
         ImageView food_pic;
         TextView food_name;

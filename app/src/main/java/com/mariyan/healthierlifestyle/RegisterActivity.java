@@ -21,14 +21,11 @@ public class RegisterActivity extends AppCompatActivity {
     private TextView userName;
     private TextView userPassword;
     private TextView userPassword2;
-    private TextView userAge;
+    private Spinner userAge;
     private Spinner userGender;
     private Spinner userHeight;
     private Spinner userWeight;
     private Spinner userTrainingsPerWeek;
-    private Object gender;
-    private Object height;
-    private Object weight;
     private Button register;
 
     @Override
@@ -53,10 +50,18 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        Spinner spinnerAge = setSpinnerAge();
+        spinnerAge.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
         Spinner spinnerGender = setSpinner("Male", "Female");
         spinnerGender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                gender = parent.getItemAtPosition(pos);
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
@@ -66,7 +71,7 @@ public class RegisterActivity extends AppCompatActivity {
         Spinner spinnerTrainings = setSpinner("0", "1-3", "3-7");
         spinnerTrainings.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                gender = parent.getItemAtPosition(pos);
+
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
@@ -76,7 +81,7 @@ public class RegisterActivity extends AppCompatActivity {
         Spinner spinnerHeight = setSpinnerHeight();
         spinnerHeight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                height = parent.getItemAtPosition(pos);
+
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
@@ -86,7 +91,7 @@ public class RegisterActivity extends AppCompatActivity {
         Spinner spinnerWeight = setSpinnerWeight();
         spinnerWeight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                weight = parent.getItemAtPosition(pos);
+
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
@@ -139,6 +144,24 @@ public class RegisterActivity extends AppCompatActivity {
         return spinner;
     }
 
+    public Spinner setSpinnerAge() {
+
+        String[] arraySpinner = new String[55];
+        int counter = 16;
+        for (int i = 0; i <= 54; i++) {
+            arraySpinner[i] = String.valueOf(counter);
+            counter++;
+        }
+        Spinner spinner = findViewById(R.id.ageSpinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, arraySpinner);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        return spinner;
+    }
+
+
     public Spinner setSpinnerWeight() {
 
         String[] arraySpinner = new String[201];
@@ -160,7 +183,7 @@ public class RegisterActivity extends AppCompatActivity {
         userName = findViewById(R.id.namePlainText);
         userPassword = findViewById(R.id.passwordPlainText);
         userPassword2 = findViewById(R.id.confirmPasswordPlainText);
-        userAge = findViewById(R.id.agePlainText);
+        userAge = findViewById(R.id.ageSpinner);
         userGender = findViewById(R.id.genderSpinner);
         userHeight = findViewById(R.id.heightSpinner);
         userWeight = findViewById(R.id.weightSpinner);
@@ -169,10 +192,9 @@ public class RegisterActivity extends AppCompatActivity {
         String name = userName.getText().toString().trim();
         String password = userPassword.getText().toString().trim();
         String password2 = userPassword2.getText().toString().trim();
-        String age = userAge.getText().toString().trim();
 
 
-        if (name.isEmpty() || password.isEmpty() || age.isEmpty()) {
+        if (name.isEmpty() || password.isEmpty()) {
             Toast.makeText(getApplicationContext(), "Empty field", Toast.LENGTH_LONG).show();
             Notification notify = new Notification.Builder(getApplicationContext())
                     .setContentTitle("Empty field!")
@@ -193,14 +215,7 @@ public class RegisterActivity extends AppCompatActivity {
                     .setContentText(name)
                     .build();
             notify.flags |= Notification.FLAG_AUTO_CANCEL;
-        } else if (Integer.parseInt(age) < 16 || Integer.parseInt(age) > 70) {
-            Toast.makeText(getApplicationContext(), "Enter age between 16 and 70.", Toast.LENGTH_LONG).show();
-            Notification notify = new Notification.Builder(getApplicationContext())
-                    .setContentTitle("Enter age between 16 and 70.")
-                    .setContentText(name)
-                    .build();
-            notify.flags |= Notification.FLAG_AUTO_CANCEL;
-        } else {
+        }else {
             String s = "";
             ConnectionHelper connectionHelper = new ConnectionHelper();
             boolean exists = connectionHelper.userNameCheck(name);
@@ -220,6 +235,7 @@ public class RegisterActivity extends AppCompatActivity {
                             .setContentText(name)
                             .build();
                     notify.flags |= Notification.FLAG_AUTO_CANCEL;
+                    String age = userAge.getSelectedItem().toString();
                     String gender = userGender.getSelectedItem().toString();
                     String height = userHeight.getSelectedItem().toString();
                     String weight = userWeight.getSelectedItem().toString();
@@ -230,7 +246,6 @@ public class RegisterActivity extends AppCompatActivity {
                     int weightInt = Integer.parseInt(weight);
                     int ageInt = Integer.parseInt(age);
                     connectionHelper.userRegister(name, password, ageInt, gender, heightInt, weightInt, trainings);
-
                     //finish();
                 } catch (Exception e) {
                     Notification notify = new Notification.Builder(getApplicationContext())
