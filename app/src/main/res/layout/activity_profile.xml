@@ -9,10 +9,11 @@ tools:context=".ProfileActivity">
 
 <TextView
     android:id="@+id/WelcomeUserTextView"
-    android:layout_width="100dp"
+    android:layout_width="match_parent"
     android:layout_height="100dp"
     android:layout_centerHorizontal="true"
     android:gravity="center_vertical|center_horizontal"
+    android:textSize="20dp"
     android:text="@string/welcome_user" />
 
 

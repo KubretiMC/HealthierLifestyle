@@ -25,7 +25,6 @@ class ConnectionHelper {
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-       // Connection connection = null;
         String ConnectionURL;
 
         try{
@@ -72,7 +71,7 @@ class ConnectionHelper {
 
     public void userUpdate(String username, int age, int height, int weight,String trainings) throws SQLException {
 
-        PreparedStatement st = connectionclass().prepareStatement("UPDATE USERS SET AGE=?, HEIGHT=?,WEIGHT=?,TRAININGS=? WHERE USERNAME=? ");
+        PreparedStatement st = connectionclass().prepareStatement("UPDATE USERS SET AGE= ?, HEIGHT=?,WEIGHT=?,TRAININGS=? WHERE NAME=?");
 
         st.setInt(1, age);
         st.setInt(2, height);
@@ -97,7 +96,4 @@ class ConnectionHelper {
         userInfo[3] = r1.getString("trainings");
         return userInfo;
     }
-
-
-
 }

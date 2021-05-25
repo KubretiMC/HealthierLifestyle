@@ -33,19 +33,22 @@ public class ProfileActivity extends AppCompatActivity {
 
         username = getIntent().getStringExtra("USERNAME");
 
+        userName = findViewById(R.id.WelcomeUserTextView);
+        userName.setText("Welcome "+username);
+
         updateUser = findViewById(R.id.UpdateButton);
-//        updateUser.setOnClickListener(v -> {
-//            try {
-//                if(updateUser(false)){
-//                    Intent intent = getIntent();
-//                    finish();
-//                    startActivity(intent);
-//                }
-//
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//        });
+        updateUser.setOnClickListener(v -> {
+            try {
+                updateUser();
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+
+        });
         try {
             ConnectionHelper connectionHelper = new ConnectionHelper();
             userInfo=connectionHelper.userGetInfo(username);
@@ -200,63 +203,34 @@ public class ProfileActivity extends AppCompatActivity {
         return spinner;
     }
 
-//    private boolean updateUser(boolean flag) throws SQLException {
-//        userName = findViewById(R.id.namePlainText);
-//        userAge = findViewById(R.id.ageSpinner);
-//        userGender = findViewById(R.id.genderSpinner);
-//        userHeight = findViewById(R.id.heightSpinner);
-//        userWeight = findViewById(R.id.weightSpinner);
-//        userTrainingsPerWeek = findViewById(R.id.trainingsPerWeekSpinner);
-//
-//        String name = userName.getText().toString().trim();
-//
-//            String s = "";
-//            ConnectionHelper connectionHelper = new ConnectionHelper();
-//            boolean exists = connectionHelper.userNameCheck(name);
-//
-//            if (exists) {
-//                Toast.makeText(getApplicationContext(), "Username taken!", Toast.LENGTH_LONG).show();
-//                Notification notify = new Notification.Builder(getApplicationContext())
-//                        .setContentTitle("Username taken!")
-//                        .setContentText(name)
-//                        .build();
-//                notify.flags |= Notification.FLAG_AUTO_CANCEL;
-//            } else {
-//                try {
-//                    Toast.makeText(getApplicationContext(), "Registration successful!", Toast.LENGTH_LONG).show();
-//                    Notification notify = new Notification.Builder(getApplicationContext())
-//                            .setContentTitle("Registration successful!")
-//                            .setContentText(name)
-//                            .build();
-//                    notify.flags |= Notification.FLAG_AUTO_CANCEL;
-//                    String age = userAge.getSelectedItem().toString();
-//                    String gender = userGender.getSelectedItem().toString();
-//                    String height = userHeight.getSelectedItem().toString();
-//                    String weight = userWeight.getSelectedItem().toString();
-//                    String trainings = userTrainingsPerWeek.getSelectedItem().toString();
-//
-//                    flag = true;
-//                    int heightInt = Integer.parseInt(height);
-//                    int weightInt = Integer.parseInt(weight);
-//                    int ageInt = Integer.parseInt(age);
-//                    connectionHelper.userRegister(name, password, ageInt, gender, heightInt, weightInt, trainings);
-//                    //finish();
-//                } catch (Exception e) {
-//                    Notification notify = new Notification.Builder(getApplicationContext())
-//                            .setContentTitle("Error while working with database!")
-//                            .build();
-//                    notify.flags |= Notification.FLAG_AUTO_CANCEL;
-//                }
-//            }
-//        }
-//        return flag;
-//    }
+    public void updateUser() throws SQLException {
+        userAge = findViewById(R.id.ageSpinner);
+        userHeight = findViewById(R.id.heightSpinner);
+        userWeight = findViewById(R.id.weightSpinner);
+        userTrainingsPerWeek = findViewById(R.id.trainingsPerWeekSpinner);
 
+        try {
+            String age = userAge.getSelectedItem().toString();
+            String height = userHeight.getSelectedItem().toString();
+            String weight = userWeight.getSelectedItem().toString();
+            String trainings = userTrainingsPerWeek.getSelectedItem().toString();
 
-//    private void userArray() throws SQLException {
-//        ConnectionHelper connectionHelper = new ConnectionHelper();
-//        userinfo=connectionHelper.userGetInfo(username);
-//    }
+            int heightInt = Integer.parseInt(height);
+            int weightInt = Integer.parseInt(weight);
+            int ageInt = Integer.parseInt(age);
+
+            ConnectionHelper connectionHelper = new ConnectionHelper();
+            connectionHelper.userUpdate(username,ageInt,heightInt,weightInt,trainings);
+            //finish();
+        } catch (Exception e) {
+            Notification notify = new Notification.Builder(getApplicationContext())
+                    .setContentTitle("Error while working with database!")
+                    .build();
+            notify.flags |= Notification.FLAG_AUTO_CANCEL;
+        }
+
+    }
+
 }
 
 
