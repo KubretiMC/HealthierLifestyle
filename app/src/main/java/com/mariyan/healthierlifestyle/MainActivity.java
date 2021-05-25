@@ -40,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = settings.edit();
             editor.putString("username", username);
             editor.apply();
+        }else{
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+             username = prefs.getString("username", "No name defined");//"No name defined" is the default value.
         }
 
         foods = findViewById(R.id.FoodsButton);
