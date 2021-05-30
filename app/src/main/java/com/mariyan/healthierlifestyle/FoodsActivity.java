@@ -61,7 +61,7 @@ public class FoodsActivity extends AppCompatActivity {
 
     }
     private void openFoodsListActivity(String query) {
-        Intent intent = new Intent(getApplicationContext(), FoodsListActivity.class);
+        Intent intent = new Intent(getApplicationContext(), FoodsListActivity2.class);
         intent.putExtra("query", query);
         startActivity(intent);
     }

@@ -1,0 +1,39 @@
+{
+  "foods":[
+    {
+      "name": "Orange",
+      "proteins" : "0.5",
+      "carbohydrates": "12",
+      "fats" : "0.1",
+      "calories" : "47"
+    },
+    {
+      "name": "Chicken breasts",
+      "proteins" : "31",
+      "carbohydrates": "0",
+      "fats" : "3.6",
+      "calories" : "164"
+    },
+    {
+      "name": "Apple",
+      "proteins" : "0.3",
+      "carbohydrates": "14",
+      "fats" : "0.2",
+      "calories" : "52"
+    },
+    {
+      "name": "Egg",
+      "proteins" : "13",
+      "carbohydrates": "1.1",
+      "fats" : "11",
+      "calories" : "155"
+    },
+    {
+      "name": "Rice",
+      "proteins" : "2.7",
+      "carbohydrates": "28",
+      "fats" : "0.3",
+      "calories" : "130"
+    }
+  ]
+}
