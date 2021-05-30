@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 
 public class StartActivity extends AppCompatActivity {
-    private Button login;
     private Button register;
     private Button guest;
     public static Activity startActivity1;
@@ -19,9 +18,6 @@ public class StartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start);
 
         startActivity1 = this;
-
-        login = findViewById(R.id.LoginButton);
-        login.setOnClickListener(v -> openLoginActivity());
 
 
         register = findViewById(R.id.RegisterButton);
@@ -40,10 +36,6 @@ public class StartActivity extends AppCompatActivity {
             finish();
         }
 
-    }
-    private void openLoginActivity() {
-        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-        startActivity(intent);
     }
     private void openRegisterActivity() {
         Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);

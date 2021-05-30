@@ -22,7 +22,7 @@ public class FoodsActivity extends AppCompatActivity {
         showAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openFoodsListActivity("select * from foods");
+                openFoodsListActivity("");
             }
         });
 
@@ -30,7 +30,7 @@ public class FoodsActivity extends AppCompatActivity {
         showProtein.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openFoodsListActivity("select * from foods where proteins>10");
+                openFoodsListActivity("proteins");
             }
         });
 
@@ -38,7 +38,7 @@ public class FoodsActivity extends AppCompatActivity {
         showCarbo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openFoodsListActivity("select * from foods where carbohydrates>10");
+                openFoodsListActivity("carbohydrates");
             }
         });
 
@@ -46,7 +46,7 @@ public class FoodsActivity extends AppCompatActivity {
         showFat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openFoodsListActivity("select * from foods where fats>10");
+                openFoodsListActivity("fats");
             }
         });
 
@@ -54,15 +54,15 @@ public class FoodsActivity extends AppCompatActivity {
         showCalorie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openFoodsListActivity("select * from foods where calories>100");
+                openFoodsListActivity("calories");
             }
         });
 
 
     }
-    private void openFoodsListActivity(String query) {
-        Intent intent = new Intent(getApplicationContext(), FoodsListActivity2.class);
-        intent.putExtra("query", query);
+    private void openFoodsListActivity(String type) {
+        Intent intent = new Intent(getApplicationContext(), FoodsListActivity.class);
+        intent.putExtra("type", type);
         startActivity(intent);
     }
 }
