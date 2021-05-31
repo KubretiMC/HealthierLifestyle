@@ -24,17 +24,22 @@ public class ProfileActivity extends AppCompatActivity {
     private Spinner userWeight;
     private Spinner userTrainingsPerWeek;
     private Button updateUser;
-    private String username;
-    private String userInfo[]=new String[4];
+   // private String username;
+ //   private String userInfo[]=new String[4];
+    private User user = new User();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        username = getIntent().getStringExtra("USERNAME");
+
+        Intent i = getIntent();
+        user = (User) i.getParcelableExtra("userStats");
+
+      //  username = getIntent().getStringExtra("USERNAME");
 
         userName = findViewById(R.id.WelcomeUserTextView);
-        userName.setText("Welcome "+username);
+        userName.setText("Welcome "+user.getName());
 
         updateUser = findViewById(R.id.UpdateButton);
         updateUser.setOnClickListener(v -> {
@@ -49,12 +54,12 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         });
-        try {
-            ConnectionHelper connectionHelper = new ConnectionHelper();
-            userInfo=connectionHelper.userGetInfo(username);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            ConnectionHelper connectionHelper = new ConnectionHelper();
+//            userInfo=connectionHelper.userGetInfo(username);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
 
 
 
@@ -68,7 +73,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        String age = userInfo[0]; //the value you want the position for
+        String age = String.valueOf(user.getAge()); //the value you want the position for
         ArrayAdapter ageAdapter = (ArrayAdapter) spinnerAge.getAdapter(); //cast to an ArrayAdapter
         int spinnerAgePosition = ageAdapter.getPosition(age);
         spinnerAge.setSelection(spinnerAgePosition);
@@ -87,7 +92,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        String trainings = userInfo[3]; //the value you want the position for
+        String trainings = user.getTrainings(); //the value you want the position for
         ArrayAdapter trainingsAdapter = (ArrayAdapter) spinnerTrainings.getAdapter(); //cast to an ArrayAdapter
         int spinnerTrainingsPosition = trainingsAdapter.getPosition(trainings);
         spinnerTrainings.setSelection(spinnerTrainingsPosition);
@@ -102,7 +107,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        String height = userInfo[1]; //the value you want the position for
+        String height = String.valueOf(user.getHeight()); //the value you want the position for
         ArrayAdapter heightAdapter = (ArrayAdapter) spinnerHeight.getAdapter(); //cast to an ArrayAdapter
         int spinnerHeightPosition = heightAdapter.getPosition(height);
         spinnerHeight.setSelection(spinnerHeightPosition);
@@ -117,7 +122,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        String weight = userInfo[2]; //the value you want the position for
+        String weight = String.valueOf(user.getWeight()); //the value you want the position for
         ArrayAdapter weightAdapter = (ArrayAdapter) spinnerWeight.getAdapter(); //cast to an ArrayAdapter
         int spinnerWeightPosition = weightAdapter.getPosition(weight);
         spinnerWeight.setSelection(spinnerWeightPosition);
@@ -219,8 +224,12 @@ public class ProfileActivity extends AppCompatActivity {
             int weightInt = Integer.parseInt(weight);
             int ageInt = Integer.parseInt(age);
 
-            ConnectionHelper connectionHelper = new ConnectionHelper();
-            connectionHelper.userUpdate(username,ageInt,heightInt,weightInt,trainings);
+            user.setAge(ageInt);
+            user.setWeight(weightInt);
+            user.setHeight(heightInt);
+            user.setTrainings(trainings);
+//            ConnectionHelper connectionHelper = new ConnectionHelper();
+//            connectionHelper.userUpdate(username,ageInt,heightInt,weightInt,trainings);
             //finish();
         } catch (Exception e) {
             Notification notify = new Notification.Builder(getApplicationContext())

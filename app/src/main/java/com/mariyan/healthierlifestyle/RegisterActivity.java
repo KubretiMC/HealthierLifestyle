@@ -2,8 +2,11 @@ package com.mariyan.healthierlifestyle;
 
 import android.app.Notification;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,19 +17,22 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
+
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RegisterActivity extends AppCompatActivity {
 
     private TextView userName;
-    private TextView userPassword;
-    private TextView userPassword2;
     private Spinner userAge;
     private Spinner userGender;
     private Spinner userHeight;
     private Spinner userWeight;
     private Spinner userTrainingsPerWeek;
     private Button register;
+    //private  List<User> userList = new ArrayList<User>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,19 +40,27 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         register = findViewById(R.id.RegisterButton);
-        register.setOnClickListener(v -> {
-            try {
-                if(createUser(false)){
-                    String username = String.valueOf(userName);
-                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                    intent.putExtra("USERNAME", username);
-                    StartActivity.startActivity1.finish();
-                    startActivity(intent);
-                    finish();
-                }
+        register.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                try {
+                    userName = findViewById(R.id.namePlainText);
+                    String username = userName.getText().toString().trim();;
+                    if(createUser(username)) {
+                        SharedPreferences preferences = getSharedPreferences("save", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("isSaved", "true");
+                        editor.apply();
 
-            } catch (SQLException e) {
-                e.printStackTrace();
+
+                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                     //   intent.putParcelableArrayListExtra("user", (ArrayList<? extends Parcelable>) userList);
+                        StartActivity.startActivity1.finish();
+                        startActivity(intent);
+                        finish();
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -161,7 +175,6 @@ public class RegisterActivity extends AppCompatActivity {
         return spinner;
     }
 
-
     public Spinner setSpinnerWeight() {
 
         String[] arraySpinner = new String[201];
@@ -179,84 +192,65 @@ public class RegisterActivity extends AppCompatActivity {
         return spinner;
     }
 
-    private boolean createUser(boolean flag) throws SQLException {
-        userName = findViewById(R.id.namePlainText);
-        userPassword = findViewById(R.id.passwordPlainText);
-        userPassword2 = findViewById(R.id.confirmPasswordPlainText);
+    private boolean createUser(String username) throws SQLException {
         userAge = findViewById(R.id.ageSpinner);
         userGender = findViewById(R.id.genderSpinner);
         userHeight = findViewById(R.id.heightSpinner);
         userWeight = findViewById(R.id.weightSpinner);
         userTrainingsPerWeek = findViewById(R.id.trainingsPerWeekSpinner);
 
-        String name = userName.getText().toString().trim();
-        String password = userPassword.getText().toString().trim();
-        String password2 = userPassword2.getText().toString().trim();
 
 
-        if (name.isEmpty() || password.isEmpty()) {
+        if (username.isEmpty()) {
             Toast.makeText(getApplicationContext(), "Empty field", Toast.LENGTH_LONG).show();
             Notification notify = new Notification.Builder(getApplicationContext())
                     .setContentTitle("Empty field!")
-                    .setContentText(name)
+                    .setContentText(username)
                     .build();
             notify.flags |= Notification.FLAG_AUTO_CANCEL;
-        } else if (name.length() < 6 || name.length() > 16 || password.length() < 6 || password.length() > 16) {
-            Toast.makeText(getApplicationContext(), "Username and password must be between 6 and 16 characters", Toast.LENGTH_LONG).show();
+            return false;
+        } else if (username.length() < 6 || username.length() > 16) {
+            Toast.makeText(getApplicationContext(), "Username must be between 6 and 16 characters", Toast.LENGTH_LONG).show();
             Notification notify = new Notification.Builder(getApplicationContext())
-                    .setContentTitle("Username and password must be between 6 and 16 characters")
-                    .setContentText(name)
+                    .setContentTitle("Username must be between 6 and 16 characters")
+                    .setContentText(username)
                     .build();
             notify.flags |= Notification.FLAG_AUTO_CANCEL;
-        } else if (!password.equals(password2)) {
-            Toast.makeText(getApplicationContext(), "Passwords don't match.", Toast.LENGTH_LONG).show();
-            Notification notify = new Notification.Builder(getApplicationContext())
-                    .setContentTitle("Passwords don't match.")
-                    .setContentText(name)
-                    .build();
-            notify.flags |= Notification.FLAG_AUTO_CANCEL;
-        }else {
-            String s = "";
-            ConnectionHelper connectionHelper = new ConnectionHelper();
-            boolean exists = connectionHelper.userNameCheck(name);
-
-            if (exists) {
-                Toast.makeText(getApplicationContext(), "Username taken!", Toast.LENGTH_LONG).show();
+            return false;
+        } else {
+            try {
+                Toast.makeText(getApplicationContext(), "Registration successful!", Toast.LENGTH_LONG).show();
                 Notification notify = new Notification.Builder(getApplicationContext())
-                        .setContentTitle("Username taken!")
-                        .setContentText(name)
+                        .setContentTitle("Registration successful!")
+                        .setContentText(username)
                         .build();
                 notify.flags |= Notification.FLAG_AUTO_CANCEL;
-            } else {
-                try {
-                    Toast.makeText(getApplicationContext(), "Registration successful!", Toast.LENGTH_LONG).show();
-                    Notification notify = new Notification.Builder(getApplicationContext())
-                            .setContentTitle("Registration successful!")
-                            .setContentText(name)
-                            .build();
-                    notify.flags |= Notification.FLAG_AUTO_CANCEL;
-                    String age = userAge.getSelectedItem().toString();
-                    String gender = userGender.getSelectedItem().toString();
-                    String height = userHeight.getSelectedItem().toString();
-                    String weight = userWeight.getSelectedItem().toString();
-                    String trainings = userTrainingsPerWeek.getSelectedItem().toString();
+                String age = userAge.getSelectedItem().toString();
+                String gender = userGender.getSelectedItem().toString();
+                String height = userHeight.getSelectedItem().toString();
+                String weight = userWeight.getSelectedItem().toString();
+                String trainings = userTrainingsPerWeek.getSelectedItem().toString();
 
-                    flag = true;
-                    int heightInt = Integer.parseInt(height);
-                    int weightInt = Integer.parseInt(weight);
-                    int ageInt = Integer.parseInt(age);
-                    connectionHelper.userRegister(name, password, ageInt, gender, heightInt, weightInt, trainings);
-                    //finish();
-                } catch (Exception e) {
-                    Notification notify = new Notification.Builder(getApplicationContext())
-                            .setContentTitle("Error while working with database!")
-                            .build();
-                    notify.flags |= Notification.FLAG_AUTO_CANCEL;
-                }
+                int heightInt = Integer.parseInt(height);
+                int weightInt = Integer.parseInt(weight);
+                int ageInt = Integer.parseInt(age);
+
+
+                User user = new User(username,ageInt,gender,heightInt,weightInt,trainings);
+                SharedPreferences appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+                Gson gson = new Gson();
+                String json = gson.toJson(user);
+                prefsEditor.putString("User", json);
+                prefsEditor.commit();
+                return true;
+            } catch (Exception e) {
+                Notification notify = new Notification.Builder(getApplicationContext())
+                        .setContentTitle("Error while working with database!")
+                        .build();
+                notify.flags |= Notification.FLAG_AUTO_CANCEL;
             }
         }
-        return flag;
+        return false;
     }
 }
-
-

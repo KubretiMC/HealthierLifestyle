@@ -15,35 +15,50 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
+import com.google.gson.Gson;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private Button foods;
     private String username;
     private MenuInflater inflater;
-
-
+    private List<User> userList = new ArrayList<User>();
+    private User user = new User();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        username = getIntent().getStringExtra("USERNAME");
 
-        if (username != null && !username.equals("")) {
-            //save
-            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences appSharedPrefs = PreferenceManager
+                .getDefaultSharedPreferences(this.getApplicationContext());
+        Gson gson = new Gson();
+        String json = appSharedPrefs.getString("User", "");
+        user = gson.fromJson(json, User.class);
 
-            SharedPreferences.Editor editor = settings.edit();
-            editor.putString("username", username);
-            editor.apply();
-        }else{
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-             username = prefs.getString("username", "No name defined");//"No name defined" is the default value.
-        }
+//        userList = getIntent().getParcelableArrayListExtra("user");
+//
+//        if (!userList.isEmpty()) {
+//            User user = new User();
+//            SharedPreferences appSharedPrefs = PreferenceManager
+//                    .getDefaultSharedPreferences(this.getApplicationContext());
+//            SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+//            Gson gson = new Gson();
+//            String json = gson.toJson(user);
+//            prefsEditor.putString("MyUser", json);
+//
+//            prefsEditor.commit();
+//
+//
+//        }else{
+//            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+//            username = prefs.getString("username", "No name defined");//"No name defined" is the default value.
+//        }
 
         foods = findViewById(R.id.FoodsButton);
         foods.setOnClickListener(v -> openFoodsActivity());
@@ -68,10 +83,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String check = settings.getString("username", null);
+        SharedPreferences preferences = getSharedPreferences("save", MODE_PRIVATE);
+        String checkBox = preferences.getString("isSaved","");
 
-        if (check != null && !check.equals("")) {
+        if(checkBox.equals("true")){
             inflater = getMenuInflater();
             inflater.inflate(R.menu.profile_menu, menu);
         }
@@ -83,21 +98,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.profileItem:
-                openProfileActivity();
-                return true;
-            case R.id.logoutItem:
-                openStartActivity();
-                finish();
-                SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("remember", "false");
-                editor.apply();
-
-                SharedPreferences preferences2 = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                SharedPreferences.Editor editor2 = preferences2.edit();
-
-                editor2.putString("username","").apply();
-                editor2.apply();
+                openProfileActivity(user);
 
                 return true;
             default:
@@ -110,9 +111,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void openProfileActivity() {
+    private void openProfileActivity(User user) {
         Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
-        intent.putExtra("USERNAME", username);
+        //   intent.putParcelableArrayListExtra("user", (ArrayList<? extends Parcelable>) userList);
+        intent.putExtra("userStats", user);
+
         startActivity(intent);
     }
 
