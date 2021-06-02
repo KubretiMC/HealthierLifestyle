@@ -2,6 +2,7 @@ package com.mariyan.healthierlifestyle;
 
 import android.app.Notification;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.view.View;
@@ -245,7 +246,30 @@ public class RegisterActivity extends AppCompatActivity {
                     int heightInt = Integer.parseInt(height);
                     int weightInt = Integer.parseInt(weight);
                     int ageInt = Integer.parseInt(age);
+
+
+                    SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("remember", "true");
+                    editor.apply();
+
+                    User.setName(name);
+                    User.setAge(age);
+                    User.setGender(gender);
+                    User.setHeight(height);
+                    User.setWeight(weight);
+                    User.setTrainings(trainings);
+                    String userr= User.getAge();
+                    User.write("name",User.getName());
+                    User.write("age",User.getAge());
+                    User.write("gender",User.getGender());
+                    User.write("height",User.getHeight());
+                    User.write("weight",User.getWeight());
+                    User.write("trainings",User.getTrainings());
+
                     connectionHelper.userRegister(name, password, ageInt, gender, heightInt, weightInt, trainings);
+
+
                     //finish();
                 } catch (Exception e) {
                     Notification notify = new Notification.Builder(getApplicationContext())

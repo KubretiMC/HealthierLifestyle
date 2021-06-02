@@ -30,11 +30,28 @@ public class StartActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
         String checkBox = preferences.getString("remember","");
 
+        User.init(getApplicationContext());
         if(checkBox.equals("true")){
+            User.setName(User.read("name", ""));
+            User.setAge(User.read("age", ""));
+            User.setGender(User.read("gender", ""));
+            User.setWeight(User.read("weight", ""));
+            User.setHeight(User.read("height", ""));
+            User.setTrainings(User.read("trainings", ""));
+
+            String name2=User.getName();
+            String age2=User.getAge();
+            String gender=User.getGender();
+            String weight=User.getWeight();
+            String height=User.getHeight();
+            String trainings=User.getTrainings();
+
             Intent intent = new Intent(StartActivity.this,MainActivity.class);
             startActivity(intent);
             finish();
         }
+
+
 
     }
     private void openRegisterActivity() {
