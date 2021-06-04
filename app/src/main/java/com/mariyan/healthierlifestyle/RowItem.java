@@ -8,7 +8,6 @@ public class RowItem {
     private float food_fats;
     private float food_calories;
 
-
     public RowItem(String food_name, int food_pic_id)
     {
         this.food_name = food_name;

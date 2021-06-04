@@ -1,7 +1,6 @@
 package com.mariyan.healthierlifestyle;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 
 public class listView extends AppCompatActivity {

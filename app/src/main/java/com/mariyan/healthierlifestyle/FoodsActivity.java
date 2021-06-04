@@ -4,13 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 public class FoodsActivity extends AppCompatActivity {
     private Button showAll;
     private Button showProtein;
-    private Button showCarbo;
+    private Button showCarbohydrate;
     private Button showFat;
     private Button showCalorie;
     @Override
@@ -34,8 +33,8 @@ public class FoodsActivity extends AppCompatActivity {
             }
         });
 
-        showCarbo = findViewById(R.id.CarbohydrateFoodsButton);
-        showCarbo.setOnClickListener(new View.OnClickListener() {
+        showCarbohydrate = findViewById(R.id.CarbohydrateFoodsButton);
+        showCarbohydrate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openFoodsListActivity("carbohydrates");
@@ -57,8 +56,6 @@ public class FoodsActivity extends AppCompatActivity {
                 openFoodsListActivity("calories");
             }
         });
-
-
     }
     private void openFoodsListActivity(String type) {
         Intent intent = new Intent(getApplicationContext(), FoodsListActivity.class);

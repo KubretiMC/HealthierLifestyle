@@ -9,14 +9,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import java.sql.SQLException;
 
 public class ProfileActivity extends AppCompatActivity {
-
     private TextView userName;
     private Spinner userAge;
     private Spinner userGender;
@@ -24,18 +20,16 @@ public class ProfileActivity extends AppCompatActivity {
     private Spinner userWeight;
     private Spinner userTrainingsPerWeek;
     private Button updateUser;
-    private String username;
-    private String userInfo[]=new String[4];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        username = getIntent().getStringExtra("USERNAME");
-
         userName = findViewById(R.id.WelcomeUserTextView);
-        userName.setText("Welcome "+username);
-
+        userAge = findViewById(R.id.ageSpinner);
+        userHeight = findViewById(R.id.heightSpinner);
+        userWeight = findViewById(R.id.weightSpinner);
+        userTrainingsPerWeek = findViewById(R.id.trainingsPerWeekSpinner);
         updateUser = findViewById(R.id.UpdateButton);
         updateUser.setOnClickListener(v -> {
             try {
@@ -46,18 +40,8 @@ public class ProfileActivity extends AppCompatActivity {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
-
         });
-        try {
-            ConnectionHelper connectionHelper = new ConnectionHelper();
-            userInfo=connectionHelper.userGetInfo(username);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-
-
+        userName.setText("Welcome "+User.getName());
 
         Spinner spinnerAge = setSpinnerAge();
         spinnerAge.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -67,15 +51,9 @@ public class ProfileActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
-        String age = userInfo[0]; //the value you want the position for
         ArrayAdapter ageAdapter = (ArrayAdapter) spinnerAge.getAdapter(); //cast to an ArrayAdapter
-        int spinnerAgePosition = ageAdapter.getPosition(age);
+        int spinnerAgePosition = ageAdapter.getPosition(User.getAge());
         spinnerAge.setSelection(spinnerAgePosition);
-
-
-
-
 
         Spinner spinnerTrainings = setSpinner("0", "1-3", "3-7");
         spinnerTrainings.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -86,10 +64,8 @@ public class ProfileActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
-        String trainings = userInfo[3]; //the value you want the position for
         ArrayAdapter trainingsAdapter = (ArrayAdapter) spinnerTrainings.getAdapter(); //cast to an ArrayAdapter
-        int spinnerTrainingsPosition = trainingsAdapter.getPosition(trainings);
+        int spinnerTrainingsPosition = trainingsAdapter.getPosition(User.getTrainings());
         spinnerTrainings.setSelection(spinnerTrainingsPosition);
 
         Spinner spinnerHeight = setSpinnerHeight();
@@ -101,10 +77,8 @@ public class ProfileActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
-        String height = userInfo[1]; //the value you want the position for
         ArrayAdapter heightAdapter = (ArrayAdapter) spinnerHeight.getAdapter(); //cast to an ArrayAdapter
-        int spinnerHeightPosition = heightAdapter.getPosition(height);
+        int spinnerHeightPosition = heightAdapter.getPosition(User.getHeight());
         spinnerHeight.setSelection(spinnerHeightPosition);
 
         Spinner spinnerWeight = setSpinnerWeight();
@@ -116,10 +90,8 @@ public class ProfileActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
-        String weight = userInfo[2]; //the value you want the position for
         ArrayAdapter weightAdapter = (ArrayAdapter) spinnerWeight.getAdapter(); //cast to an ArrayAdapter
-        int spinnerWeightPosition = weightAdapter.getPosition(weight);
+        int spinnerWeightPosition = weightAdapter.getPosition(User.getWeight());
         spinnerWeight.setSelection(spinnerWeightPosition);
     }
 
@@ -204,10 +176,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void updateUser() throws SQLException {
-        userAge = findViewById(R.id.ageSpinner);
-        userHeight = findViewById(R.id.heightSpinner);
-        userWeight = findViewById(R.id.weightSpinner);
-        userTrainingsPerWeek = findViewById(R.id.trainingsPerWeekSpinner);
+
 
         try {
             String age = userAge.getSelectedItem().toString();
@@ -219,8 +188,8 @@ public class ProfileActivity extends AppCompatActivity {
             int weightInt = Integer.parseInt(weight);
             int ageInt = Integer.parseInt(age);
 
-            ConnectionHelper connectionHelper = new ConnectionHelper();
-            connectionHelper.userUpdate(username,ageInt,heightInt,weightInt,trainings);
+//            ConnectionHelper connectionHelper = new ConnectionHelper();
+//            connectionHelper.userUpdate(username,ageInt,heightInt,weightInt,trainings);
             //finish();
         } catch (Exception e) {
             Notification notify = new Notification.Builder(getApplicationContext())

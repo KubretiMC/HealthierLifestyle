@@ -28,35 +28,6 @@
         </TableRow>
         <TableRow android:layout_height="match_parent" android:layout_width="match_parent">
             <TextView
-                android:id="@+id/passwordTextView"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:text="@string/password"
-                />
-            <EditText
-                android:id="@+id/passwordPlainText"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:inputType="textPassword"
-                />
-        </TableRow>
-        <TableRow android:layout_height="match_parent" android:layout_width="match_parent">
-            <TextView
-                android:id="@+id/confirmPasswordTextView"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:text="@string/confirm_password"
-                />
-            <EditText
-                android:id="@+id/confirmPasswordPlainText"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:inputType="textPassword"
-                />
-        </TableRow>
-
-        <TableRow android:layout_height="match_parent" android:layout_width="match_parent">
-            <TextView
                 android:id="@+id/ageTextView"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"

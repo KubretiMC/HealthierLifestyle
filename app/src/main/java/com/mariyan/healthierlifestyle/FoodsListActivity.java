@@ -1,14 +1,11 @@
 package com.mariyan.healthierlifestyle;
 
-import android.content.Context;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -16,14 +13,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,7 +31,6 @@ public class FoodsListActivity extends AppCompatActivity implements AdapterView.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_foods_list);
-
         listview = findViewById(R.id.listview);
         foodType = String.valueOf(getIntent().getStringExtra("type"));
         if(foodType.equals("")){
@@ -49,30 +42,23 @@ public class FoodsListActivity extends AppCompatActivity implements AdapterView.
         }
     }
 
-
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         String food_name = rowItems.get(position).getFood_name();
         Toast.makeText(getApplicationContext(), "" + food_name, Toast.LENGTH_SHORT).show();
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         getMenuInflater().inflate(R.menu.search_menu, menu);
-
         MenuItem menuItem = menu.findItem(R.id.search_view);
-
         SearchView searchView = (SearchView) menuItem.getActionView();
-
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
 
                 return false;
             }
-
             @Override
             public boolean onQueryTextChange(String newText) {
                 Log.e("Main", " data search" + newText);
@@ -80,12 +66,8 @@ public class FoodsListActivity extends AppCompatActivity implements AdapterView.
                 return true;
             }
         });
-
-
         return true;
-
     }
-
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -93,13 +75,11 @@ public class FoodsListActivity extends AppCompatActivity implements AdapterView.
         if (id == R.id.search_view) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
-
     public String LoadJsonFromAsset() {
-        String json = null;
+        String json;
         try {
             InputStream in = this.getAssets().open("mynewfile.json");
             int size = in.available();
@@ -107,8 +87,6 @@ public class FoodsListActivity extends AppCompatActivity implements AdapterView.
             in.read(bbuffer);
             in.close();
             json = new String(bbuffer, "UTF-8");
-
-
         } catch (IOException e) {
             e.printStackTrace();
             return null;

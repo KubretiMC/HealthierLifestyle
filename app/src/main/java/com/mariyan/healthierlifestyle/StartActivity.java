@@ -1,11 +1,10 @@
 package com.mariyan.healthierlifestyle;
-import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 public class StartActivity extends AppCompatActivity {
@@ -18,18 +17,13 @@ public class StartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start);
 
         startActivity1 = this;
-
-
         register = findViewById(R.id.RegisterButton);
         register.setOnClickListener(v -> openRegisterActivity());
-
         guest = findViewById(R.id.ContinueAsGuestButton);
         guest.setOnClickListener(v -> openMainActivity());
 
-
         SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
         String checkBox = preferences.getString("remember","");
-
         User.init(getApplicationContext());
         if(checkBox.equals("true")){
             User.setName(User.read("name", ""));
@@ -38,21 +32,10 @@ public class StartActivity extends AppCompatActivity {
             User.setWeight(User.read("weight", ""));
             User.setHeight(User.read("height", ""));
             User.setTrainings(User.read("trainings", ""));
-
-            String name2=User.getName();
-            String age2=User.getAge();
-            String gender=User.getGender();
-            String weight=User.getWeight();
-            String height=User.getHeight();
-            String trainings=User.getTrainings();
-
             Intent intent = new Intent(StartActivity.this,MainActivity.class);
             startActivity(intent);
             finish();
         }
-
-
-
     }
     private void openRegisterActivity() {
         Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
@@ -62,6 +45,4 @@ public class StartActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
     }
-
-
 }
