@@ -2,14 +2,19 @@ package com.mariyan.healthierlifestyle;
 
 import android.app.Notification;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import java.sql.SQLException;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -19,31 +24,49 @@ public class ProfileActivity extends AppCompatActivity {
     private Spinner userHeight;
     private Spinner userWeight;
     private Spinner userTrainingsPerWeek;
+    private EditText calories;
+    private EditText proteins;
+    private EditText carbohydrates;
+    private EditText fats;
     private Button updateUser;
+    private int age = Integer.parseInt(User.getAge());
+    private int height = Integer.parseInt(User.getHeight());
+    private int weight = Integer.parseInt(User.getWeight());
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
         userName = findViewById(R.id.WelcomeUserTextView);
+        userName.setText("Welcome " + User.getName());
         userAge = findViewById(R.id.ageSpinner);
+        userGender = findViewById(R.id.genderSpinner);
         userHeight = findViewById(R.id.heightSpinner);
         userWeight = findViewById(R.id.weightSpinner);
         userTrainingsPerWeek = findViewById(R.id.trainingsPerWeekSpinner);
         updateUser = findViewById(R.id.UpdateButton);
         updateUser.setOnClickListener(v -> {
-            try {
-                updateUser();
-                Intent intent = getIntent();
-                finish();
-                startActivity(intent);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            updateUser();
+            Intent intent = getIntent();
+            finish();
+            startActivity(intent);
         });
-        userName.setText("Welcome "+User.getName());
 
-        Spinner spinnerAge = setSpinnerAge();
+        calories = findViewById(R.id.caloriesPlainText);
+        calories.setText(String.valueOf(calculateCalories()));
+
+        proteins = findViewById(R.id.proteinsPlainText);
+        proteins.setText(String.valueOf(calculateProteins()));
+
+        carbohydrates = findViewById(R.id.carbohydratesPlainText);
+        carbohydrates.setText(String.valueOf(calculateCarbohydrates()));
+
+        fats = findViewById(R.id.fatsPlainText);
+        fats.setText(String.valueOf(calculateFats()));
+
+        Spinner spinnerAge = findViewById(R.id.ageSpinner);
+        spinnerAge = setSpinner(55, 16, spinnerAge);
         spinnerAge.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
             }
@@ -55,7 +78,20 @@ public class ProfileActivity extends AppCompatActivity {
         int spinnerAgePosition = ageAdapter.getPosition(User.getAge());
         spinnerAge.setSelection(spinnerAgePosition);
 
-        Spinner spinnerTrainings = setSpinner("0", "1-3", "3-7");
+        Spinner spinnerGender = setSpinnerGender("Male", "Female");
+        spinnerGender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+        ArrayAdapter genderAdapter = (ArrayAdapter) spinnerGender.getAdapter(); //cast to an ArrayAdapter
+        int spinnerGenderPosition = genderAdapter.getPosition(User.getGender());
+        spinnerGender.setSelection(spinnerGenderPosition);
+
+        Spinner spinnerTrainings = setSpinnerTrainings("0", "1-3", "3-7");
         spinnerTrainings.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 
@@ -68,7 +104,8 @@ public class ProfileActivity extends AppCompatActivity {
         int spinnerTrainingsPosition = trainingsAdapter.getPosition(User.getTrainings());
         spinnerTrainings.setSelection(spinnerTrainingsPosition);
 
-        Spinner spinnerHeight = setSpinnerHeight();
+        Spinner spinnerHeight = findViewById(R.id.heightSpinner);
+        spinnerHeight = setSpinner(81, 140, spinnerHeight);
         spinnerHeight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 
@@ -81,7 +118,8 @@ public class ProfileActivity extends AppCompatActivity {
         int spinnerHeightPosition = heightAdapter.getPosition(User.getHeight());
         spinnerHeight.setSelection(spinnerHeightPosition);
 
-        Spinner spinnerWeight = setSpinnerWeight();
+        Spinner spinnerWeight = findViewById(R.id.weightSpinner);
+        spinnerWeight = setSpinner(201, 40, spinnerWeight);
         spinnerWeight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 
@@ -95,21 +133,7 @@ public class ProfileActivity extends AppCompatActivity {
         spinnerWeight.setSelection(spinnerWeightPosition);
     }
 
-    public Spinner setSpinner(String a, String b) {
-
-        String[] arraySpinner = new String[]{
-                a, b
-        };
-        Spinner spinner = findViewById(R.id.genderSpinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, arraySpinner);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-
-        return spinner;
-    }
-
-    public Spinner setSpinner(String a, String b, String c) {
+    public Spinner setSpinnerTrainings(String a, String b, String c) {
 
         String[] arraySpinner = new String[]{
                 a, b, c
@@ -123,15 +147,12 @@ public class ProfileActivity extends AppCompatActivity {
         return spinner;
     }
 
-    public Spinner setSpinnerHeight() {
+    public Spinner setSpinnerGender(String a, String b) {
 
-        String[] arraySpinner = new String[91];
-        int counter = 130;
-        for (int i = 0; i <= 90; i++) {
-            arraySpinner[i] = String.valueOf(counter);
-            counter++;
-        }
-        Spinner spinner = findViewById(R.id.heightSpinner);
+        String[] arraySpinner = new String[]{
+                a, b
+        };
+        Spinner spinner = findViewById(R.id.genderSpinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, arraySpinner);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -140,66 +161,84 @@ public class ProfileActivity extends AppCompatActivity {
         return spinner;
     }
 
-    public Spinner setSpinnerAge() {
+    public void updateUser() {
+        String age = userAge.getSelectedItem().toString();
+        String gender = userGender.getSelectedItem().toString();
+        String height = userHeight.getSelectedItem().toString();
+        String weight = userWeight.getSelectedItem().toString();
+        String trainings = userTrainingsPerWeek.getSelectedItem().toString();
 
-        String[] arraySpinner = new String[55];
-        int counter = 16;
-        for (int i = 0; i <= 54; i++) {
-            arraySpinner[i] = String.valueOf(counter);
-            counter++;
+        User.setAge(age);
+        User.setGender(gender);
+        User.setHeight(height);
+        User.setWeight(weight);
+        User.setTrainings(trainings);
+        User.write("age", User.getAge());
+        User.write("gender", User.getGender());
+        User.write("height", User.getHeight());
+        User.write("weight", User.getWeight());
+        User.write("trainings", User.getTrainings());
+
+        Toast.makeText(getApplicationContext(), "Information updated!", Toast.LENGTH_LONG).show();
+        Notification notify = new Notification.Builder(getApplicationContext())
+                .setContentTitle("Information updated!")
+                .setContentText("Information updated!")
+                .build();
+        notify.flags |= Notification.FLAG_AUTO_CANCEL;
+    }
+
+    public Spinner setSpinner(int spinnerLength, int spinnerStart, Spinner spinner) {
+        String[] arraySpinner = new String[spinnerLength];
+        for (int i = 0; i < spinnerLength; i++) {
+            arraySpinner[i] = String.valueOf(spinnerStart);
+            spinnerStart++;
         }
-        Spinner spinner = findViewById(R.id.ageSpinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, arraySpinner);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-
         return spinner;
     }
 
-
-    public Spinner setSpinnerWeight() {
-
-        String[] arraySpinner = new String[201];
-        int counter = 40;
-        for (int i = 0; i <= 200; i++) {
-            arraySpinner[i] = String.valueOf(counter);
-            counter++;
+    public double calculateCalories() {
+        double result;
+        if (User.getGender().equals("Male")) {
+            result = 66.5 + 13.8 * weight + 5.0 * height - 6.8 * age;
+        } else {
+            result = 655.1 + 9.6 * weight + 1.9 * height - 4.7 * age;
         }
-        Spinner spinner = findViewById(R.id.weightSpinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, arraySpinner);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-
-        return spinner;
-    }
-
-    public void updateUser() throws SQLException {
-
-
-        try {
-            String age = userAge.getSelectedItem().toString();
-            String height = userHeight.getSelectedItem().toString();
-            String weight = userWeight.getSelectedItem().toString();
-            String trainings = userTrainingsPerWeek.getSelectedItem().toString();
-
-            int heightInt = Integer.parseInt(height);
-            int weightInt = Integer.parseInt(weight);
-            int ageInt = Integer.parseInt(age);
-
-//            ConnectionHelper connectionHelper = new ConnectionHelper();
-//            connectionHelper.userUpdate(username,ageInt,heightInt,weightInt,trainings);
-            //finish();
-        } catch (Exception e) {
-            Notification notify = new Notification.Builder(getApplicationContext())
-                    .setContentTitle("Error while working with database!")
-                    .build();
-            notify.flags |= Notification.FLAG_AUTO_CANCEL;
+        if (User.getTrainings().equals("1-3")) {
+            result = result * 1.2;
+        } else if (User.getTrainings().equals("3-7")) {
+            result = result * 1.5;
         }
 
+        return (double) Math.round(result * 100d) / 100d;
     }
 
+    public double calculateFats() {
+        return Math.round((calculateCalories() * 0.3 / 9) * 100d) / 100d;
+    }
+
+    public double calculateProteins() {
+        double result;
+        if (User.getTrainings().equals("1-3")) {
+            result = Double.valueOf(User.getWeight()) * 0.8;
+        } else if (User.getTrainings().equals("3-7")) {
+            result = Double.valueOf(User.getWeight()) * 1.1;
+        } else {
+            result = Double.valueOf(User.getWeight()) * 1.3;
+        }
+        return Math.round(result * 100d) / 100d;
+    }
+
+    public double calculateCarbohydrates() {
+        double cal = calculateCalories();
+        double fa = calculateFats() * 9;
+        double prot = calculateProteins() * 4;
+        double carb = (cal - fa - prot) / 4;
+        return Math.round(carb * 100d) / 100d;
+    }
 }
 
 

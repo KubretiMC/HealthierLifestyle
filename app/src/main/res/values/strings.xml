@@ -27,6 +27,10 @@
     <string name="confirm_password">Confirm password</string>
     <string name="welcome_user">Welcome</string>
     <string name="update_user_information">Update user information</string>
+    <string name="proteins_per_day">Proteins per day:</string>
+    <string name="carbohydrates_per_day">carbohydrates per day</string>
+    <string name="fats_per_day">fats per day</string>
+    <string name="calories_per_day">calories per day</string>
 
 
     <string-array name="Foods_names">
