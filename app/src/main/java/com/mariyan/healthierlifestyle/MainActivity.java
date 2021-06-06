@@ -27,9 +27,18 @@ public class MainActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = settings.edit();
             editor.putString("username", username);
             editor.apply();
+
         } else {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             username = prefs.getString("username", "No name defined");//"No name defined" is the default value.
+
+            User.init(getApplicationContext());
+            User.setName(User.read("name", ""));
+            User.setAge(User.read("age", ""));
+            User.setGender(User.read("gender", ""));
+            User.setWeight(User.read("weight", ""));
+            User.setHeight(User.read("height", ""));
+            User.setTrainings(User.read("trainings", ""));
         }
         foods = findViewById(R.id.FoodsButton);
         foods.setOnClickListener(v -> openFoodsActivity());

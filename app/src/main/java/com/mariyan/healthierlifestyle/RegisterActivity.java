@@ -171,6 +171,7 @@ public class RegisterActivity extends AppCompatActivity {
             editor.putString("remember", "true");
             editor.apply();
 
+            User.init(getApplicationContext());
             User.setName(name);
             User.setAge(age);
             User.setGender(gender);

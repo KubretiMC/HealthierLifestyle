@@ -24,14 +24,7 @@ public class StartActivity extends AppCompatActivity {
 
         SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
         String checkBox = preferences.getString("remember","");
-        User.init(getApplicationContext());
         if(checkBox.equals("true")){
-            User.setName(User.read("name", ""));
-            User.setAge(User.read("age", ""));
-            User.setGender(User.read("gender", ""));
-            User.setWeight(User.read("weight", ""));
-            User.setHeight(User.read("height", ""));
-            User.setTrainings(User.read("trainings", ""));
             Intent intent = new Intent(StartActivity.this,MainActivity.class);
             startActivity(intent);
             finish();

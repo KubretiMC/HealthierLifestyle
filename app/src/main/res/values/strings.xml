@@ -31,6 +31,8 @@
     <string name="carbohydrates_per_day">carbohydrates per day</string>
     <string name="fats_per_day">fats per day</string>
     <string name="calories_per_day">calories per day</string>
+    <string name="zero">0</string>
+    <string name="reset">Reset</string>
 
 
     <string-array name="Foods_names">

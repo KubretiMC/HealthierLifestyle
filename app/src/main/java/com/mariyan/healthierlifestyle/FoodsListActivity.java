@@ -1,11 +1,15 @@
 package com.mariyan.healthierlifestyle;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -23,23 +27,84 @@ import java.util.HashMap;
 import java.util.List;
 
 public class FoodsListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
-    String foodType;
-    List<RowItem> rowItems;
-    CustomAdapter adapter;
-    ListView listview;
+    private String foodType;
+    private List<RowItem> rowItems;
+    private List<String> sumList;
+    private CustomAdapter adapter;
+    private Button wanted;
+    private Button unwanted;
+    private Button sum;
+    private Button subtract;
+    private Button reset;
+    private EditText proteins;
+    private EditText carbohydrates;
+    private EditText fats;
+    private EditText calories;
+    private double proteinsAmount=0;
+    private double carbohydratesAmount=0;
+    private double fatsAmount=0;
+    private double caloriesAmount=0;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_foods_list);
-        listview = findViewById(R.id.listview);
+
+        ListView listView = findViewById(R.id.listview);
         foodType = String.valueOf(getIntent().getStringExtra("type"));
-        if(foodType.equals("")){
-           getAll();
-        }else if(foodType.equals("calories")){
-            getType(foodType,100);
-        } else {
-            getType(foodType,10);
+
+
+
+        LinearLayout calculatorLayout = findViewById(R.id.calculatorLayout);
+        LinearLayout addLayout = findViewById(R.id.addLayout);
+             if(User.getName()==""){
+            calculatorLayout.setVisibility(View.GONE);
+            addLayout.setVisibility(View.GONE);
+
+            LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    1.0f
+            );
+            LinearLayout foodsListLayout = findViewById(R.id.foodsListLayout);
+            foodsListLayout.setLayoutParams(param);
+        }else{
+            wanted=findViewById(R.id.WantedButton);
+            unwanted=findViewById(R.id.UnwantedButton);
+            sum = findViewById(R.id.SumButton);
+            reset = findViewById(R.id.ResetButton);
+            subtract = findViewById(R.id.SubtractButton);
+            proteins = findViewById(R.id.proteinsPlainText);
+            carbohydrates = findViewById(R.id.proteinsPlainText);
+            fats = findViewById(R.id.fatsPlainText);
+            calories = findViewById(R.id.caloriesPlainText);
+
+            //sum.setOnClickListener(v -> sumNutriens());
         }
+        ArrayList<HashMap<String, String>> arrayList = new ArrayList<>();
+        if(foodType.equals("")){
+           getAll(arrayList);
+        }else if(foodType.equals("calories")){
+            getType(arrayList,foodType,100);
+        } else {
+            getType(arrayList,foodType,10);
+        }
+
+        ListAdapter adapter = new SimpleAdapter(this, arrayList, R.layout.list_viewdegn,
+                new String[]{"name", "protein", "proteins", "carbohydrate", "carbohydrates", "fat", "fats", "calorie", "calories"},
+                new int[]{R.id.name, R.id.proteinName, R.id.proteins, R.id.carbohydrateName, R.id.carbohydrates,
+                        R.id.fatName, R.id.fats, R.id.calorieName, R.id.calories});
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                proteinsAmount =Double.valueOf(arrayList.get(position).get("proteins"));
+                carbohydratesAmount =Double.valueOf(arrayList.get(position).get("carbohydrates"));
+                fatsAmount =Double.valueOf(arrayList.get(position).get("fats"));
+                caloriesAmount =Double.valueOf(arrayList.get(position).get("calories"));
+            }
+        });
     }
 
     @Override
@@ -94,12 +159,12 @@ public class FoodsListActivity extends AppCompatActivity implements AdapterView.
         return json;
     }
 
-    public void getAll() {
+    public void getAll( ArrayList<HashMap<String, String>> arrayList) {
         try {
             JSONObject obj = new JSONObject(LoadJsonFromAsset());
             JSONArray array = obj.getJSONArray("foods");
             HashMap<String, String> list;
-            ArrayList<HashMap<String, String>> arrayList = new ArrayList<>();
+//            ArrayList<HashMap<String, String>> arrayList = new ArrayList<>();
             for (int i = 0; i < array.length(); i++) {
                 JSONObject o = array.getJSONObject(i);
                 String name = o.getString("name");
@@ -123,22 +188,24 @@ public class FoodsListActivity extends AppCompatActivity implements AdapterView.
                 list.put("calories", calories);
                 arrayList.add(list);
             }
-            ListAdapter adapter = new SimpleAdapter(this, arrayList, R.layout.list_viewdegn,
-                    new String[]{"name", "protein", "proteins", "carbohydrate", "carbohydrates", "fat", "fats", "calorie", "calories"},
-                    new int[]{R.id.name, R.id.proteinName, R.id.proteins, R.id.carbohydrateName, R.id.carbohydrates,
-                            R.id.fatName, R.id.fats, R.id.calorieName, R.id.calories});
-            listview.setAdapter(adapter);
+//            ListAdapter adapter = new SimpleAdapter(this, arrayList, R.layout.list_viewdegn,
+//                    new String[]{"name", "protein", "proteins", "carbohydrate", "carbohydrates", "fat", "fats", "calorie", "calories"},
+//                    new int[]{R.id.name, R.id.proteinName, R.id.proteins, R.id.carbohydrateName, R.id.carbohydrates,
+//                            R.id.fatName, R.id.fats, R.id.calorieName, R.id.calories});
+//            listview.setAdapter(adapter);
+
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    public void getType(String type, int biggerThan) {
+    public void getType( ArrayList<HashMap<String, String>> arrayList,String type, int biggerThan) {
         try {
             JSONObject obj = new JSONObject(LoadJsonFromAsset());
             JSONArray array = obj.getJSONArray("foods");
             HashMap<String, String> list;
-            ArrayList<HashMap<String, String>> arrayList = new ArrayList<>();
+           // ArrayList<HashMap<String, String>> arrayList = new ArrayList<>();
             for (int i = 0; i < array.length(); i++) {
                 JSONObject o = array.getJSONObject(i);
                 String get = o.getString(type);
@@ -166,13 +233,19 @@ public class FoodsListActivity extends AppCompatActivity implements AdapterView.
                     arrayList.add(list);
                 }
             }
-            ListAdapter adapter = new SimpleAdapter(this, arrayList, R.layout.list_viewdegn,
-                    new String[]{"name", "protein", "proteins", "carbohydrate", "carbohydrates", "fat", "fats", "calorie", "calories"},
-                    new int[]{R.id.name, R.id.proteinName, R.id.proteins, R.id.carbohydrateName, R.id.carbohydrates,
-                            R.id.fatName, R.id.fats, R.id.calorieName, R.id.calories});
-            listview.setAdapter(adapter);
+//            ListAdapter adapter = new SimpleAdapter(this, arrayList, R.layout.list_viewdegn,
+//                    new String[]{"name", "protein", "proteins", "carbohydrate", "carbohydrates", "fat", "fats", "calorie", "calories"},
+//                    new int[]{R.id.name, R.id.proteinName, R.id.proteins, R.id.carbohydrateName, R.id.carbohydrates,
+//                            R.id.fatName, R.id.fats, R.id.calorieName, R.id.calories});
+//            listview.setAdapter(adapter);
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
+
+//    private void sumNutriens(){
+//       adapter.getItemId()
+//
+//    }
+
 }
