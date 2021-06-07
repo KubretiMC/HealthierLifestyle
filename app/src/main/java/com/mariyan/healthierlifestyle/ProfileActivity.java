@@ -20,7 +20,6 @@ import java.sql.SQLException;
 public class ProfileActivity extends AppCompatActivity {
     private TextView userName;
     private Spinner userAge;
-    private Spinner userGender;
     private Spinner userHeight;
     private Spinner userWeight;
     private Spinner userTrainingsPerWeek;
@@ -29,6 +28,8 @@ public class ProfileActivity extends AppCompatActivity {
     private EditText carbohydrates;
     private EditText fats;
     private Button updateUser;
+    private Button wanted;
+    private Button unwanted;
     private int age = Integer.parseInt(User.getAge());
     private int height = Integer.parseInt(User.getHeight());
     private int weight = Integer.parseInt(User.getWeight());
@@ -38,20 +39,31 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        userName = findViewById(R.id.WelcomeUserTextView);
-        userName.setText("Welcome " + User.getName());
+
         userAge = findViewById(R.id.ageSpinner);
-        userGender = findViewById(R.id.genderSpinner);
         userHeight = findViewById(R.id.heightSpinner);
         userWeight = findViewById(R.id.weightSpinner);
+
+        userName = findViewById(R.id.WelcomeUserTextView);
+        userName.setText("Welcome " + User.getName());
+
         userTrainingsPerWeek = findViewById(R.id.trainingsPerWeekSpinner);
+
+
         updateUser = findViewById(R.id.UpdateButton);
         updateUser.setOnClickListener(v -> {
             updateUser();
-            Intent intent = getIntent();
-            finish();
-            startActivity(intent);
         });
+
+        wanted = findViewById(R.id.WantedButton);
+        wanted.setOnClickListener(v -> {
+            openWantedActivity();
+        });
+
+
+        unwanted=findViewById(R.id.UnwantedButton);
+
+
 
         calories = findViewById(R.id.caloriesPlainText);
         calories.setText(String.valueOf(calculateCalories()));
@@ -77,19 +89,6 @@ public class ProfileActivity extends AppCompatActivity {
         ArrayAdapter ageAdapter = (ArrayAdapter) spinnerAge.getAdapter(); //cast to an ArrayAdapter
         int spinnerAgePosition = ageAdapter.getPosition(User.getAge());
         spinnerAge.setSelection(spinnerAgePosition);
-
-        Spinner spinnerGender = setSpinnerGender("Male", "Female");
-        spinnerGender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-
-            }
-
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-        ArrayAdapter genderAdapter = (ArrayAdapter) spinnerGender.getAdapter(); //cast to an ArrayAdapter
-        int spinnerGenderPosition = genderAdapter.getPosition(User.getGender());
-        spinnerGender.setSelection(spinnerGenderPosition);
 
         Spinner spinnerTrainings = setSpinnerTrainings("0", "1-3", "3-7");
         spinnerTrainings.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -147,29 +146,13 @@ public class ProfileActivity extends AppCompatActivity {
         return spinner;
     }
 
-    public Spinner setSpinnerGender(String a, String b) {
-
-        String[] arraySpinner = new String[]{
-                a, b
-        };
-        Spinner spinner = findViewById(R.id.genderSpinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, arraySpinner);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-
-        return spinner;
-    }
-
     public void updateUser() {
         String age = userAge.getSelectedItem().toString();
-        String gender = userGender.getSelectedItem().toString();
         String height = userHeight.getSelectedItem().toString();
         String weight = userWeight.getSelectedItem().toString();
         String trainings = userTrainingsPerWeek.getSelectedItem().toString();
 
         User.setAge(age);
-        User.setGender(gender);
         User.setHeight(height);
         User.setWeight(weight);
         User.setTrainings(trainings);
@@ -238,6 +221,11 @@ public class ProfileActivity extends AppCompatActivity {
         double prot = calculateProteins() * 4;
         double carb = (cal - fa - prot) / 4;
         return Math.round(carb * 100d) / 100d;
+    }
+
+    private void openWantedActivity() {
+        Intent intent = new Intent(getApplicationContext(), WantedFoodsActivity.class);
+        startActivity(intent);
     }
 }
 

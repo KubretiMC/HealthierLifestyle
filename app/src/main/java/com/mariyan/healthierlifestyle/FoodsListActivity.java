@@ -1,7 +1,9 @@
 package com.mariyan.healthierlifestyle;
 
-import android.content.Intent;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,13 +28,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.google.gson.Gson;
+
 public class FoodsListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     private String foodType;
     private List<RowItem> rowItems;
     private List<String> sumList;
     private CustomAdapter adapter;
-    private Button wanted;
-    private Button unwanted;
+    private Button addWanted;
+    private Button addUnwanted;
     private Button sum;
     private Button subtract;
     private Button reset;
@@ -45,6 +49,10 @@ public class FoodsListActivity extends AppCompatActivity implements AdapterView.
     private double fatsAmount=0;
     private double caloriesAmount=0;
 
+    private int pos;
+
+    private ArrayList<ArrayList<String>> list;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_foods_list);
@@ -53,10 +61,9 @@ public class FoodsListActivity extends AppCompatActivity implements AdapterView.
         foodType = String.valueOf(getIntent().getStringExtra("type"));
 
 
-
         LinearLayout calculatorLayout = findViewById(R.id.calculatorLayout);
         LinearLayout addLayout = findViewById(R.id.addLayout);
-             if(User.getName()==""){
+        if (User.getName() == "") {
             calculatorLayout.setVisibility(View.GONE);
             addLayout.setVisibility(View.GONE);
 
@@ -67,9 +74,9 @@ public class FoodsListActivity extends AppCompatActivity implements AdapterView.
             );
             LinearLayout foodsListLayout = findViewById(R.id.foodsListLayout);
             foodsListLayout.setLayoutParams(param);
-        }else{
-            wanted=findViewById(R.id.WantedButton);
-            unwanted=findViewById(R.id.UnwantedButton);
+        } else {
+            addWanted = findViewById(R.id.WantedButton);
+            addUnwanted = findViewById(R.id.UnwantedButton);
             sum = findViewById(R.id.SumButton);
             reset = findViewById(R.id.ResetButton);
             subtract = findViewById(R.id.SubtractButton);
@@ -78,15 +85,43 @@ public class FoodsListActivity extends AppCompatActivity implements AdapterView.
             fats = findViewById(R.id.fatsPlainText);
             calories = findViewById(R.id.caloriesPlainText);
 
+            ArrayList<HashMap<String, String>> arrayList = new ArrayList<>();
+            addWanted.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    HashMap<String, String> list = new HashMap<>();
+                    String protein = "Proteins:";
+                    String carbohydrate = "Carbohydrates:";
+                    String fat = "Fats:";
+                    String calorie = "Calories:";
+
+                    String name = arrayList.get(pos).get("name");
+                    String proteins = arrayList.get(pos).get("proteins");
+                    String carbohydrates = arrayList.get(pos).get("carbohydrates");
+                    String fats = arrayList.get(pos).get("fats");
+                    String calories = arrayList.get(pos).get("calories");
+                    list.put("name", name);
+                    list.put("protein", protein);
+                    list.put("proteins", proteins);
+                    list.put("carbohydrate", carbohydrate);
+                    list.put("carbohydrates", carbohydrates);
+                    list.put("fat", fat);
+                    list.put("fats", fats);
+                    list.put("calorie", calorie);
+                    list.put("calories", calories);
+                    MainActivity.wantedList.add(list);
+
+
+                }
+            });
+
             //sum.setOnClickListener(v -> sumNutriens());
-        }
-        ArrayList<HashMap<String, String>> arrayList = new ArrayList<>();
-        if(foodType.equals("")){
-           getAll(arrayList);
-        }else if(foodType.equals("calories")){
-            getType(arrayList,foodType,100);
+
+        if (foodType.equals("")) {
+            getAll(arrayList);
+        } else if (foodType.equals("calories")) {
+            getType(arrayList, foodType, 100);
         } else {
-            getType(arrayList,foodType,10);
+            getType(arrayList, foodType, 10);
         }
 
         ListAdapter adapter = new SimpleAdapter(this, arrayList, R.layout.list_viewdegn,
@@ -99,12 +134,14 @@ public class FoodsListActivity extends AppCompatActivity implements AdapterView.
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                proteinsAmount =Double.valueOf(arrayList.get(position).get("proteins"));
-                carbohydratesAmount =Double.valueOf(arrayList.get(position).get("carbohydrates"));
-                fatsAmount =Double.valueOf(arrayList.get(position).get("fats"));
-                caloriesAmount =Double.valueOf(arrayList.get(position).get("calories"));
+                proteinsAmount = Double.valueOf(arrayList.get(position).get("proteins"));
+                carbohydratesAmount = Double.valueOf(arrayList.get(position).get("carbohydrates"));
+                fatsAmount = Double.valueOf(arrayList.get(position).get("fats"));
+                caloriesAmount = Double.valueOf(arrayList.get(position).get("calories"));
+                pos = position;
             }
         });
+        }
     }
 
     @Override

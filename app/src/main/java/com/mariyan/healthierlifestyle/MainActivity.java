@@ -11,15 +11,24 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class MainActivity extends AppCompatActivity {
     private Button foods;
     private String username;
     private MenuInflater inflater;
-
+    public static ArrayList<HashMap<String, String>> wantedList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        wantedList = new ArrayList<HashMap<String, String>>();
 
         username = getIntent().getStringExtra("USERNAME");
         if (username != null && !username.equals("")) {
@@ -39,6 +48,10 @@ public class MainActivity extends AppCompatActivity {
             User.setWeight(User.read("weight", ""));
             User.setHeight(User.read("height", ""));
             User.setTrainings(User.read("trainings", ""));
+
+
+
+
         }
         foods = findViewById(R.id.FoodsButton);
         foods.setOnClickListener(v -> openFoodsActivity());

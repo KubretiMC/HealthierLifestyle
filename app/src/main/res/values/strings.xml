@@ -33,6 +33,10 @@
     <string name="calories_per_day">calories per day</string>
     <string name="zero">0</string>
     <string name="reset">Reset</string>
+    <string name="wanted">Wanted</string>
+    <string name="unwanted">unwanted</string>
+    <string name="wanted_foods">wanted foods</string>
+    <string name="unwanted_foods">unwanted foods</string>
 
 
     <string-array name="Foods_names">

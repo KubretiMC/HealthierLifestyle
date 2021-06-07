@@ -13,7 +13,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="0.3"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -50,32 +50,15 @@
                     android:id="@+id/ageTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/age" />
 
                 <Spinner
                     android:id="@+id/ageSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@android:drawable/btn_dropdown"
-                    android:spinnerMode="dropdown"
-                    android:layout_marginLeft="10dp"/>
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/genderTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/gender" />
-
-                <Spinner
-                    android:id="@+id/genderSpinner"
-                    android:layout_width="140dp"
-                    android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
                     android:background="@android:drawable/btn_dropdown"
                     android:spinnerMode="dropdown" />
             </TableRow>
@@ -88,15 +71,17 @@
                     android:id="@+id/heightTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/height" />
 
                 <Spinner
                     android:id="@+id/heightSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
                     android:background="@android:drawable/btn_dropdown"
-                    android:spinnerMode="dropdown"
-                    android:layout_marginLeft="10dp"/>
+                    android:spinnerMode="dropdown" />
             </TableRow>
 
             <TableRow
@@ -107,15 +92,17 @@
                     android:id="@+id/weightTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/weight" />
 
                 <Spinner
                     android:id="@+id/weightSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
                     android:background="@android:drawable/btn_dropdown"
-                    android:spinnerMode="dropdown"
-                    android:layout_marginLeft="10dp"/>
+                    android:spinnerMode="dropdown" />
             </TableRow>
 
             <TableRow
@@ -126,15 +113,17 @@
                     android:id="@+id/trainingsPerWeekTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/trainings_per_week" />
 
                 <Spinner
                     android:id="@+id/trainingsPerWeekSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
                     android:background="@android:drawable/btn_dropdown"
-                    android:spinnerMode="dropdown"
-                    android:layout_marginLeft="10dp"/>
+                    android:spinnerMode="dropdown" />
             </TableRow>
 
             <Button
@@ -146,7 +135,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/personRegisterTable" />
-
         </TableLayout>
     </LinearLayout>
 
@@ -174,13 +162,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/proteins_per_day" />
+
                 <EditText
                     android:id="@+id/proteinsPlainText"
-                    android:layout_height="wrap_content"
                     android:layout_width="100dp"
-                    android:editable="false"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    />
+                    android:editable="false" />
             </TableRow>
 
 
@@ -193,13 +181,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/carbohydrates_per_day" />
+
                 <EditText
                     android:id="@+id/carbohydratesPlainText"
-                    android:layout_height="wrap_content"
                     android:layout_width="100dp"
-                    android:editable="false"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    />
+                    android:editable="false" />
             </TableRow>
 
 
@@ -212,15 +200,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/fats_per_day" />
+
                 <EditText
                     android:id="@+id/fatsPlainText"
-                    android:layout_height="wrap_content"
                     android:layout_width="100dp"
-                    android:editable="false"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    />
+                    android:editable="false" />
             </TableRow>
-
 
             <TableRow
                 android:layout_width="match_parent"
@@ -231,13 +218,33 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/calories_per_day" />
+
                 <EditText
                     android:id="@+id/caloriesPlainText"
-                    android:layout_height="wrap_content"
                     android:layout_width="100dp"
-                    android:editable="false"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    />
+                    android:editable="false" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/WantedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/wanted_foods" />
+
+                <Button
+                    android:id="@+id/UnwantedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/unwanted_foods" />
+
             </TableRow>
         </TableLayout>
     </LinearLayout>
