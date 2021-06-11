@@ -1,11 +1,14 @@
 package com.mariyan.healthierlifestyle;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -14,12 +17,18 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+
+import com.google.gson.Gson;
+
+import java.util.HashMap;
 import java.util.List;
 
 public class WantedFoodsActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     private String foodType;
     private List<RowItem> rowItems;
     private CustomAdapter adapter;
+    private Button removeWanted;
+    private int pos;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +47,31 @@ public class WantedFoodsActivity extends AppCompatActivity implements AdapterVie
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                pos = position;
             }
         });
+
+        removeWanted = findViewById(R.id.RemoveButton);
+        removeWanted.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                MainActivity.wantedList.remove(pos);
+
+                SharedPreferences db = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+                SharedPreferences.Editor collection = db.edit();
+                Gson gson = new Gson();
+                String arrayList1 = gson.toJson(MainActivity.wantedList);
+
+                collection.putString("wantedList", arrayList1);
+                collection.commit();
+
+                finish();
+                startActivity(getIntent());
+            }
+        });
+
+
+
     }
 
     @Override
