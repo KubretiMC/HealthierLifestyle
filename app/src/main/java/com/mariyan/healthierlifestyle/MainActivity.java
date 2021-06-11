@@ -30,6 +30,15 @@ public class MainActivity extends AppCompatActivity {
 
         wantedList = new ArrayList<HashMap<String, String>>();
 
+        SharedPreferences db=PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        Gson gson = new Gson();
+        String arrayListString = db.getString("wantedList", null);
+        if(arrayListString != null) {
+            Type type = new TypeToken<ArrayList<HashMap<String, String>>>() {
+            }.getType();
+            wantedList = gson.fromJson(arrayListString, type);
+        }
         username = getIntent().getStringExtra("USERNAME");
         if (username != null && !username.equals("")) {
             SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());

@@ -28,20 +28,7 @@ public class WantedFoodsActivity extends AppCompatActivity implements AdapterVie
         ListView listView = findViewById(R.id.listview);
         foodType = String.valueOf(getIntent().getStringExtra("type"));
 
-        LinearLayout calculatorLayout = findViewById(R.id.calculatorLayout);
-        LinearLayout addLayout = findViewById(R.id.addLayout);
-        if(User.getName()==""){
-            calculatorLayout.setVisibility(View.GONE);
-            addLayout.setVisibility(View.GONE);
 
-            LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    1.0f
-            );
-            LinearLayout foodsListLayout = findViewById(R.id.foodsListLayout);
-            foodsListLayout.setLayoutParams(param);
-        }
         ListAdapter adapter = new SimpleAdapter(this, MainActivity.wantedList, R.layout.list_viewdegn,
                 new String[]{"name", "protein", "proteins", "carbohydrate", "carbohydrates", "fat", "fats", "calorie", "calories"},
                 new int[]{R.id.name, R.id.proteinName, R.id.proteins, R.id.carbohydrateName, R.id.carbohydrates,
