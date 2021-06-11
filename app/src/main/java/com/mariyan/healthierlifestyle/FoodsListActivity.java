@@ -117,14 +117,12 @@ public class FoodsListActivity extends AppCompatActivity implements AdapterView.
                 for (HashMap<String, String> m : MainActivity.wantedList)
                     if (m.containsValue(name)) {
                         flag = true;
+                        Toast.makeText(getApplicationContext(), "Already in", Toast.LENGTH_SHORT).show();
                         break;
                     }
 
-                if(flag==false) {
-                    MainActivity.wantedList.add(list);
-                }else{
-                    Toast.makeText(getApplicationContext(), "Already in", Toast.LENGTH_SHORT).show();
-                }
+                if(flag==false) MainActivity.wantedList.add(list);
+
 
                 SharedPreferences db = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
