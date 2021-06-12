@@ -57,12 +57,14 @@ public class ProfileActivity extends AppCompatActivity {
 
         wanted = findViewById(R.id.WantedButton);
         wanted.setOnClickListener(v -> {
-            openWantedActivity();
+            openWantedActivity("wanted");
         });
 
 
         unwanted=findViewById(R.id.UnwantedButton);
-
+        unwanted.setOnClickListener(v -> {
+            openWantedActivity("unwanted");
+        });
 
 
         calories = findViewById(R.id.caloriesPlainText);
@@ -168,6 +170,9 @@ public class ProfileActivity extends AppCompatActivity {
                 .setContentText("Information updated!")
                 .build();
         notify.flags |= Notification.FLAG_AUTO_CANCEL;
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
     }
 
     public Spinner setSpinner(int spinnerLength, int spinnerStart, Spinner spinner) {
@@ -223,8 +228,9 @@ public class ProfileActivity extends AppCompatActivity {
         return Math.round(carb * 100d) / 100d;
     }
 
-    private void openWantedActivity() {
+    private void openWantedActivity(String type) {
         Intent intent = new Intent(getApplicationContext(), WantedFoodsActivity.class);
+        intent.putExtra("type", type);
         startActivity(intent);
     }
 }

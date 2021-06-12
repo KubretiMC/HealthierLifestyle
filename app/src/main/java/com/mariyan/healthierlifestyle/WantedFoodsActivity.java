@@ -24,11 +24,13 @@ import java.util.HashMap;
 import java.util.List;
 
 public class WantedFoodsActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+    private String wanted;
     private String foodType;
     private List<RowItem> rowItems;
     private CustomAdapter adapter;
     private Button removeWanted;
-    private int pos;
+    private Button removeUnwanted;
+    private int pos=-1;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,38 +39,75 @@ public class WantedFoodsActivity extends AppCompatActivity implements AdapterVie
         ListView listView = findViewById(R.id.listview);
         foodType = String.valueOf(getIntent().getStringExtra("type"));
 
+        if(foodType.equals("wanted")) {
+            removeWanted = findViewById(R.id.RemoveButton);
+            ListAdapter adapter = new SimpleAdapter(this, MainActivity.wantedList, R.layout.list_viewdegn,
+                    new String[]{"name", "protein", "proteins", "carbohydrate", "carbohydrates", "fat", "fats", "calorie", "calories"},
+                    new int[]{R.id.name, R.id.proteinName, R.id.proteins, R.id.carbohydrateName, R.id.carbohydrates,
+                            R.id.fatName, R.id.fats, R.id.calorieName, R.id.calories});
+            listView.setAdapter(adapter);
 
-        ListAdapter adapter = new SimpleAdapter(this, MainActivity.wantedList, R.layout.list_viewdegn,
-                new String[]{"name", "protein", "proteins", "carbohydrate", "carbohydrates", "fat", "fats", "calorie", "calories"},
-                new int[]{R.id.name, R.id.proteinName, R.id.proteins, R.id.carbohydrateName, R.id.carbohydrates,
-                        R.id.fatName, R.id.fats, R.id.calorieName, R.id.calories});
-        listView.setAdapter(adapter);
+            if(MainActivity.wantedList.isEmpty()){
+                removeWanted.setVisibility(View.GONE);
+            }
+
+            removeWanted.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    MainActivity.wantedList.remove(pos);
+
+                    SharedPreferences db = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+                    SharedPreferences.Editor collection = db.edit();
+                    Gson gson = new Gson();
+                    String arrayList1 = gson.toJson(MainActivity.wantedList);
+
+                    collection.putString("wantedList", arrayList1);
+                    collection.commit();
+                    pos=-1;
+                    finish();
+                    startActivity(getIntent());
+                }
+            });
+
+
+        }else{
+
+            removeUnwanted = findViewById(R.id.RemoveButton);
+            ListAdapter adapter = new SimpleAdapter(this, MainActivity.unwantedList, R.layout.list_viewdegn,
+                    new String[]{"name", "protein", "proteins", "carbohydrate", "carbohydrates", "fat", "fats", "calorie", "calories"},
+                    new int[]{R.id.name, R.id.proteinName, R.id.proteins, R.id.carbohydrateName, R.id.carbohydrates,
+                            R.id.fatName, R.id.fats, R.id.calorieName, R.id.calories});
+            listView.setAdapter(adapter);
+
+            if(MainActivity.unwantedList.isEmpty()){
+                removeUnwanted.setVisibility(View.GONE);
+            }
+
+            removeUnwanted.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    MainActivity.unwantedList.remove(pos);
+
+                    SharedPreferences db = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+                    SharedPreferences.Editor collection = db.edit();
+                    Gson gson = new Gson();
+                    String arrayList1 = gson.toJson(MainActivity.unwantedList);
+
+                    collection.putString("unwantedList", arrayList1);
+                    collection.commit();
+                    pos=-1;
+                    finish();
+                    startActivity(getIntent());
+                }
+            });
+        }
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 pos = position;
             }
         });
 
-        removeWanted = findViewById(R.id.RemoveButton);
-        removeWanted.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                MainActivity.wantedList.remove(pos);
-
-                SharedPreferences db = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
-                SharedPreferences.Editor collection = db.edit();
-                Gson gson = new Gson();
-                String arrayList1 = gson.toJson(MainActivity.wantedList);
-
-                collection.putString("wantedList", arrayList1);
-                collection.commit();
-
-                finish();
-                startActivity(getIntent());
-            }
-        });
 
 
 

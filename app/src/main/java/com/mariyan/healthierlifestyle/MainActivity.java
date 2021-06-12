@@ -23,13 +23,14 @@ public class MainActivity extends AppCompatActivity {
     private String username;
     private MenuInflater inflater;
     public static ArrayList<HashMap<String, String>> wantedList;
+    public static ArrayList<HashMap<String, String>> unwantedList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        wantedList = new ArrayList<HashMap<String, String>>();
-
+        wantedList = new ArrayList<>();
+        unwantedList = new ArrayList<>();
         SharedPreferences db=PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         Gson gson = new Gson();
@@ -38,6 +39,12 @@ public class MainActivity extends AppCompatActivity {
             Type type = new TypeToken<ArrayList<HashMap<String, String>>>() {
             }.getType();
             wantedList = gson.fromJson(arrayListString, type);
+        }
+        arrayListString = db.getString("unwantedList", null);
+        if(arrayListString != null) {
+            Type type = new TypeToken<ArrayList<HashMap<String, String>>>() {
+            }.getType();
+            unwantedList = gson.fromJson(arrayListString, type);
         }
         username = getIntent().getStringExtra("USERNAME");
         if (username != null && !username.equals("")) {
