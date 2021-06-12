@@ -6,34 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="20"
+    android:weightSum="10"
     tools:context=".FoodsListActivity">
-    <LinearLayout
-        android:id="@+id/addLayout"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:visibility="gone">
-        <Button
-            android:id="@+id/WantedButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Add to wanted foods"
-            />
-        <Button
-            android:id="@+id/UnwantedButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Add to unwanted foods" />
-    </LinearLayout>
     <LinearLayout
         android:id="@+id/foodsListLayout"
         android:layout_width="match_parent" android:layout_height="0dp"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
-        android:layout_weight="14"
+        android:layout_weight="9"
         android:gravity="center"
         android:orientation="horizontal"
 
@@ -50,90 +30,29 @@
             ></ListView>
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/calculatorLayout"
-        android:layout_height="0dp" android:layout_width="match_parent"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_weight="5"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:visibility="gone"
-        >
-    <TableLayout android:id="@+id/personRegisterTable"
-        android:layout_height="wrap_content" android:layout_width="match_parent"
-        tools:ignore="MissingConstraints">
-        <TableRow android:layout_height="match_parent" android:layout_width="match_parent">
-            <Button
-                android:id="@+id/SumButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Sum"
-             />
-            <Button
-                android:id="@+id/ResetButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/reset"
-                />
-        </TableRow>
-        <TableRow android:layout_height="match_parent" android:layout_width="match_parent">
-            <TextView
-                android:id="@+id/proteinsTextView"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:text="@string/proteins" />
-            <TextView
-                android:id="@+id/carbohydratesTextView"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:text="@string/carbohydrates" />
-            <TextView
-                android:id="@+id/fatsTextView"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:text="@string/fats" />
-            <TextView
-                android:id="@+id/caloriesTextView"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:text="@string/calories" />
-        </TableRow>
-
-        <TableRow  android:layout_height="match_parent" android:layout_width="match_parent">
-            <EditText
-                android:id="@+id/proteinsPlainText"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:text="@string/zero" />
-            <EditText
-                android:id="@+id/carbohydratesPlainText"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:text="@string/zero" />
-            <EditText
-                android:id="@+id/fatsPlainText"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:text="@string/zero" />
-            <EditText
-                android:id="@+id/caloriesPlainText"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:text="@string/zero" />
-        </TableRow>>
-
-    </TableLayout>
-
-</LinearLayout>
-
+        android:id="@+id/addLayout"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:visibility="gone">
+        <Button
+            android:id="@+id/WantedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Add to wanted foods"
+            />
+        <Button
+            android:id="@+id/CalculatorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/calculator_mode"
+            />
+        <Button
+            android:id="@+id/UnwantedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Add to unwanted foods" />
+    </LinearLayout>
 </LinearLayout>

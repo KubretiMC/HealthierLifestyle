@@ -37,6 +37,7 @@
     <string name="unwanted">unwanted</string>
     <string name="wanted_foods">wanted foods</string>
     <string name="unwanted_foods">unwanted foods</string>
+    <string name="calculator_mode">Calculator Mode</string>
 
 
     <string-array name="Foods_names">

@@ -1,7 +1,6 @@
 package com.mariyan.healthierlifestyle;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -34,16 +33,13 @@ import java.util.List;
 
 import com.google.gson.Gson;
 
-public class FoodsListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class CalculatorActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     private String foodType;
     private List<RowItem> rowItems;
     private List<String> sumList;
     private CustomAdapter adapter;
-    private Button addWanted;
-    private Button addUnwanted;
     private Button sum;
     private Button reset;
-    private Button calculator;
     private EditText proteins;
     private EditText carbohydrates;
     private EditText fats;
@@ -52,6 +48,10 @@ public class FoodsListActivity extends AppCompatActivity implements AdapterView.
     private double carbohydratesAmount = 0;
     private double fatsAmount = 0;
     private double caloriesAmount = 0;
+    private double proteinSum = 0;
+    private double carboSum = 0;
+    private double fatSum = 0;
+    private double caloriesSum = 0;
 
     private int pos = -1;
 
@@ -59,15 +59,15 @@ public class FoodsListActivity extends AppCompatActivity implements AdapterView.
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_foods_list);
+        setContentView(R.layout.activity_calculator);
 
         ListView listView = findViewById(R.id.listview);
         foodType = String.valueOf(getIntent().getStringExtra("type"));
 
         LinearLayout foodsListLayout = findViewById(R.id.foodsListLayout);
-        LinearLayout addLayout = findViewById(R.id.addLayout);
+        LinearLayout calculatorLayout = findViewById(R.id.calculatorLayout);
         if (User.getName() != "") {
-            addLayout.setVisibility(View.VISIBLE);
+            calculatorLayout.setVisibility(View.VISIBLE);
         } else {
             LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
@@ -76,130 +76,53 @@ public class FoodsListActivity extends AppCompatActivity implements AdapterView.
             );
             foodsListLayout.setLayoutParams(param);
         }
-        calculator = findViewById(R.id.CalculatorButton);
-        addWanted = findViewById(R.id.WantedButton);
-        addUnwanted = findViewById(R.id.UnwantedButton);
         sum = findViewById(R.id.SumButton);
         reset = findViewById(R.id.ResetButton);
         proteins = findViewById(R.id.proteinsPlainText);
-        carbohydrates = findViewById(R.id.proteinsPlainText);
+        carbohydrates = findViewById(R.id.carbohydratesPlainText);
         fats = findViewById(R.id.fatsPlainText);
         calories = findViewById(R.id.caloriesPlainText);
 
-        calculator.setOnClickListener(v -> openCalculatorActivity());
-
         ArrayList<HashMap<String, String>> arrayList = new ArrayList<>();
-        addWanted.setOnClickListener(new View.OnClickListener() {
+        sum.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (pos < 0) {
                     Toast.makeText(getApplicationContext(), "Please select food!", Toast.LENGTH_SHORT).show();
                 } else {
                     HashMap<String, String> list = new HashMap<>();
-                    String protein = "Proteins:";
-                    String carbohydrate = "Carbohydrates:";
-                    String fat = "Fats:";
-                    String calorie = "Calories:";
+                    proteinSum += proteinsAmount;
+                    carboSum += carbohydratesAmount;
+                    fatSum += fatsAmount;
+                    caloriesSum += caloriesAmount;
+                    proteins.setText(String.format("%.2f", proteinSum));
+                    carbohydrates.setText(String.format("%.2f", carboSum));
+                    fats.setText(String.format("%.2f", fatSum));
+                    calories.setText(String.format("%.2f", caloriesSum));
 
-                    String name = arrayList.get(pos).get("name");
-                    String proteins = arrayList.get(pos).get("proteins");
-                    String carbohydrates = arrayList.get(pos).get("carbohydrates");
-                    String fats = arrayList.get(pos).get("fats");
-                    String calories = arrayList.get(pos).get("calories");
-                    list.put("name", name);
-                    list.put("protein", protein);
-                    list.put("proteins", proteins);
-                    list.put("carbohydrate", carbohydrate);
-                    list.put("carbohydrates", carbohydrates);
-                    list.put("fat", fat);
-                    list.put("fats", fats);
-                    list.put("calorie", calorie);
-                    list.put("calories", calories);
-
-                    boolean flag = false;
-                    for (HashMap<String, String> m : MainActivity.wantedList)
-                        if (m.containsValue(name)) {
-                            flag = true;
-                            Toast.makeText(getApplicationContext(), "Already in", Toast.LENGTH_SHORT).show();
-                            break;
-                        }
-
-                    if (flag == false) {
-                        MainActivity.wantedList.add(list);
-
-
-                        SharedPreferences db = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
-                        SharedPreferences.Editor collection = db.edit();
-                        Gson gson = new Gson();
-                        String arrayList1 = gson.toJson(MainActivity.wantedList);
-
-                        collection.putString("wantedList", arrayList1);
-                        collection.commit();
-                        pos = -1;
-                        Toast.makeText(getApplicationContext(), "Added", Toast.LENGTH_SHORT).show();
-                        finish();
-                        startActivity(getIntent());
-                    }
+                    Toast.makeText(getApplicationContext(), "Calculated", Toast.LENGTH_SHORT).show();
+//                        finish();
+//                        startActivity(getIntent());
                 }
             }
         });
 
-        addUnwanted.setOnClickListener(new View.OnClickListener() {
+        reset.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (pos < 0) {
-                    Toast.makeText(getApplicationContext(), "Please select food!", Toast.LENGTH_SHORT).show();
-                } else {
-                    HashMap<String, String> list = new HashMap<>();
-                    String protein = "Proteins:";
-                    String carbohydrate = "Carbohydrates:";
-                    String fat = "Fats:";
-                    String calorie = "Calories:";
+                proteinSum = 0;
+                carboSum = 0;
+                fatSum = 0;
+                caloriesSum = 0;
+                proteins.setText("0");
+                carbohydrates.setText("0");
+                fats.setText("0");
+                calories.setText("0");
 
-                    String name = arrayList.get(pos).get("name");
-                    String proteins = arrayList.get(pos).get("proteins");
-                    String carbohydrates = arrayList.get(pos).get("carbohydrates");
-                    String fats = arrayList.get(pos).get("fats");
-                    String calories = arrayList.get(pos).get("calories");
-                    list.put("name", name);
-                    list.put("protein", protein);
-                    list.put("proteins", proteins);
-                    list.put("carbohydrate", carbohydrate);
-                    list.put("carbohydrates", carbohydrates);
-                    list.put("fat", fat);
-                    list.put("fats", fats);
-                    list.put("calorie", calorie);
-                    list.put("calories", calories);
+                Toast.makeText(getApplicationContext(), "Calculated", Toast.LENGTH_SHORT).show();
+//                        finish();
+//                        startActivity(getIntent());
 
-                    boolean flag = false;
-                    for (HashMap<String, String> m : MainActivity.unwantedList)
-                        if (m.containsValue(name)) {
-                            flag = true;
-                            Toast.makeText(getApplicationContext(), "Already in", Toast.LENGTH_SHORT).show();
-                            break;
-                        }
-
-                    if (flag == false) {
-                        MainActivity.unwantedList.add(list);
-
-
-                        SharedPreferences db = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
-                        SharedPreferences.Editor collection = db.edit();
-                        Gson gson = new Gson();
-                        String arrayList1 = gson.toJson(MainActivity.unwantedList);
-
-                        collection.putString("unwantedList", arrayList1);
-                        collection.commit();
-                        pos = -1;
-                        Toast.makeText(getApplicationContext(), "Added", Toast.LENGTH_SHORT).show();
-                        finish();
-                        startActivity(getIntent());
-                    }
-                }
             }
         });
-        //sum.setOnClickListener(v -> sumNutriens());
-
         if (foodType.equals("")) {
             getAll(arrayList);
         } else if (foodType.equals("calories")) {
@@ -215,7 +138,6 @@ public class FoodsListActivity extends AppCompatActivity implements AdapterView.
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 proteinsAmount = Double.valueOf(arrayList.get(position).get("proteins"));
@@ -362,11 +284,6 @@ public class FoodsListActivity extends AppCompatActivity implements AdapterView.
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    }
-    private void openCalculatorActivity() {
-        Intent intent = new Intent(getApplicationContext(), CalculatorActivity.class);
-        intent.putExtra("type", foodType);
-        startActivity(intent);
     }
 
 //    private void sumNutriens(){
