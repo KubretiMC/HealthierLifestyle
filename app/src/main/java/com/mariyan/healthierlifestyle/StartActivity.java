@@ -10,13 +10,12 @@ import android.widget.Button;
 public class StartActivity extends AppCompatActivity {
     private Button register;
     private Button guest;
-    public static Activity startActivity1;
+    public static Activity startActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-
-        startActivity1 = this;
+        startActivity = this;
         register = findViewById(R.id.RegisterButton);
         register.setOnClickListener(v -> openRegisterActivity());
         guest = findViewById(R.id.ContinueAsGuestButton);
@@ -24,9 +23,9 @@ public class StartActivity extends AppCompatActivity {
 
         SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
         String checkBox = preferences.getString("remember","");
+        assert checkBox != null;
         if(checkBox.equals("true")){
-            Intent intent = new Intent(StartActivity.this,MainActivity.class);
-            startActivity(intent);
+            openMainActivity();
             finish();
         }
     }

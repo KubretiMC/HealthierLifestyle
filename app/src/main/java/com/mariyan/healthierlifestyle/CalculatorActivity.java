@@ -1,9 +1,6 @@
 package com.mariyan.healthierlifestyle;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,8 +27,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import com.google.gson.Gson;
 
 public class CalculatorActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     private String foodType;
@@ -61,7 +56,7 @@ public class CalculatorActivity extends AppCompatActivity implements AdapterView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator);
 
-        ListView listView = findViewById(R.id.listview);
+        ListView listView = findViewById(R.id.listView);
         foodType = String.valueOf(getIntent().getStringExtra("type"));
 
         LinearLayout foodsListLayout = findViewById(R.id.foodsListLayout);
@@ -84,44 +79,40 @@ public class CalculatorActivity extends AppCompatActivity implements AdapterView
         calories = findViewById(R.id.caloriesPlainText);
 
         ArrayList<HashMap<String, String>> arrayList = new ArrayList<>();
-        sum.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if (pos < 0) {
-                    Toast.makeText(getApplicationContext(), "Please select food!", Toast.LENGTH_SHORT).show();
-                } else {
-                    HashMap<String, String> list = new HashMap<>();
-                    proteinSum += proteinsAmount;
-                    carboSum += carbohydratesAmount;
-                    fatSum += fatsAmount;
-                    caloriesSum += caloriesAmount;
-                    proteins.setText(String.format("%.2f", proteinSum));
-                    carbohydrates.setText(String.format("%.2f", carboSum));
-                    fats.setText(String.format("%.2f", fatSum));
-                    calories.setText(String.format("%.2f", caloriesSum));
-
-                    Toast.makeText(getApplicationContext(), "Calculated", Toast.LENGTH_SHORT).show();
-//                        finish();
-//                        startActivity(getIntent());
-                }
-            }
-        });
-
-        reset.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                proteinSum = 0;
-                carboSum = 0;
-                fatSum = 0;
-                caloriesSum = 0;
-                proteins.setText("0");
-                carbohydrates.setText("0");
-                fats.setText("0");
-                calories.setText("0");
+        sum.setOnClickListener(v -> {
+            if (pos < 0) {
+                Toast.makeText(getApplicationContext(), "Please select food!", Toast.LENGTH_SHORT).show();
+            } else {
+                HashMap<String, String> list = new HashMap<>();
+                proteinSum += proteinsAmount;
+                carboSum += carbohydratesAmount;
+                fatSum += fatsAmount;
+                caloriesSum += caloriesAmount;
+                proteins.setText(String.format("%.2f", proteinSum));
+                carbohydrates.setText(String.format("%.2f", carboSum));
+                fats.setText(String.format("%.2f", fatSum));
+                calories.setText(String.format("%.2f", caloriesSum));
 
                 Toast.makeText(getApplicationContext(), "Calculated", Toast.LENGTH_SHORT).show();
 //                        finish();
 //                        startActivity(getIntent());
-
             }
+        });
+
+        reset.setOnClickListener(v -> {
+            proteinSum = 0;
+            carboSum = 0;
+            fatSum = 0;
+            caloriesSum = 0;
+            proteins.setText("0");
+            carbohydrates.setText("0");
+            fats.setText("0");
+            calories.setText("0");
+
+            Toast.makeText(getApplicationContext(), "Calculated", Toast.LENGTH_SHORT).show();
+//                        finish();
+//                        startActivity(getIntent());
+
         });
         if (foodType.equals("")) {
             getAll(arrayList);
@@ -137,15 +128,12 @@ public class CalculatorActivity extends AppCompatActivity implements AdapterView
                         R.id.fatName, R.id.fats, R.id.calorieName, R.id.calories});
         listView.setAdapter(adapter);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                proteinsAmount = Double.valueOf(arrayList.get(position).get("proteins"));
-                carbohydratesAmount = Double.valueOf(arrayList.get(position).get("carbohydrates"));
-                fatsAmount = Double.valueOf(arrayList.get(position).get("fats"));
-                caloriesAmount = Double.valueOf(arrayList.get(position).get("calories"));
-                pos = position;
-            }
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            proteinsAmount = Double.valueOf(arrayList.get(position).get("proteins"));
+            carbohydratesAmount = Double.valueOf(arrayList.get(position).get("carbohydrates"));
+            fatsAmount = Double.valueOf(arrayList.get(position).get("fats"));
+            caloriesAmount = Double.valueOf(arrayList.get(position).get("calories"));
+            pos = position;
         });
     }
 
@@ -285,10 +273,5 @@ public class CalculatorActivity extends AppCompatActivity implements AdapterView
             e.printStackTrace();
         }
     }
-
-//    private void sumNutriens(){
-//       adapter.getItemId()
-//
-//    }
 
 }

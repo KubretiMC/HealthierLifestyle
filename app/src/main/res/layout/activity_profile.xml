@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_layout"
     android:layout_width="match_parent"
@@ -21,10 +20,9 @@
             android:id="@+id/WelcomeUserTextView"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_centerHorizontal="true"
             android:gravity="center_vertical|center_horizontal"
             android:text="@string/welcome_user"
-            android:textSize="20dp" />
+            android:textSize="18sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -56,8 +54,10 @@
                     android:id="@+id/proteinsPlainText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:editable="false" />
+                    android:layout_marginStart="20dp"
+                    android:inputType="numberDecimal"
+                    android:editable="false"
+                    android:autofillHints="" />
             </TableRow>
 
 
@@ -75,8 +75,10 @@
                     android:id="@+id/carbohydratesPlainText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:editable="false" />
+                    android:layout_marginStart="20dp"
+                    android:inputType="numberDecimal"
+                    android:editable="false"
+                    android:autofillHints="" />
             </TableRow>
 
 
@@ -94,8 +96,10 @@
                     android:id="@+id/fatsPlainText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:editable="false" />
+                    android:layout_marginStart="20dp"
+                    android:inputType="numberDecimal"
+                    android:editable="false"
+                    android:autofillHints="" />
             </TableRow>
 
             <TableRow
@@ -113,7 +117,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:editable="false" />
+                    android:inputType="numberDecimal"
+                    android:editable="false"
+                    android:autofillHints="" />
             </TableRow>
 
             <TableRow

@@ -38,6 +38,10 @@
     <string name="wanted_foods">wanted foods</string>
     <string name="unwanted_foods">unwanted foods</string>
     <string name="calculator_mode">Calculator Mode</string>
+    <string name="add_to_wanted_foods">Add to wanted foods</string>
+    <string name="add_to_unwanted_foods">Add to unwanted foods</string>
+    <string name="remove">Remove</string>
+    <string name="sum">Sum</string>
 
 
     <string-array name="Foods_names">

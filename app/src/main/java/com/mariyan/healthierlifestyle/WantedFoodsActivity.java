@@ -9,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -20,7 +19,6 @@ import androidx.appcompat.widget.SearchView;
 
 import com.google.gson.Gson;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class WantedFoodsActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
@@ -36,7 +34,7 @@ public class WantedFoodsActivity extends AppCompatActivity implements AdapterVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wanted);
 
-        ListView listView = findViewById(R.id.listview);
+        ListView listView = findViewById(R.id.listView);
         foodType = String.valueOf(getIntent().getStringExtra("type"));
 
         if(foodType.equals("wanted")) {
@@ -51,22 +49,20 @@ public class WantedFoodsActivity extends AppCompatActivity implements AdapterVie
                 removeWanted.setVisibility(View.GONE);
             }
 
-            removeWanted.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    MainActivity.wantedList.remove(pos);
+            removeWanted.setOnClickListener(v -> {
+                MainActivity.wantedList.remove(pos);
 
-                    SharedPreferences db = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                SharedPreferences db = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-                    SharedPreferences.Editor collection = db.edit();
-                    Gson gson = new Gson();
-                    String arrayList1 = gson.toJson(MainActivity.wantedList);
+                SharedPreferences.Editor collection = db.edit();
+                Gson gson = new Gson();
+                String arrayList1 = gson.toJson(MainActivity.wantedList);
 
-                    collection.putString("wantedList", arrayList1);
-                    collection.commit();
-                    pos=-1;
-                    finish();
-                    startActivity(getIntent());
-                }
+                collection.putString("wantedList", arrayList1);
+                collection.commit();
+                pos=-1;
+                finish();
+                startActivity(getIntent());
             });
 
 
@@ -83,30 +79,23 @@ public class WantedFoodsActivity extends AppCompatActivity implements AdapterVie
                 removeUnwanted.setVisibility(View.GONE);
             }
 
-            removeUnwanted.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    MainActivity.unwantedList.remove(pos);
+            removeUnwanted.setOnClickListener(v -> {
+                MainActivity.unwantedList.remove(pos);
 
-                    SharedPreferences db = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                SharedPreferences db = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-                    SharedPreferences.Editor collection = db.edit();
-                    Gson gson = new Gson();
-                    String arrayList1 = gson.toJson(MainActivity.unwantedList);
+                SharedPreferences.Editor collection = db.edit();
+                Gson gson = new Gson();
+                String arrayList1 = gson.toJson(MainActivity.unwantedList);
 
-                    collection.putString("unwantedList", arrayList1);
-                    collection.commit();
-                    pos=-1;
-                    finish();
-                    startActivity(getIntent());
-                }
+                collection.putString("unwantedList", arrayList1);
+                collection.commit();
+                pos=-1;
+                finish();
+                startActivity(getIntent());
             });
         }
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                pos = position;
-            }
-        });
+        listView.setOnItemClickListener((parent, view, position, id) -> pos = position);
 
 
 

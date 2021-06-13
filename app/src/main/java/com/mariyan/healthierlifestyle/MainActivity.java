@@ -46,17 +46,14 @@ public class MainActivity extends AppCompatActivity {
             }.getType();
             unwantedList = gson.fromJson(arrayListString, type);
         }
-        username = getIntent().getStringExtra("USERNAME");
+        username = getIntent().getStringExtra("username");
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         if (username != null && !username.equals("")) {
-            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             SharedPreferences.Editor editor = settings.edit();
             editor.putString("username", username);
             editor.apply();
-
         } else {
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            username = prefs.getString("username", "No name defined");//"No name defined" is the default value.
-
+            username = settings.getString("username", "No name defined");//"No name defined" is the default value.
             User.init(getApplicationContext());
             User.setName(User.read("name", ""));
             User.setAge(User.read("age", ""));
@@ -64,10 +61,6 @@ public class MainActivity extends AppCompatActivity {
             User.setWeight(User.read("weight", ""));
             User.setHeight(User.read("height", ""));
             User.setTrainings(User.read("trainings", ""));
-
-
-
-
         }
         foods = findViewById(R.id.FoodsButton);
         foods.setOnClickListener(v -> openFoodsActivity());
@@ -75,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void onDestroy() {
         super.onDestroy();
-
         SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
         String checkbox = preferences.getString("remember", "");
         assert checkbox != null;
@@ -117,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void openProfileActivity() {
         Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
-        intent.putExtra("USERNAME", username);
         startActivity(intent);
     }
 }
