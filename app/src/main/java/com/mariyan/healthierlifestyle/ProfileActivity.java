@@ -9,52 +9,38 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ProfileActivity extends AppCompatActivity {
-    private TextView userName;
-    private EditText calories;
-    private EditText proteins;
-    private EditText carbohydrates;
-    private EditText fats;
-    private Button updateUser;
-    private Button wanted;
-    private Button unwanted;
-    private int age = Integer.parseInt(User.getAge());
-    private int height = Integer.parseInt(User.getHeight());
-    private int weight = Integer.parseInt(User.getWeight());
+    private final int age = Integer.parseInt(User.getAge());
+    private final int height = Integer.parseInt(User.getHeight());
+    private final int weight = Integer.parseInt(User.getWeight());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        userName = findViewById(R.id.WelcomeUserTextView);
+        TextView userName = findViewById(R.id.WelcomeUserTextView);
         userName.setText("Welcome " + User.getName());
 
-        calories = findViewById(R.id.caloriesPlainText);
+        EditText calories = findViewById(R.id.caloriesPlainText);
         calories.setText(String.valueOf(calculateCalories()));
 
-        proteins = findViewById(R.id.proteinsPlainText);
+        EditText proteins = findViewById(R.id.proteinsPlainText);
         proteins.setText(String.valueOf(calculateProteins()));
 
-        carbohydrates = findViewById(R.id.carbohydratesPlainText);
+        EditText carbohydrates = findViewById(R.id.carbohydratesPlainText);
         carbohydrates.setText(String.valueOf(calculateCarbohydrates()));
 
-        fats = findViewById(R.id.fatsPlainText);
+        EditText fats = findViewById(R.id.fatsPlainText);
         fats.setText(String.valueOf(calculateFats()));
 
-        updateUser = findViewById(R.id.UpdateButton);
-        updateUser.setOnClickListener(v -> {
-            openUpdateUserActivity();
-        });
+        Button updateUser = findViewById(R.id.UpdateButton);
+        updateUser.setOnClickListener(v -> openUpdateUserActivity());
 
-        wanted = findViewById(R.id.WantedButton);
-        wanted.setOnClickListener(v -> {
-            openWantedActivity("wanted");
-        });
+        Button wanted = findViewById(R.id.WantedButton);
+        wanted.setOnClickListener(v -> openWantedActivity("wanted"));
 
-        unwanted = findViewById(R.id.UnwantedButton);
-        unwanted.setOnClickListener(v -> {
-            openWantedActivity("unwanted");
-        });
+        Button unwanted = findViewById(R.id.UnwantedButton);
+        unwanted.setOnClickListener(v -> openWantedActivity("unwanted"));
 
     }
 
@@ -80,11 +66,11 @@ public class ProfileActivity extends AppCompatActivity {
     public double calculateProteins() {
         double result;
         if (User.getTrainings().equals("1-3")) {
-            result = Double.valueOf(User.getWeight()) * 0.8;
+            result = Double.parseDouble(User.getWeight()) * 0.8;
         } else if (User.getTrainings().equals("3-7")) {
-            result = Double.valueOf(User.getWeight()) * 1.1;
+            result = Double.parseDouble(User.getWeight()) * 1.1;
         } else {
-            result = Double.valueOf(User.getWeight()) * 1.3;
+            result = Double.parseDouble(User.getWeight()) * 1.3;
         }
         return Math.round(result * 100d) / 100d;
     }

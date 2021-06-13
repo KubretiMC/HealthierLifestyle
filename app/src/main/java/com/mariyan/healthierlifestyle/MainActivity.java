@@ -17,9 +17,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
-    private Button foods;
-    private String username;
-    private MenuInflater inflater;
     public static ArrayList<HashMap<String, String>> wantedList;
     public static ArrayList<HashMap<String, String>> unwantedList;
     @Override
@@ -32,14 +29,13 @@ public class MainActivity extends AppCompatActivity {
         wantedList = fillLists(wantedList,"wantedList");
         unwantedList = fillLists(unwantedList,"unwantedList");
 
-        username = getIntent().getStringExtra("username");
+        String username = getIntent().getStringExtra("username");
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         if (username != null && !username.equals("")) {
             SharedPreferences.Editor editor = settings.edit();
             editor.putString("username", username);
             editor.apply();
         } else {
-            username = settings.getString("username", "No name defined");//"No name defined" is the default value.
             User.init(getApplicationContext());
             User.setName(User.read("name", ""));
             User.setAge(User.read("age", ""));
@@ -48,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
             User.setHeight(User.read("height", ""));
             User.setTrainings(User.read("trainings", ""));
         }
-        foods = findViewById(R.id.FoodsButton);
+        Button foods = findViewById(R.id.FoodsButton);
         foods.setOnClickListener(v -> openFoodsActivity());
     }
 
@@ -57,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String check = settings.getString("username", null);
         if (check != null && !check.equals("")) {
-            inflater = getMenuInflater();
+            MenuInflater inflater = getMenuInflater();
             inflater.inflate(R.menu.profile_menu, menu);
         }
         return true;

@@ -15,13 +15,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CalculatorActivity extends AppCompatActivity {
-    private String foodType;
-    private Button sum;
-    private Button reset;
     private EditText proteins;
     private EditText carbohydrates;
     private EditText fats;
@@ -42,7 +40,7 @@ public class CalculatorActivity extends AppCompatActivity {
         ListView listView = findViewById(R.id.listView);
         LinearLayout foodsListLayout = findViewById(R.id.foodsListLayout);
         LinearLayout calculatorLayout = findViewById(R.id.calculatorLayout);
-        if (User.getName() != "") {
+        if (!User.getName().equals("")) {
             calculatorLayout.setVisibility(View.VISIBLE);
         } else {
             LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
@@ -52,8 +50,8 @@ public class CalculatorActivity extends AppCompatActivity {
             );
             foodsListLayout.setLayoutParams(param);
         }
-        sum = findViewById(R.id.SumButton);
-        reset = findViewById(R.id.ResetButton);
+        Button sum = findViewById(R.id.SumButton);
+        Button reset = findViewById(R.id.ResetButton);
         proteins = findViewById(R.id.proteinsPlainText);
         carbohydrates = findViewById(R.id.carbohydratesPlainText);
         fats = findViewById(R.id.fatsPlainText);
@@ -86,7 +84,7 @@ public class CalculatorActivity extends AppCompatActivity {
             fats.setText("0");
             calories.setText("0");
         });
-        foodType = String.valueOf(getIntent().getStringExtra("type"));
+        String foodType = String.valueOf(getIntent().getStringExtra("type"));
         if (foodType.equals("")) {
             getType(arrayList, "proteins", 0);
         } else if (foodType.equals("calories")) {
@@ -118,7 +116,7 @@ public class CalculatorActivity extends AppCompatActivity {
             byte[] bbuffer = new byte[size];
             in.read(bbuffer);
             in.close();
-            json = new String(bbuffer, "UTF-8");
+            json = new String(bbuffer, StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
             return null;

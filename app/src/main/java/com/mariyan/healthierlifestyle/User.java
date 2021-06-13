@@ -35,26 +35,6 @@ public class User
         prefsEditor.commit();
     }
 
-    public static boolean read(String key, boolean defValue) {
-        return mSharedPref.getBoolean(key, defValue);
-    }
-
-    public static void write(String key, boolean value) {
-        SharedPreferences.Editor prefsEditor = mSharedPref.edit();
-        prefsEditor.putBoolean(key, value);
-        prefsEditor.commit();
-    }
-
-    public static Integer read(String key, int defValue) {
-        return mSharedPref.getInt(key, defValue);
-    }
-
-    public static void write(String key, Integer value) {
-        SharedPreferences.Editor prefsEditor = mSharedPref.edit();
-        prefsEditor.putInt(key, value).commit();
-    }
-
-
     public static String getName() {
         return name;
     }

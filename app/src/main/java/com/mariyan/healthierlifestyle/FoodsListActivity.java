@@ -18,15 +18,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import com.google.gson.Gson;
 
 public class FoodsListActivity extends AppCompatActivity {
     private String foodType;
-    private Button addWanted;
-    private Button addUnwanted;
-    private Button calculator;
     private String name;
     private String proteinsAmount;
     private String carbohydratesAmount;
@@ -40,7 +38,7 @@ public class FoodsListActivity extends AppCompatActivity {
 
         LinearLayout foodsListLayout = findViewById(R.id.foodsListLayout);
         LinearLayout addLayout = findViewById(R.id.addLayout);
-        if (User.getName() != "") {
+        if (!User.getName().equals("")) {
             addLayout.setVisibility(View.VISIBLE);
         } else {
             LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
@@ -51,13 +49,13 @@ public class FoodsListActivity extends AppCompatActivity {
             foodsListLayout.setLayoutParams(param);
         }
 
-        calculator = findViewById(R.id.CalculatorButton);
+        Button calculator = findViewById(R.id.CalculatorButton);
         calculator.setOnClickListener(v -> openCalculatorActivity());
 
-        addWanted = findViewById(R.id.WantedButton);
+        Button addWanted = findViewById(R.id.WantedButton);
         addWanted.setOnClickListener(v -> addFood(MainActivity.wantedList, "wantedList"));
 
-        addUnwanted = findViewById(R.id.UnwantedButton);
+        Button addUnwanted = findViewById(R.id.UnwantedButton);
         addUnwanted.setOnClickListener(v -> addFood(MainActivity.unwantedList, "unwantedList"));
 
         foodType = String.valueOf(getIntent().getStringExtra("type"));
@@ -76,16 +74,13 @@ public class FoodsListActivity extends AppCompatActivity {
                 new int[]{R.id.name, R.id.proteinName, R.id.proteins, R.id.carbohydrateName, R.id.carbohydrates,
                         R.id.fatName, R.id.fats, R.id.calorieName, R.id.calories});
         listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                pos = position;
-                name = arrayList.get(position).get("name");
-                proteinsAmount = arrayList.get(position).get("proteins");
-                carbohydratesAmount = arrayList.get(position).get("carbohydrates");
-                fatsAmount = arrayList.get(position).get("fats");
-                caloriesAmount = arrayList.get(position).get("calories");
-            }
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            pos = position;
+            name = arrayList.get(position).get("name");
+            proteinsAmount = arrayList.get(position).get("proteins");
+            carbohydratesAmount = arrayList.get(position).get("carbohydrates");
+            fatsAmount = arrayList.get(position).get("fats");
+            caloriesAmount = arrayList.get(position).get("calories");
         });
     }
 
@@ -97,7 +92,7 @@ public class FoodsListActivity extends AppCompatActivity {
             byte[] bbuffer = new byte[size];
             in.read(bbuffer);
             in.close();
-            json = new String(bbuffer, "UTF-8");
+            json = new String(bbuffer, StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
             return null;

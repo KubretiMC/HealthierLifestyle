@@ -16,17 +16,14 @@ public class UpdateUserActivity extends AppCompatActivity {
     private Spinner userHeight;
     private Spinner userWeight;
     private Spinner userTrainingsPerWeek;
-    private Button updateUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_user);
 
-        updateUser = findViewById(R.id.UpdateButton);
-        updateUser.setOnClickListener(v -> {
-            updateUser();
-        });
+        Button updateUser = findViewById(R.id.UpdateButton);
+        updateUser.setOnClickListener(v -> updateUser());
 
         userAge = findViewById(R.id.ageSpinner);
         userAge = setSpinner(55, 16, userAge);

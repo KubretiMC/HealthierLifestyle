@@ -7,55 +7,26 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class FoodsActivity extends AppCompatActivity {
-    private Button showAll;
-    private Button showProtein;
-    private Button showCarbohydrate;
-    private Button showFat;
-    private Button showCalorie;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_foods);
 
-        showAll = findViewById(R.id.AllFoodsButton);
-        showAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openFoodsListActivity("");
-            }
-        });
+        Button showAll = findViewById(R.id.AllFoodsButton);
+        showAll.setOnClickListener(v -> openFoodsListActivity(""));
 
-        showProtein = findViewById(R.id.ProteinFoodsButton);
-        showProtein.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openFoodsListActivity("proteins");
-            }
-        });
+        Button showProtein = findViewById(R.id.ProteinFoodsButton);
+        showProtein.setOnClickListener(v -> openFoodsListActivity("proteins"));
 
-        showCarbohydrate = findViewById(R.id.CarbohydrateFoodsButton);
-        showCarbohydrate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openFoodsListActivity("carbohydrates");
-            }
-        });
+        Button showCarbohydrate = findViewById(R.id.CarbohydrateFoodsButton);
+        showCarbohydrate.setOnClickListener(v -> openFoodsListActivity("carbohydrates"));
 
-        showFat = findViewById(R.id.FatFoodsButton);
-        showFat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openFoodsListActivity("fats");
-            }
-        });
+        Button showFat = findViewById(R.id.FatFoodsButton);
+        showFat.setOnClickListener(v -> openFoodsListActivity("fats"));
 
-        showCalorie = findViewById(R.id.CalorieFoodsButton);
-        showCalorie.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openFoodsListActivity("calories");
-            }
-        });
+        Button showCalorie = findViewById(R.id.CalorieFoodsButton);
+        showCalorie.setOnClickListener(v -> openFoodsListActivity("calories"));
     }
     private void openFoodsListActivity(String type) {
         Intent intent = new Intent(getApplicationContext(), FoodsListActivity.class);

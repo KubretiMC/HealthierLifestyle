@@ -8,8 +8,6 @@ import android.os.Bundle;
 import android.widget.Button;
 
 public class StartActivity extends AppCompatActivity {
-    private Button register;
-    private Button guest;
     public static Activity startActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,10 +15,10 @@ public class StartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start);
         startActivity = this;
 
-        register = findViewById(R.id.RegisterButton);
+        Button register = findViewById(R.id.RegisterButton);
         register.setOnClickListener(v -> openRegisterActivity());
 
-        guest = findViewById(R.id.ContinueAsGuestButton);
+        Button guest = findViewById(R.id.ContinueAsGuestButton);
         guest.setOnClickListener(v -> openMainActivity());
 
         SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);

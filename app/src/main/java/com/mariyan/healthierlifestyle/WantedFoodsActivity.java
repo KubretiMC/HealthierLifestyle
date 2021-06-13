@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class WantedFoodsActivity extends AppCompatActivity {
-    private String foodType;
     private Button removeWanted;
     private ListView listView;
     private int pos = -1;
@@ -28,16 +27,16 @@ public class WantedFoodsActivity extends AppCompatActivity {
         listView = findViewById(R.id.listView);
         listView.setOnItemClickListener((parent, view, position, id) -> pos = position);
 
-        foodType = String.valueOf(getIntent().getStringExtra("type"));
+        String foodType = String.valueOf(getIntent().getStringExtra("type"));
         if (foodType.equals("wanted")) {
-            showFoods(MainActivity.wantedList);
+            showFoods(MainActivity.wantedList,"wantedList");
         } else {
-            showFoods(MainActivity.unwantedList);
+            showFoods(MainActivity.unwantedList,"unwantedList");
         }
 
     }
 
-    private void showFoods(ArrayList<HashMap<String, String>> list) {
+    private void showFoods(ArrayList<HashMap<String, String>> list,String wanted) {
         ListAdapter adapter = new SimpleAdapter(this, list, R.layout.list_viewdegn,
                 new String[]{"name", "protein", "proteins", "carbohydrate", "carbohydrates", "fat", "fats", "calorie", "calories"},
                 new int[]{R.id.name, R.id.proteinName, R.id.proteins, R.id.carbohydrateName, R.id.carbohydrates,
@@ -56,7 +55,7 @@ public class WantedFoodsActivity extends AppCompatActivity {
                     SharedPreferences.Editor collection = db.edit();
                     Gson gson = new Gson();
                     String listWantedString = gson.toJson(list);
-                    collection.putString("wantedList", listWantedString);
+                    collection.putString(wanted, listWantedString);
                     collection.commit();
                     pos = -1;
                     finish();

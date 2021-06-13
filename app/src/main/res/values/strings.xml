@@ -52,11 +52,4 @@
         <item>Egg</item>
     </string-array>
 
-    <array name="foods_pics">
-        <item>@drawable/apple</item>
-        <item>@drawable/chickenbreasts</item>
-        <item>@drawable/orange</item>
-        <item>@drawable/rice</item>
-        <item>@drawable/egg</item>
-    </array>
 </resources>

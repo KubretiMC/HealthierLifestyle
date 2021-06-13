@@ -19,7 +19,6 @@ public class RegisterActivity extends AppCompatActivity {
     private Spinner userHeight;
     private Spinner userWeight;
     private Spinner userTrainingsPerWeek;
-    private Button register;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +26,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         userName = findViewById(R.id.namePlainText);
 
-        register = findViewById(R.id.RegisterButton);
+        Button register = findViewById(R.id.RegisterButton);
         register.setOnClickListener(v -> {
                 if (createUser()) {
                     String username = String.valueOf(userName);
