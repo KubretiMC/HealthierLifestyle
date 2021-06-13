@@ -52,20 +52,6 @@ public class MainActivity extends AppCompatActivity {
         foods.setOnClickListener(v -> openFoodsActivity());
     }
 
-    public void onDestroy() {
-        super.onDestroy();
-        SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
-        String checkbox = preferences.getString("remember", "");
-        assert checkbox != null;
-        if (checkbox.equals("false")) {
-            SharedPreferences preferences2 = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            SharedPreferences.Editor editor2 = preferences2.edit();
-            editor2.putString("username", "").apply();
-            editor2.apply();
-        }
-        finish();
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -79,13 +65,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.profileItem:
-                openProfileActivity();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.profileItem) {
+            openProfileActivity();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private void openFoodsActivity() {
@@ -97,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
         startActivity(intent);
     }
-    public ArrayList<HashMap<String, String>> fillLists(ArrayList<HashMap<String, String>> list, String wantedList){
+    private ArrayList<HashMap<String, String>> fillLists(ArrayList<HashMap<String, String>> list, String wantedList){
         SharedPreferences preferences=PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Gson gson = new Gson();
         String wanted = preferences.getString(wantedList, null);

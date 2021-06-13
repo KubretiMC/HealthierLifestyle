@@ -32,7 +32,6 @@ public class CalculatorActivity extends AppCompatActivity implements AdapterView
     private String foodType;
     private List<RowItem> rowItems;
     private List<String> sumList;
-    private CustomAdapter adapter;
     private Button sum;
     private Button reset;
     private EditText proteins;
@@ -141,28 +140,6 @@ public class CalculatorActivity extends AppCompatActivity implements AdapterView
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         String food_name = rowItems.get(position).getFood_name();
         Toast.makeText(getApplicationContext(), "" + food_name, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.search_menu, menu);
-        MenuItem menuItem = menu.findItem(R.id.search_view);
-        SearchView searchView = (SearchView) menuItem.getActionView();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                Log.e("Main", " data search" + newText);
-                adapter.getFilter().filter(newText);
-                return true;
-            }
-        });
-        return true;
     }
 
     @Override

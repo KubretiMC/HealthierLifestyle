@@ -105,27 +105,7 @@ public class WantedFoodsActivity extends AppCompatActivity implements AdapterVie
         Toast.makeText(getApplicationContext(), "" + food_name, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.search_menu, menu);
-        MenuItem menuItem = menu.findItem(R.id.search_view);
-        SearchView searchView = (SearchView) menuItem.getActionView();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                Log.e("Main", " data search" + newText);
-                adapter.getFilter().filter(newText);
-                return true;
-            }
-        });
-        return true;
-    }
+   
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
