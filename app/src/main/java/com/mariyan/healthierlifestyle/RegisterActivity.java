@@ -145,11 +145,6 @@ public class RegisterActivity extends AppCompatActivity {
             return false;
         } else {
             Toast.makeText(getApplicationContext(), "Registration successful!", Toast.LENGTH_LONG).show();
-            Notification notify = new Notification.Builder(getApplicationContext())
-                    .setContentTitle("Registration successful!")
-                    .setContentText(name)
-                    .build();
-            notify.flags |= Notification.FLAG_AUTO_CANCEL;
             String age = userAge.getSelectedItem().toString();
             String gender = userGender.getSelectedItem().toString();
             String height = userHeight.getSelectedItem().toString();

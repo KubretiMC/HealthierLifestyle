@@ -10,10 +10,8 @@ import android.view.MenuItem;
 import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,24 +26,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         wantedList = new ArrayList<>();
         unwantedList = new ArrayList<>();
-        SharedPreferences db=PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-        Gson gson = new Gson();
-        String arrayListString = db.getString("wantedList", null);
-        if(arrayListString != null) {
-            Type type = new TypeToken<ArrayList<HashMap<String, String>>>() {
-            }.getType();
-            wantedList = gson.fromJson(arrayListString, type);
-        }
-        arrayListString = db.getString("unwantedList", null);
-        if(arrayListString != null) {
-            Type type = new TypeToken<ArrayList<HashMap<String, String>>>() {
-            }.getType();
-            unwantedList = gson.fromJson(arrayListString, type);
-        }
+        wantedList = fillLists(wantedList,"wantedList");
+        unwantedList = fillLists(unwantedList,"unwantedList");
+
         username = getIntent().getStringExtra("username");
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         if (username != null && !username.equals("")) {
@@ -110,5 +96,15 @@ public class MainActivity extends AppCompatActivity {
     private void openProfileActivity() {
         Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
         startActivity(intent);
+    }
+    public ArrayList<HashMap<String, String>> fillLists(ArrayList<HashMap<String, String>> list, String wantedList){
+        SharedPreferences preferences=PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        Gson gson = new Gson();
+        String wanted = preferences.getString(wantedList, null);
+        if(wanted != null) {
+            Type type = new TypeToken<ArrayList<HashMap<String, String>>>() {}.getType();
+            list = gson.fromJson(wanted, type);
+        }
+        return list;
     }
 }

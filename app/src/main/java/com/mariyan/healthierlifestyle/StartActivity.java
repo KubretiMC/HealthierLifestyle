@@ -16,8 +16,10 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
         startActivity = this;
+
         register = findViewById(R.id.RegisterButton);
         register.setOnClickListener(v -> openRegisterActivity());
+
         guest = findViewById(R.id.ContinueAsGuestButton);
         guest.setOnClickListener(v -> openMainActivity());
 

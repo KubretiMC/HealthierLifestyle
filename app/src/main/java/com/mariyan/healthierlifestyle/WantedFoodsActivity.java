@@ -13,13 +13,10 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-
 import com.google.gson.Gson;
-
 import java.util.List;
 
 public class WantedFoodsActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
@@ -69,8 +66,6 @@ public class WantedFoodsActivity extends AppCompatActivity implements AdapterVie
                     startActivity(getIntent());
                 }
             });
-
-
         } else {
 
             removeUnwanted = findViewById(R.id.RemoveButton);
@@ -102,8 +97,6 @@ public class WantedFoodsActivity extends AppCompatActivity implements AdapterVie
             });
         }
         listView.setOnItemClickListener((parent, view, position, id) -> pos = position);
-
-
     }
 
     @Override

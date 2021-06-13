@@ -80,11 +80,11 @@ public class FoodsListActivity extends AppCompatActivity implements AdapterView.
 
         ArrayList<HashMap<String, String>> arrayList = new ArrayList<>();
         addWanted.setOnClickListener(v -> {
-            addFood(MainActivity.wantedList);
+            addFood(MainActivity.wantedList,"wantedList");
         });
 
         addUnwanted.setOnClickListener(v -> {
-            addFood(MainActivity.unwantedList);
+            addFood(MainActivity.unwantedList, "unwantedList");
         });
 
         if (foodType.equals("")) {
@@ -244,7 +244,7 @@ public class FoodsListActivity extends AppCompatActivity implements AdapterView.
         intent.putExtra("type", foodType);
         startActivity(intent);
     }
-    public void addFood(ArrayList<HashMap<String, String>> listWanted){
+    public void addFood(ArrayList<HashMap<String, String>> listWanted, String wanted){
             if (pos < 0) {
                 Toast.makeText(getApplicationContext(), "Please select food!", Toast.LENGTH_SHORT).show();
             } else {
@@ -276,7 +276,7 @@ public class FoodsListActivity extends AppCompatActivity implements AdapterView.
                     SharedPreferences.Editor collection = db.edit();
                     Gson gson = new Gson();
                     String arrayList1 = gson.toJson(listWanted);
-                    collection.putString("wantedList", arrayList1);
+                    collection.putString(wanted, arrayList1);
                     collection.commit();
                     pos = -1;
                     Toast.makeText(getApplicationContext(), "Added", Toast.LENGTH_SHORT).show();
