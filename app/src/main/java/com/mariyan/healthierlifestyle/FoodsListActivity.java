@@ -80,7 +80,7 @@ public class FoodsListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 pos = position;
-                name = arrayList.get(pos).get("name");
+                name = arrayList.get(position).get("name");
                 proteinsAmount = arrayList.get(position).get("proteins");
                 carbohydratesAmount = arrayList.get(position).get("carbohydrates");
                 fatsAmount = arrayList.get(position).get("fats");
@@ -179,8 +179,8 @@ public class FoodsListActivity extends AppCompatActivity {
                 SharedPreferences db = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 SharedPreferences.Editor collection = db.edit();
                 Gson gson = new Gson();
-                String arrayList1 = gson.toJson(listWanted);
-                collection.putString(wanted, arrayList1);
+                String listWantedString = gson.toJson(listWanted);
+                collection.putString(wanted, listWantedString);
                 collection.commit();
                 pos = -1;
                 Toast.makeText(getApplicationContext(), "Added", Toast.LENGTH_SHORT).show();
