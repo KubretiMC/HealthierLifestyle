@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -84,7 +83,7 @@ public class FoodsListActivity extends AppCompatActivity {
         });
     }
 
-    public String LoadJsonFromAsset() {
+    private String LoadJsonFromAsset() {
         String json;
         try {
             InputStream in = this.getAssets().open("mynewfile.json");
@@ -100,7 +99,7 @@ public class FoodsListActivity extends AppCompatActivity {
         return json;
     }
 
-    public void getType(ArrayList<HashMap<String, String>> arrayList, String type, int biggerThan) {
+    private void getType(ArrayList<HashMap<String, String>> arrayList, String type, int biggerThan) {
         try {
             JSONObject obj = new JSONObject(LoadJsonFromAsset());
             JSONArray array = obj.getJSONArray("foods");
@@ -143,7 +142,7 @@ public class FoodsListActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void addFood(ArrayList<HashMap<String, String>> listWanted, String wanted) {
+    private void addFood(ArrayList<HashMap<String, String>> listWanted, String wanted) {
         if (pos < 0) {
             Toast.makeText(getApplicationContext(), "Please select food!", Toast.LENGTH_SHORT).show();
         } else {
@@ -176,7 +175,7 @@ public class FoodsListActivity extends AppCompatActivity {
                 Gson gson = new Gson();
                 String listWantedString = gson.toJson(listWanted);
                 collection.putString(wanted, listWantedString);
-                collection.commit();
+                collection.apply();
                 pos = -1;
                 Toast.makeText(getApplicationContext(), "Added", Toast.LENGTH_SHORT).show();
                 finish();

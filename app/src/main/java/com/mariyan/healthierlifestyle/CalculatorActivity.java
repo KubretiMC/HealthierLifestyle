@@ -108,7 +108,7 @@ public class CalculatorActivity extends AppCompatActivity {
         });
     }
     
-    public String LoadJsonFromAsset() {
+    private String LoadJsonFromAsset() {
         String json;
         try {
             InputStream in = this.getAssets().open("mynewfile.json");
@@ -124,7 +124,7 @@ public class CalculatorActivity extends AppCompatActivity {
         return json;
     }
 
-    public void getType(ArrayList<HashMap<String, String>> arrayList, String type, int biggerThan) {
+    private void getType(ArrayList<HashMap<String, String>> arrayList, String type, int biggerThan) {
         try {
             JSONObject obj = new JSONObject(LoadJsonFromAsset());
             JSONArray array = obj.getJSONArray("foods");

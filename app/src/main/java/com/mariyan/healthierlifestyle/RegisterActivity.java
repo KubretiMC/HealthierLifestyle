@@ -39,7 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
         userAge = findViewById(R.id.ageSpinner);
-        userAge = setSpinner(55,16,userAge);
+        setSpinner(55, 16, userAge);
         userAge.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
             }
@@ -49,7 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
         userHeight = findViewById(R.id.heightSpinner);
-        userHeight = setSpinner(81,140,userHeight);
+        setSpinner(81, 140, userHeight);
         userHeight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 
@@ -60,7 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
         userWeight = findViewById(R.id.weightSpinner);
-        userWeight = setSpinner(201,40,userWeight);
+        setSpinner(201, 40, userWeight);
         userWeight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 
@@ -90,7 +90,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    public Spinner setSpinnerGender(String a, String b) {
+    private Spinner setSpinnerGender(String a, String b) {
         String[] arraySpinner = new String[]{a, b};
         Spinner spinner = findViewById(R.id.genderSpinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arraySpinner);
@@ -99,7 +99,7 @@ public class RegisterActivity extends AppCompatActivity {
         return spinner;
     }
 
-    public Spinner setSpinnerTrainings(String a, String b, String c) {
+    private Spinner setSpinnerTrainings(String a, String b, String c) {
         String[] arraySpinner = new String[]{a, b, c};
         Spinner spinner = findViewById(R.id.trainingsPerWeekSpinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
@@ -109,7 +109,7 @@ public class RegisterActivity extends AppCompatActivity {
         return spinner;
     }
 
-    public Spinner setSpinner(int spinnerLength,int spinnerStart, Spinner spinner) {
+    private Spinner setSpinner(int spinnerLength, int spinnerStart, Spinner spinner) {
         String[] arraySpinner = new String[spinnerLength];
         for (int i = 0; i < spinnerLength; i++) {
             arraySpinner[i] = String.valueOf(spinnerStart);

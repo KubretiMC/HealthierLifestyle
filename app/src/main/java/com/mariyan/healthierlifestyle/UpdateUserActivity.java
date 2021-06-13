@@ -26,7 +26,7 @@ public class UpdateUserActivity extends AppCompatActivity {
         updateUser.setOnClickListener(v -> updateUser());
 
         userAge = findViewById(R.id.ageSpinner);
-        userAge = setSpinner(55, 16, userAge);
+        setSpinner(55, 16, userAge);
         userAge.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
             }
@@ -53,7 +53,7 @@ public class UpdateUserActivity extends AppCompatActivity {
 
         userHeight = findViewById(R.id.heightSpinner);
         userHeight = findViewById(R.id.heightSpinner);
-        userHeight = setSpinner(81, 140, userHeight);
+        setSpinner(81, 140, userHeight);
         userHeight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
             }
@@ -66,7 +66,7 @@ public class UpdateUserActivity extends AppCompatActivity {
         userHeight.setSelection(spinnerHeightPosition);
 
         userWeight = findViewById(R.id.weightSpinner);
-        userWeight = setSpinner(201, 40, userWeight);
+        setSpinner(201, 40, userWeight);
         userWeight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
             }
@@ -79,7 +79,7 @@ public class UpdateUserActivity extends AppCompatActivity {
         userWeight.setSelection(spinnerWeightPosition);
     }
 
-    public void updateUser() {
+    private void updateUser() {
         String age = userAge.getSelectedItem().toString();
         String height = userHeight.getSelectedItem().toString();
         String weight = userWeight.getSelectedItem().toString();
@@ -101,7 +101,7 @@ public class UpdateUserActivity extends AppCompatActivity {
         finish();
     }
 
-    public Spinner setSpinner(int spinnerLength, int spinnerStart, Spinner spinner) {
+    private Spinner setSpinner(int spinnerLength, int spinnerStart, Spinner spinner) {
         String[] arraySpinner = new String[spinnerLength];
         for (int i = 0; i < spinnerLength; i++) {
             arraySpinner[i] = String.valueOf(spinnerStart);

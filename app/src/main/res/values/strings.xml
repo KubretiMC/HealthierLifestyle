@@ -42,14 +42,4 @@
     <string name="add_to_unwanted_foods">Add to unwanted foods</string>
     <string name="remove">Remove</string>
     <string name="sum">Sum</string>
-
-
-    <string-array name="Foods_names">
-        <item>Orange</item>
-        <item>Chicken Breasts</item>
-        <item>Apple</item>
-        <item>Rice</item>
-        <item>Egg</item>
-    </string-array>
-
 </resources>

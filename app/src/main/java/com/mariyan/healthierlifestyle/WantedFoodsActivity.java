@@ -56,7 +56,7 @@ public class WantedFoodsActivity extends AppCompatActivity {
                     Gson gson = new Gson();
                     String listWantedString = gson.toJson(list);
                     collection.putString(wanted, listWantedString);
-                    collection.commit();
+                    collection.apply();
                     pos = -1;
                     finish();
                     startActivity(getIntent());

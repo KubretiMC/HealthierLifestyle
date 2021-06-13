@@ -44,7 +44,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
-    public double calculateCalories() {
+    private double calculateCalories() {
         double result;
         if (User.getGender().equals("Male")) {
             result = 66.5 + 13.8 * weight + 5.0 * height - 6.8 * age;
@@ -59,11 +59,11 @@ public class ProfileActivity extends AppCompatActivity {
         return (double) Math.round(result * 100d) / 100d;
     }
 
-    public double calculateFats() {
+    private double calculateFats() {
         return Math.round((calculateCalories() * 0.3 / 9) * 100d) / 100d;
     }
 
-    public double calculateProteins() {
+    private double calculateProteins() {
         double result;
         if (User.getTrainings().equals("1-3")) {
             result = Double.parseDouble(User.getWeight()) * 0.8;
@@ -75,7 +75,7 @@ public class ProfileActivity extends AppCompatActivity {
         return Math.round(result * 100d) / 100d;
     }
 
-    public double calculateCarbohydrates() {
+    private double calculateCarbohydrates() {
         double cal = calculateCalories();
         double fa = calculateFats() * 9;
         double prot = calculateProteins() * 4;
