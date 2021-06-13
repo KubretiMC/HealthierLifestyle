@@ -1,30 +1,15 @@
 package com.mariyan.healthierlifestyle;
 
 import android.app.Activity;
-import android.app.Notification;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Update;
-
-import java.sql.SQLException;
 
 public class ProfileActivity extends AppCompatActivity {
     private TextView userName;
-    private Spinner userAge;
-    private Spinner userHeight;
-    private Spinner userWeight;
-    private Spinner userTrainingsPerWeek;
     private EditText calories;
     private EditText proteins;
     private EditText carbohydrates;
@@ -41,33 +26,8 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-
-        userAge = findViewById(R.id.ageSpinner);
-        userHeight = findViewById(R.id.heightSpinner);
-        userWeight = findViewById(R.id.weightSpinner);
-
         userName = findViewById(R.id.WelcomeUserTextView);
         userName.setText("Welcome " + User.getName());
-
-        userTrainingsPerWeek = findViewById(R.id.trainingsPerWeekSpinner);
-
-
-        updateUser = findViewById(R.id.UpdateButton);
-        updateUser.setOnClickListener(v -> {
-            openUpdateUserActivity();
-        });
-
-        wanted = findViewById(R.id.WantedButton);
-        wanted.setOnClickListener(v -> {
-            openWantedActivity("wanted");
-        });
-
-
-        unwanted = findViewById(R.id.UnwantedButton);
-        unwanted.setOnClickListener(v -> {
-            openWantedActivity("unwanted");
-        });
-
 
         calories = findViewById(R.id.caloriesPlainText);
         calories.setText(String.valueOf(calculateCalories()));
@@ -80,6 +40,22 @@ public class ProfileActivity extends AppCompatActivity {
 
         fats = findViewById(R.id.fatsPlainText);
         fats.setText(String.valueOf(calculateFats()));
+
+        updateUser = findViewById(R.id.UpdateButton);
+        updateUser.setOnClickListener(v -> {
+            openUpdateUserActivity();
+        });
+
+        wanted = findViewById(R.id.WantedButton);
+        wanted.setOnClickListener(v -> {
+            openWantedActivity("wanted");
+        });
+
+        unwanted = findViewById(R.id.UnwantedButton);
+        unwanted.setOnClickListener(v -> {
+            openWantedActivity("unwanted");
+        });
+
     }
 
     public double calculateCalories() {
@@ -94,7 +70,6 @@ public class ProfileActivity extends AppCompatActivity {
         } else if (User.getTrainings().equals("3-7")) {
             result = result * 1.5;
         }
-
         return (double) Math.round(result * 100d) / 100d;
     }
 
@@ -132,15 +107,10 @@ public class ProfileActivity extends AppCompatActivity {
         int LAUNCH_SECOND_ACTIVITY = 1;
         Intent i = new Intent(getApplicationContext(), UpdateUserActivity.class);
         startActivityForResult(i, LAUNCH_SECOND_ACTIVITY);
-
-//        Intent intent = new Intent(getApplicationContext(), UpdateUserActivity.class);
-//        startActivity(intent);
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_CANCELED) {
                 Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
@@ -148,8 +118,5 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         }
-    } //onActivityResult
-
+    }
 }
-
-

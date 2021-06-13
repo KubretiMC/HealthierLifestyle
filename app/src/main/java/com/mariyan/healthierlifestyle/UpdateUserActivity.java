@@ -1,17 +1,14 @@
 package com.mariyan.healthierlifestyle;
 
 import android.app.Activity;
-import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 public class UpdateUserActivity extends AppCompatActivity {
@@ -19,84 +16,70 @@ public class UpdateUserActivity extends AppCompatActivity {
     private Spinner userHeight;
     private Spinner userWeight;
     private Spinner userTrainingsPerWeek;
-    private EditText calories;
-    private EditText proteins;
-    private EditText carbohydrates;
-    private EditText fats;
     private Button updateUser;
-    private int age = Integer.parseInt(User.getAge());
-    private int height = Integer.parseInt(User.getHeight());
-    private int weight = Integer.parseInt(User.getWeight());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_user);
 
-
-        userAge = findViewById(R.id.ageSpinner);
-        userHeight = findViewById(R.id.heightSpinner);
-        userWeight = findViewById(R.id.weightSpinner);
-        userTrainingsPerWeek = findViewById(R.id.trainingsPerWeekSpinner);
-
         updateUser = findViewById(R.id.UpdateButton);
         updateUser.setOnClickListener(v -> {
             updateUser();
         });
 
-        Spinner spinnerAge = findViewById(R.id.ageSpinner);
-        spinnerAge = setSpinner(55, 16, spinnerAge);
-        spinnerAge.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        userAge = findViewById(R.id.ageSpinner);
+        userAge = setSpinner(55, 16, userAge);
+        userAge.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-        ArrayAdapter ageAdapter = (ArrayAdapter) spinnerAge.getAdapter(); //cast to an ArrayAdapter
+        ArrayAdapter ageAdapter = (ArrayAdapter) userAge.getAdapter(); //cast to an ArrayAdapter
         int spinnerAgePosition = ageAdapter.getPosition(User.getAge());
-        spinnerAge.setSelection(spinnerAgePosition);
+        userAge.setSelection(spinnerAgePosition);
 
-        Spinner spinnerTrainings = setSpinnerTrainings("0", "1-3", "3-7");
-        spinnerTrainings.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        userTrainingsPerWeek = findViewById(R.id.trainingsPerWeekSpinner);
+        userTrainingsPerWeek = setSpinnerTrainings("0", "1-3", "3-7");
+        userTrainingsPerWeek.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-        ArrayAdapter trainingsAdapter = (ArrayAdapter) spinnerTrainings.getAdapter(); //cast to an ArrayAdapter
+        ArrayAdapter trainingsAdapter = (ArrayAdapter) userTrainingsPerWeek.getAdapter(); //cast to an ArrayAdapter
         int spinnerTrainingsPosition = trainingsAdapter.getPosition(User.getTrainings());
-        spinnerTrainings.setSelection(spinnerTrainingsPosition);
+        userTrainingsPerWeek.setSelection(spinnerTrainingsPosition);
 
-        Spinner spinnerHeight = findViewById(R.id.heightSpinner);
-        spinnerHeight = setSpinner(81, 140, spinnerHeight);
-        spinnerHeight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        userHeight = findViewById(R.id.heightSpinner);
+        userHeight = findViewById(R.id.heightSpinner);
+        userHeight = setSpinner(81, 140, userHeight);
+        userHeight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-        ArrayAdapter heightAdapter = (ArrayAdapter) spinnerHeight.getAdapter(); //cast to an ArrayAdapter
+        ArrayAdapter heightAdapter = (ArrayAdapter) userHeight.getAdapter(); //cast to an ArrayAdapter
         int spinnerHeightPosition = heightAdapter.getPosition(User.getHeight());
-        spinnerHeight.setSelection(spinnerHeightPosition);
+        userHeight.setSelection(spinnerHeightPosition);
 
-        Spinner spinnerWeight = findViewById(R.id.weightSpinner);
-        spinnerWeight = setSpinner(201, 40, spinnerWeight);
-        spinnerWeight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        userWeight = findViewById(R.id.weightSpinner);
+        userWeight = setSpinner(201, 40, userWeight);
+        userWeight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-        ArrayAdapter weightAdapter = (ArrayAdapter) spinnerWeight.getAdapter(); //cast to an ArrayAdapter
+        ArrayAdapter weightAdapter = (ArrayAdapter) userWeight.getAdapter(); //cast to an ArrayAdapter
         int spinnerWeightPosition = weightAdapter.getPosition(User.getWeight());
-        spinnerWeight.setSelection(spinnerWeightPosition);
+        userWeight.setSelection(spinnerWeightPosition);
     }
 
     public void updateUser() {
@@ -116,17 +99,9 @@ public class UpdateUserActivity extends AppCompatActivity {
         User.write("trainings", User.getTrainings());
 
         Toast.makeText(getApplicationContext(), "Information updated!", Toast.LENGTH_LONG).show();
-        Notification notify = new Notification.Builder(getApplicationContext())
-                .setContentTitle("Information updated!")
-                .setContentText("Information updated!")
-                .build();
-        notify.flags |= Notification.FLAG_AUTO_CANCEL;
-        Intent intent = getIntent();
         Intent returnIntent = new Intent();
         setResult(Activity.RESULT_CANCELED, returnIntent);
         finish();
-//        finish();
-//        startActivity(intent);
     }
 
     public Spinner setSpinner(int spinnerLength, int spinnerStart, Spinner spinner) {
@@ -143,16 +118,12 @@ public class UpdateUserActivity extends AppCompatActivity {
     }
 
     public Spinner setSpinnerTrainings(String a, String b, String c) {
-
-        String[] arraySpinner = new String[]{
-                a, b, c
-        };
+        String[] arraySpinner = new String[]{a, b, c};
         Spinner spinner = findViewById(R.id.trainingsPerWeekSpinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, arraySpinner);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-
         return spinner;
     }
 }

@@ -1,6 +1,5 @@
 package com.mariyan.healthierlifestyle;
 
-import android.app.Notification;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -95,8 +94,7 @@ public class RegisterActivity extends AppCompatActivity {
     public Spinner setSpinnerGender(String a, String b) {
         String[] arraySpinner = new String[]{a, b};
         Spinner spinner = findViewById(R.id.genderSpinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, arraySpinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arraySpinner);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         return spinner;
@@ -118,8 +116,7 @@ public class RegisterActivity extends AppCompatActivity {
             arraySpinner[i] = String.valueOf(spinnerStart);
             spinnerStart++;
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, arraySpinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arraySpinner);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         return spinner;
@@ -129,19 +126,9 @@ public class RegisterActivity extends AppCompatActivity {
         String name = userName.getText().toString().trim();
         if (name.isEmpty()) {
             Toast.makeText(getApplicationContext(), "Please enter username!", Toast.LENGTH_LONG).show();
-            Notification notify = new Notification.Builder(getApplicationContext())
-                    .setContentTitle("Empty field!")
-                    .setContentText(name)
-                    .build();
-            notify.flags |= Notification.FLAG_AUTO_CANCEL;
             return false;
         } else if (name.length() < 6 || name.length() > 16) {
             Toast.makeText(getApplicationContext(), "Username must be between 6 and 16 characters", Toast.LENGTH_LONG).show();
-            Notification notify = new Notification.Builder(getApplicationContext())
-                    .setContentTitle("Username must be between 6 and 16 characters")
-                    .setContentText(name)
-                    .build();
-            notify.flags |= Notification.FLAG_AUTO_CANCEL;
             return false;
         } else {
             Toast.makeText(getApplicationContext(), "Registration successful!", Toast.LENGTH_LONG).show();
