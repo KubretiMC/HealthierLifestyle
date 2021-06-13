@@ -13,6 +13,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -28,7 +29,7 @@ public class WantedFoodsActivity extends AppCompatActivity implements AdapterVie
     private CustomAdapter adapter;
     private Button removeWanted;
     private Button removeUnwanted;
-    private int pos=-1;
+    private int pos = -1;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +38,7 @@ public class WantedFoodsActivity extends AppCompatActivity implements AdapterVie
         ListView listView = findViewById(R.id.listView);
         foodType = String.valueOf(getIntent().getStringExtra("type"));
 
-        if(foodType.equals("wanted")) {
+        if (foodType.equals("wanted")) {
             removeWanted = findViewById(R.id.RemoveButton);
             ListAdapter adapter = new SimpleAdapter(this, MainActivity.wantedList, R.layout.list_viewdegn,
                     new String[]{"name", "protein", "proteins", "carbohydrate", "carbohydrates", "fat", "fats", "calorie", "calories"},
@@ -45,28 +46,32 @@ public class WantedFoodsActivity extends AppCompatActivity implements AdapterVie
                             R.id.fatName, R.id.fats, R.id.calorieName, R.id.calories});
             listView.setAdapter(adapter);
 
-            if(MainActivity.wantedList.isEmpty()){
+            if (MainActivity.wantedList.isEmpty()) {
                 removeWanted.setVisibility(View.GONE);
             }
 
             removeWanted.setOnClickListener(v -> {
-                MainActivity.wantedList.remove(pos);
+                if (pos < 0) {
+                    Toast.makeText(getApplicationContext(), "Please select food!", Toast.LENGTH_SHORT).show();
+                } else {
+                    MainActivity.wantedList.remove(pos);
 
-                SharedPreferences db = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences db = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-                SharedPreferences.Editor collection = db.edit();
-                Gson gson = new Gson();
-                String arrayList1 = gson.toJson(MainActivity.wantedList);
+                    SharedPreferences.Editor collection = db.edit();
+                    Gson gson = new Gson();
+                    String arrayList1 = gson.toJson(MainActivity.wantedList);
 
-                collection.putString("wantedList", arrayList1);
-                collection.commit();
-                pos=-1;
-                finish();
-                startActivity(getIntent());
+                    collection.putString("wantedList", arrayList1);
+                    collection.commit();
+                    pos = -1;
+                    finish();
+                    startActivity(getIntent());
+                }
             });
 
 
-        }else{
+        } else {
 
             removeUnwanted = findViewById(R.id.RemoveButton);
             ListAdapter adapter = new SimpleAdapter(this, MainActivity.unwantedList, R.layout.list_viewdegn,
@@ -75,29 +80,28 @@ public class WantedFoodsActivity extends AppCompatActivity implements AdapterVie
                             R.id.fatName, R.id.fats, R.id.calorieName, R.id.calories});
             listView.setAdapter(adapter);
 
-            if(MainActivity.unwantedList.isEmpty()){
+            if (MainActivity.unwantedList.isEmpty()) {
                 removeUnwanted.setVisibility(View.GONE);
             }
 
             removeUnwanted.setOnClickListener(v -> {
-                MainActivity.unwantedList.remove(pos);
-
-                SharedPreferences db = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
-                SharedPreferences.Editor collection = db.edit();
-                Gson gson = new Gson();
-                String arrayList1 = gson.toJson(MainActivity.unwantedList);
-
-                collection.putString("unwantedList", arrayList1);
-                collection.commit();
-                pos=-1;
-                finish();
-                startActivity(getIntent());
+                if (pos < 0) {
+                    Toast.makeText(getApplicationContext(), "Please select food!", Toast.LENGTH_SHORT).show();
+                } else {
+                    MainActivity.unwantedList.remove(pos);
+                    SharedPreferences db = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor collection = db.edit();
+                    Gson gson = new Gson();
+                    String arrayList1 = gson.toJson(MainActivity.unwantedList);
+                    collection.putString("unwantedList", arrayList1);
+                    collection.commit();
+                    pos = -1;
+                    finish();
+                    startActivity(getIntent());
+                }
             });
         }
         listView.setOnItemClickListener((parent, view, position, id) -> pos = position);
-
-
 
 
     }
@@ -119,6 +123,7 @@ public class WantedFoodsActivity extends AppCompatActivity implements AdapterVie
 
                 return false;
             }
+
             @Override
             public boolean onQueryTextChange(String newText) {
                 Log.e("Main", " data search" + newText);
