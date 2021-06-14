@@ -19,7 +19,7 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         TextView userName = findViewById(R.id.WelcomeUserTextView);
-        userName.setText((getString(R.string.welcome) + User.getName()));
+        userName.setText((getString(R.string.welcome)  + User.getName()));
 
         EditText calories = findViewById(R.id.caloriesPlainText);
         calories.setText(String.valueOf(calculateCalories()));

@@ -35,5 +35,5 @@
     <string name="remove">Remove</string>
     <string name="sum">Sum</string>
     <string name="profile">Profile</string>
-    <string name="welcome">\"Welcome \"</string>
+    <string name="welcome">Welcome \t</string>
 </resources>
