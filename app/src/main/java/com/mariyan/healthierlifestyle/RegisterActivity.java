@@ -70,7 +70,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        userGender = setSpinnerGender("Male", "Female");
+        userGender = setSpinnerGender();
         userGender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
             }
@@ -79,7 +79,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        userTrainingsPerWeek = setSpinnerTrainings("0", "1-3", "3-7");
+        userTrainingsPerWeek = setSpinnerTrainings();
         userTrainingsPerWeek.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 
@@ -90,8 +90,8 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private Spinner setSpinnerGender(String a, String b) {
-        String[] arraySpinner = new String[]{a, b};
+    private Spinner setSpinnerGender() {
+        String[] arraySpinner = new String[]{"Male", "Female"};
         Spinner spinner = findViewById(R.id.genderSpinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arraySpinner);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -99,8 +99,8 @@ public class RegisterActivity extends AppCompatActivity {
         return spinner;
     }
 
-    private Spinner setSpinnerTrainings(String a, String b, String c) {
-        String[] arraySpinner = new String[]{a, b, c};
+    private Spinner setSpinnerTrainings() {
+        String[] arraySpinner = new String[]{"0", "1-3", "3-7"};
         Spinner spinner = findViewById(R.id.trainingsPerWeekSpinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, arraySpinner);
@@ -109,7 +109,7 @@ public class RegisterActivity extends AppCompatActivity {
         return spinner;
     }
 
-    private Spinner setSpinner(int spinnerLength, int spinnerStart, Spinner spinner) {
+    private void setSpinner(int spinnerLength, int spinnerStart, Spinner spinner) {
         String[] arraySpinner = new String[spinnerLength];
         for (int i = 0; i < spinnerLength; i++) {
             arraySpinner[i] = String.valueOf(spinnerStart);
@@ -118,7 +118,6 @@ public class RegisterActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arraySpinner);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        return spinner;
     }
 
     private boolean createUser() {

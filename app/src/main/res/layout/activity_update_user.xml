@@ -3,7 +3,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_layout"
     android:layout_marginTop="20dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,7 +10,6 @@
     android:orientation="vertical"
     tools:context=".UpdateUserActivity">
         <TableLayout
-            android:id="@+id/personEditTable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -23,7 +21,6 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/ageTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -33,7 +30,7 @@
                     android:id="@+id/ageSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:background="@android:drawable/btn_dropdown"
                     android:spinnerMode="dropdown" />
@@ -44,7 +41,6 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/heightTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -54,7 +50,7 @@
                     android:id="@+id/heightSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:background="@android:drawable/btn_dropdown"
                     android:spinnerMode="dropdown" />
@@ -65,7 +61,6 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/weightTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -75,7 +70,7 @@
                     android:id="@+id/weightSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:background="@android:drawable/btn_dropdown"
                     android:spinnerMode="dropdown" />
@@ -86,7 +81,6 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/trainingsPerWeekTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -96,7 +90,7 @@
                     android:id="@+id/trainingsPerWeekSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:background="@android:drawable/btn_dropdown"
                     android:spinnerMode="dropdown" />

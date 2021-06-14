@@ -1,5 +1,6 @@
 package com.mariyan.healthierlifestyle;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -34,6 +35,7 @@ public class CalculatorActivity extends AppCompatActivity {
     private double caloriesSum = 0;
     private int pos = -1;
 
+    @SuppressLint("DefaultLocale")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator);

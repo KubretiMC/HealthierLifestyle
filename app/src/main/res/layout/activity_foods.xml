@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/main_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -20,7 +19,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
-        android:layout_weight="1"
         android:text="@string/show_all_foods"
         />
     </LinearLayout>
@@ -37,7 +35,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:layout_weight="1"
             android:text="@string/show_foods_rich_on_protein"
             />
     </LinearLayout>
@@ -54,7 +51,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:layout_weight="1"
             android:text="@string/show_foods_rich_on_carbohydrates"
             />
     </LinearLayout>
@@ -71,7 +67,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:layout_weight="1"
             android:text="@string/show_foods_rich_on_fats"
             />
     </LinearLayout>
@@ -88,7 +83,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:layout_weight="1"
             android:text="@string/show_foods_rich_on_calories"
             />
     </LinearLayout>

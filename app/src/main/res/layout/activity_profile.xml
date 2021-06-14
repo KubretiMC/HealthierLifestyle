@@ -2,7 +2,6 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -33,7 +32,6 @@
         android:orientation="horizontal">
 
         <TableLayout
-            android:id="@+id/nutrientsPerDayTable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -45,7 +43,6 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/proteinsTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/proteins_per_day" />
@@ -58,7 +55,8 @@
                     android:inputType="numberDecimal"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
-                    android:autofillHints="" />
+                    android:autofillHints=""
+                    tools:ignore="LabelFor" />
             </TableRow>
 
 
@@ -67,7 +65,6 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/carbohydratesTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/carbohydrates_per_day" />
@@ -80,7 +77,8 @@
                     android:inputType="numberDecimal"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
-                    android:autofillHints="" />
+                    android:autofillHints=""
+                    tools:ignore="LabelFor" />
             </TableRow>
 
 
@@ -89,7 +87,6 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/fatsTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/fats_per_day" />
@@ -102,7 +99,8 @@
                     android:inputType="numberDecimal"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
-                    android:autofillHints="" />
+                    android:autofillHints=""
+                    tools:ignore="LabelFor" />
             </TableRow>
 
             <TableRow
@@ -110,7 +108,6 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/caloriesTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/calories_per_day" />
@@ -119,11 +116,12 @@
                     android:id="@+id/caloriesPlainText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
                     android:inputType="numberDecimal"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
-                    android:autofillHints="" />
+                    android:autofillHints=""
+                    tools:ignore="LabelFor" />
             </TableRow>
 
             <TableRow

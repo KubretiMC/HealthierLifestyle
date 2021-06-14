@@ -39,7 +39,7 @@ public class UpdateUserActivity extends AppCompatActivity {
         userAge.setSelection(spinnerAgePosition);
 
         userTrainingsPerWeek = findViewById(R.id.trainingsPerWeekSpinner);
-        userTrainingsPerWeek = setSpinnerTrainings("0", "1-3", "3-7");
+        userTrainingsPerWeek = setSpinnerTrainings();
         userTrainingsPerWeek.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
             }
@@ -101,7 +101,7 @@ public class UpdateUserActivity extends AppCompatActivity {
         finish();
     }
 
-    private Spinner setSpinner(int spinnerLength, int spinnerStart, Spinner spinner) {
+    private void setSpinner(int spinnerLength, int spinnerStart, Spinner spinner) {
         String[] arraySpinner = new String[spinnerLength];
         for (int i = 0; i < spinnerLength; i++) {
             arraySpinner[i] = String.valueOf(spinnerStart);
@@ -111,11 +111,10 @@ public class UpdateUserActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item, arraySpinner);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        return spinner;
     }
 
-    public Spinner setSpinnerTrainings(String a, String b, String c) {
-        String[] arraySpinner = new String[]{a, b, c};
+    private Spinner setSpinnerTrainings() {
+        String[] arraySpinner = new String[]{"0", "1-3", "3-7"};
         Spinner spinner = findViewById(R.id.trainingsPerWeekSpinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, arraySpinner);

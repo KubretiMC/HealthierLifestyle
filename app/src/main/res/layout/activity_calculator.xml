@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -50,36 +49,32 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/sum"
-                    />
+                    tools:ignore="ButtonStyle" />
                 <Button
                     android:id="@+id/ResetButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/reset"
-                    />
+                    tools:ignore="ButtonStyle" />
             </TableRow>
             <TableRow android:layout_height="match_parent" android:layout_width="match_parent">
                 <TextView
-                    android:id="@+id/proteinsTextView"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:layout_weight="1"
                     android:text="@string/proteins" />
                 <TextView
-                    android:id="@+id/carbohydratesTextView"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:layout_weight="1"
                     android:text="@string/carbohydrates" />
                 <TextView
-                    android:id="@+id/fatsTextView"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:layout_weight="1"
                     android:text="@string/fats" />
                 <TextView
-                    android:id="@+id/caloriesTextView"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:layout_weight="1"
@@ -94,7 +89,8 @@
                     android:layout_weight="1"
                     android:inputType="numberDecimal"
                     android:text="@string/zero"
-                    android:autofillHints="" />
+                    android:autofillHints=""
+                    tools:ignore="LabelFor" />
                 <EditText
                     android:id="@+id/carbohydratesPlainText"
                     android:layout_height="wrap_content"
@@ -102,7 +98,8 @@
                     android:layout_weight="1"
                     android:inputType="numberDecimal"
                     android:text="@string/zero"
-                    android:autofillHints="" />
+                    android:autofillHints=""
+                    tools:ignore="LabelFor" />
                 <EditText
                     android:id="@+id/fatsPlainText"
                     android:layout_height="wrap_content"
@@ -110,7 +107,8 @@
                     android:layout_weight="1"
                     android:inputType="numberDecimal"
                     android:text="@string/zero"
-                    android:autofillHints="" />
+                    android:autofillHints=""
+                    tools:ignore="LabelFor" />
                 <EditText
                     android:id="@+id/caloriesPlainText"
                     android:layout_height="wrap_content"
@@ -118,7 +116,8 @@
                     android:layout_weight="1"
                     android:inputType="numberDecimal"
                     android:text="@string/zero"
-                    android:autofillHints="" />
+                    android:autofillHints=""
+                    tools:ignore="LabelFor" />
             </TableRow>
 
         </TableLayout>

@@ -176,10 +176,7 @@ public class FoodsListActivity extends AppCompatActivity {
                 String listWantedString = gson.toJson(listWanted);
                 collection.putString(wanted, listWantedString);
                 collection.apply();
-                pos = -1;
                 Toast.makeText(getApplicationContext(), "Added", Toast.LENGTH_SHORT).show();
-                finish();
-                startActivity(getIntent());
             }
         }
     }

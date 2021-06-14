@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -39,19 +38,20 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/add_to_wanted_foods"
-            />
+            tools:ignore="ButtonStyle" />
         <Button
             android:id="@+id/CalculatorButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/calculator_mode"
-            />
+            tools:ignore="ButtonStyle" />
         <Button
             android:id="@+id/UnwantedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/add_to_unwanted_foods" />
+            android:text="@string/add_to_unwanted_foods"
+            tools:ignore="ButtonStyle" />
     </LinearLayout>
 </LinearLayout>

@@ -11,13 +11,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/name"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/proteinName"
-        android:textSize="16dp"
+        android:textSize="16sp"
         android:textStyle="italic" />
     <TextView
         android:layout_width="match_parent"
@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/carbohydrateName"
-        android:textSize="16dp"
+        android:textSize="16sp"
         android:textStyle="italic" />
     <TextView
         android:layout_width="match_parent"
@@ -37,7 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/fatName"
-        android:textSize="16dp"
+        android:textSize="16sp"
         android:textStyle="italic" />
     <TextView
         android:layout_width="match_parent"
@@ -47,7 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/calorieName"
-        android:textSize="16dp"
+        android:textSize="16sp"
         android:textStyle="italic" />
     <TextView
         android:layout_width="match_parent"
