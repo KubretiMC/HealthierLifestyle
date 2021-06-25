@@ -40,54 +40,15 @@ public class RegisterActivity extends AppCompatActivity {
 
         userAge = findViewById(R.id.ageSpinner);
         setSpinner(55, 16, userAge);
-        userAge.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-            }
-
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
 
         userHeight = findViewById(R.id.heightSpinner);
         setSpinner(81, 140, userHeight);
-        userHeight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-
-            }
-
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
 
         userWeight = findViewById(R.id.weightSpinner);
         setSpinner(201, 40, userWeight);
-        userWeight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-
-            }
-
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
 
         userGender = setSpinnerGender();
-        userGender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-            }
-
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-
         userTrainingsPerWeek = setSpinnerTrainings();
-        userTrainingsPerWeek.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-
-            }
-
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
     }
 
     private Spinner setSpinnerGender() {
@@ -135,12 +96,10 @@ public class RegisterActivity extends AppCompatActivity {
             String height = userHeight.getSelectedItem().toString();
             String weight = userWeight.getSelectedItem().toString();
             String trainings = userTrainingsPerWeek.getSelectedItem().toString();
-
             SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString("remember", "true");
             editor.apply();
-
             User.init(getApplicationContext());
             User.setName(name);
             User.setAge(age);
