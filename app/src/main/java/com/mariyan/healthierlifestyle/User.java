@@ -14,10 +14,7 @@ class User
     private static  String height;
     private static  String trainings;
 
-    private User()
-    {
-
-    }
+    private User() { }
 
     public static void init(Context context)
     {

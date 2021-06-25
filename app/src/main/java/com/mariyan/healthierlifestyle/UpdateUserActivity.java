@@ -27,53 +27,24 @@ public class UpdateUserActivity extends AppCompatActivity {
 
         userAge = findViewById(R.id.ageSpinner);
         setSpinner(55, 16, userAge);
-        userAge.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-            }
-
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
         ArrayAdapter ageAdapter = (ArrayAdapter) userAge.getAdapter(); //cast to an ArrayAdapter
         int spinnerAgePosition = ageAdapter.getPosition(User.getAge());
         userAge.setSelection(spinnerAgePosition);
 
         userTrainingsPerWeek = findViewById(R.id.trainingsPerWeekSpinner);
         userTrainingsPerWeek = setSpinnerTrainings();
-        userTrainingsPerWeek.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-            }
-
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
         ArrayAdapter trainingsAdapter = (ArrayAdapter) userTrainingsPerWeek.getAdapter(); //cast to an ArrayAdapter
         int spinnerTrainingsPosition = trainingsAdapter.getPosition(User.getTrainings());
         userTrainingsPerWeek.setSelection(spinnerTrainingsPosition);
 
         userHeight = findViewById(R.id.heightSpinner);
-        userHeight = findViewById(R.id.heightSpinner);
         setSpinner(81, 140, userHeight);
-        userHeight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-            }
-
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
         ArrayAdapter heightAdapter = (ArrayAdapter) userHeight.getAdapter(); //cast to an ArrayAdapter
         int spinnerHeightPosition = heightAdapter.getPosition(User.getHeight());
         userHeight.setSelection(spinnerHeightPosition);
 
         userWeight = findViewById(R.id.weightSpinner);
         setSpinner(201, 40, userWeight);
-        userWeight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-            }
-
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
         ArrayAdapter weightAdapter = (ArrayAdapter) userWeight.getAdapter(); //cast to an ArrayAdapter
         int spinnerWeightPosition = weightAdapter.getPosition(User.getWeight());
         userWeight.setSelection(spinnerWeightPosition);

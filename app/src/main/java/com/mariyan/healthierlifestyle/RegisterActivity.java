@@ -3,8 +3,6 @@ package com.mariyan.healthierlifestyle;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -86,10 +84,12 @@ public class RegisterActivity extends AppCompatActivity {
         if (name.isEmpty()) {
             Toast.makeText(getApplicationContext(), "Please enter username!", Toast.LENGTH_LONG).show();
             return false;
-        } else if (name.length() < 6 || name.length() > 16) {
+        }
+        else if (name.length() < 6 || name.length() > 16) {
             Toast.makeText(getApplicationContext(), "Username must be between 6 and 16 characters", Toast.LENGTH_LONG).show();
             return false;
-        } else {
+        }
+        else {
             Toast.makeText(getApplicationContext(), "Registration successful!", Toast.LENGTH_LONG).show();
             String age = userAge.getSelectedItem().toString();
             String gender = userGender.getSelectedItem().toString();
