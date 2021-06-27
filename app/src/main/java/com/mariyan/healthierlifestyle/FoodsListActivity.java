@@ -11,15 +11,19 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import com.google.gson.Gson;
 
 public class FoodsListActivity extends AppCompatActivity {
@@ -30,6 +34,7 @@ public class FoodsListActivity extends AppCompatActivity {
     private String fatsAmount;
     private String caloriesAmount;
     private int pos = -1;
+    private ArrayList<HashMap<String, String>> arrayList = new ArrayList<>();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +42,9 @@ public class FoodsListActivity extends AppCompatActivity {
 
         LinearLayout foodsListLayout = findViewById(R.id.foodsListLayout);
         LinearLayout addLayout = findViewById(R.id.addLayout);
-        if (!User.getName().equals("")) {
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String check = settings.getString("username", null);
+        if (check != null && !check.equals("")) {
             addLayout.setVisibility(View.VISIBLE);
         } else {
             LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
@@ -58,13 +65,13 @@ public class FoodsListActivity extends AppCompatActivity {
         addUnwanted.setOnClickListener(v -> addFood(MainActivity.unwantedList, "unwantedList"));
 
         foodType = String.valueOf(getIntent().getStringExtra("type"));
-        ArrayList<HashMap<String, String>> arrayList = new ArrayList<>();
+
         if (foodType.equals("")) {
-            getType(arrayList, "proteins", 0);
+            getType("proteins", 0);
         } else if (foodType.equals("calories")) {
-            getType(arrayList, foodType, 100);
+            getType(foodType, 100);
         } else {
-            getType(arrayList, foodType, 10);
+            getType(foodType, 10);
         }
 
         ListView listView = findViewById(R.id.listView);
@@ -99,7 +106,7 @@ public class FoodsListActivity extends AppCompatActivity {
         return json;
     }
 
-    private void getType(ArrayList<HashMap<String, String>> arrayList, String type, int biggerThan) {
+    private void getType(String type, int biggerThan) {
         try {
             JSONObject obj = new JSONObject(LoadJsonFromAsset());
             JSONArray array = obj.getJSONArray("foods");
@@ -160,24 +167,19 @@ public class FoodsListActivity extends AppCompatActivity {
             list.put("fats", fatsAmount);
             list.put("calorie", calorie);
             list.put("calories", caloriesAmount);
-            boolean flag = false;
-            for (HashMap<String, String> m : listWanted) {
+            for (HashMap<String, String> m : listWanted)
                 if (m.containsValue(name)) {
-                    flag = true;
                     Toast.makeText(getApplicationContext(), "Already in", Toast.LENGTH_SHORT).show();
-                    break;
+                    return;
                 }
-            }
-            if (!flag) {
-                listWanted.add(list);
-                SharedPreferences db = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                SharedPreferences.Editor collection = db.edit();
-                Gson gson = new Gson();
-                String listWantedString = gson.toJson(listWanted);
-                collection.putString(wanted, listWantedString);
-                collection.apply();
-                Toast.makeText(getApplicationContext(), "Added", Toast.LENGTH_SHORT).show();
-            }
+            listWanted.add(list);
+            SharedPreferences db = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            SharedPreferences.Editor collection = db.edit();
+            Gson gson = new Gson();
+            String listWantedString = gson.toJson(listWanted);
+            collection.putString(wanted, listWantedString);
+            collection.apply();
+            Toast.makeText(getApplicationContext(), "Added", Toast.LENGTH_SHORT).show();
         }
     }
 }

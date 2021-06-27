@@ -2,10 +2,8 @@ package com.mariyan.healthierlifestyle;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -40,18 +38,6 @@ public class CalculatorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator);
         ListView listView = findViewById(R.id.listView);
-        LinearLayout foodsListLayout = findViewById(R.id.foodsListLayout);
-        LinearLayout calculatorLayout = findViewById(R.id.calculatorLayout);
-        if (!User.getName().equals("")) {
-            calculatorLayout.setVisibility(View.VISIBLE);
-        } else {
-            LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    1.0f
-            );
-            foodsListLayout.setLayoutParams(param);
-        }
         Button sum = findViewById(R.id.SumButton);
         Button reset = findViewById(R.id.ResetButton);
         proteins = findViewById(R.id.proteinsPlainText);

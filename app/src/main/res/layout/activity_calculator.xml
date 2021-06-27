@@ -26,8 +26,7 @@
             android:divider="@color/colorPrimaryDark"
             android:choiceMode="singleChoice"
             android:listSelector="#666666"
-            tools:ignore="MissingConstraints"
-            ></ListView>
+            tools:ignore="MissingConstraints" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/calculatorLayout"
@@ -37,7 +36,6 @@
         android:layout_weight="5"
         android:gravity="center"
         android:orientation="horizontal"
-        android:visibility="gone"
         >
         <TableLayout android:id="@+id/personRegisterTable"
             android:layout_height="wrap_content" android:layout_width="match_parent"

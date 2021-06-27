@@ -51,8 +51,8 @@ public class WantedFoodsActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Please select food!", Toast.LENGTH_SHORT).show();
                 } else {
                     list.remove(pos);
-                    SharedPreferences db = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                    SharedPreferences.Editor collection = db.edit();
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor collection = sharedPreferences.edit();
                     Gson gson = new Gson();
                     String listWantedString = gson.toJson(list);
                     collection.putString(wanted, listWantedString);

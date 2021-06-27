@@ -8,10 +8,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Button;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,15 +22,12 @@ import java.util.HashMap;
 public class MainActivity extends AppCompatActivity {
     public static ArrayList<HashMap<String, String>> wantedList;
     public static ArrayList<HashMap<String, String>> unwantedList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        wantedList = new ArrayList<>();
-        unwantedList = new ArrayList<>();
 
-        wantedList = fillLists(wantedList,"wantedList");
-        unwantedList = fillLists(unwantedList,"unwantedList");
 
         String username = getIntent().getStringExtra("username");
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -35,7 +35,10 @@ public class MainActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = settings.edit();
             editor.putString("username", username);
             editor.apply();
-        } else {
+        }
+
+        String check = settings.getString("username", null);
+        if (check != null && !check.equals("")) {
             User.init(getApplicationContext());
             User.setName(User.read("name", ""));
             User.setAge(User.read("age", ""));
@@ -43,7 +46,14 @@ public class MainActivity extends AppCompatActivity {
             User.setWeight(User.read("weight", ""));
             User.setHeight(User.read("height", ""));
             User.setTrainings(User.read("trainings", ""));
+
+            wantedList = new ArrayList<>();
+            wantedList = fillLists(wantedList, "wantedList");
+
+            unwantedList = new ArrayList<>();
+            unwantedList = fillLists(unwantedList, "unwantedList");
         }
+
         Button foods = findViewById(R.id.FoodsButton);
         foods.setOnClickListener(v -> openFoodsActivity());
     }
@@ -77,11 +87,12 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
         startActivity(intent);
     }
-    private ArrayList<HashMap<String, String>> fillLists(ArrayList<HashMap<String, String>> list, String wantedList){
-        SharedPreferences preferences=PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+    private ArrayList<HashMap<String, String>> fillLists(ArrayList<HashMap<String, String>> list, String wantedList) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Gson gson = new Gson();
         String wanted = preferences.getString(wantedList, null);
-        if(wanted != null) {
+        if (wanted != null) {
             Type type = new TypeToken<ArrayList<HashMap<String, String>>>() {}.getType();
             list = gson.fromJson(wanted, type);
         }

@@ -62,7 +62,6 @@ dependencies {
     // optional - Test helpers
     testImplementation "androidx.room:room-testing:$room_version"
 
-    implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'com.google.code.gson:gson:2.8.5'
 
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {

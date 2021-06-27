@@ -2,43 +2,46 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.mariyan.healthierlifestyle">
-<uses-permission android:name="android.permission.INTERNET"></uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/healthier_lifestyle"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".CalculatorActivity"
+        android:theme="@style/AppTheme"
+        android:fullBackupContent="">
+        <activity
+            android:name=".CalculatorActivity"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"
-            ></activity>
-        <activity android:name=".UpdateUserActivity"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".UpdateUserActivity"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"
-            ></activity>
-        <activity android:name=".RegisterActivity"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".RegisterActivity"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"
-            ></activity>
-        <activity android:name=".WantedFoodsActivity"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".WantedFoodsActivity"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"
-            ></activity>
-        <activity android:name=".FoodsListActivity"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".FoodsListActivity"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"></activity>
-        <activity android:name=".MainActivity"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".MainActivity"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"></activity>
-        <activity android:name=".FoodsActivity"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".FoodsActivity"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"></activity>
-        <activity android:name=".ProfileActivity"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".ProfileActivity"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"></activity>
+            tools:ignore="LockedOrientationActivity" />
         <activity android:name=".StartActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
